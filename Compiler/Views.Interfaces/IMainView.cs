@@ -11,6 +11,7 @@ namespace Compiler.Views.Interfaces
         string EditorContent { get; set; }
         bool IsEditorVisible { get; set; }
         string WindowTitle { set; }
+        public string StatusText { set; }
 
         event EventHandler NewFileClicked;
         event EventHandler OpenFileClicked;

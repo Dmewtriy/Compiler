@@ -31,6 +31,11 @@ namespace Compiler
             set => this.Text = value;
         }
 
+        public string StatusText 
+        { 
+            set => FilePathStatusLabel.Text = value; 
+        }
+
         public event EventHandler NewFileClicked;
         public event EventHandler OpenFileClicked;
         public event EventHandler SaveFileClicked;

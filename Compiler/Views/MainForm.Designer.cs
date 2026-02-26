@@ -70,12 +70,14 @@
             AboutSB = new ToolStripButton();
             HelpSB = new ToolStripButton();
             statusStrip1 = new StatusStrip();
+            FilePathStatusLabel = new ToolStripStatusLabel();
             splitContainer1 = new SplitContainer();
             lblPlaceholder = new Label();
             richTextBox1 = new RichTextBox();
             richTextBox2 = new RichTextBox();
             menuStrip1.SuspendLayout();
             toolStrip1.SuspendLayout();
+            statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -379,11 +381,18 @@
             // 
             // statusStrip1
             // 
+            statusStrip1.Items.AddRange(new ToolStripItem[] { FilePathStatusLabel });
             statusStrip1.Location = new Point(0, 439);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(784, 22);
             statusStrip1.TabIndex = 3;
             statusStrip1.Text = "statusStrip1";
+            // 
+            // FilePathStatusLabel
+            // 
+            FilePathStatusLabel.Name = "FilePathStatusLabel";
+            FilePathStatusLabel.Size = new Size(118, 17);
+            FilePathStatusLabel.Text = "toolStripStatusLabel1";
             // 
             // splitContainer1
             // 
@@ -409,8 +418,9 @@
             // lblPlaceholder
             // 
             lblPlaceholder.AutoSize = true;
+            lblPlaceholder.Dock = DockStyle.Fill;
             lblPlaceholder.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            lblPlaceholder.Location = new Point(155, 114);
+            lblPlaceholder.Location = new Point(0, 0);
             lblPlaceholder.Name = "lblPlaceholder";
             lblPlaceholder.Size = new Size(464, 25);
             lblPlaceholder.TabIndex = 2;
@@ -465,6 +475,8 @@
             menuStrip1.PerformLayout();
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
@@ -521,5 +533,6 @@
         private RichTextBox richTextBox2;
         private Label lblPlaceholder;
         private StatusStrip statusStrip1;
+        private ToolStripStatusLabel FilePathStatusLabel;
     }
 }
