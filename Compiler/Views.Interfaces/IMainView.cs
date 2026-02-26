@@ -16,12 +16,26 @@ namespace Compiler.Views.Interfaces
         event EventHandler NewFileClicked;
         event EventHandler OpenFileClicked;
         event EventHandler SaveFileClicked;
+        event EventHandler SaveAsClicked;
+        event EventHandler ExitClicked;
 
         event EventHandler UndoClicked;
         event EventHandler RedoClicked;
         event EventHandler CopyClicked;
         event EventHandler CutClicked;
         event EventHandler PasteClicked;
+        event EventHandler DeleteClicked;
+        event EventHandler SelectAllClicked;
+
+        event EventHandler TaskDescriptionClicked;
+        event EventHandler GrammarClicked;
+        event EventHandler GrammarClassificationClicked;
+        event EventHandler AnalysisMethodClicked;
+        event EventHandler TestExampleClicked;
+        event EventHandler ReferencesClicked;
+        event EventHandler SourceCodeClicked;
+
+        event EventHandler RunClicked;
 
         event EventHandler HelpClicked;
         event EventHandler AboutClicked;
@@ -39,6 +53,8 @@ namespace Compiler.Views.Interfaces
         void PerformCopy();
         void PerformCut();
         void PerformPaste();
+        void PerformDelete();
+        void PerformSelectAll();
 
         DialogResult ConfirmSaveBeforeAction();
 
