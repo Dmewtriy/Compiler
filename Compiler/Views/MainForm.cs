@@ -12,16 +12,16 @@ namespace Compiler
 
         public string EditorContent
         {
-            get => richTextBox1.Text;
-            set => richTextBox1.Text = value;
+            get => richTextBoxEdit.Text;
+            set => richTextBoxEdit.Text = value;
         }
 
         public bool IsEditorVisible
         {
-            get => richTextBox1.Visible;
+            get => richTextBoxEdit.Visible;
             set
             {
-                richTextBox1.Visible = value;
+                richTextBoxEdit.Visible = value;
                 lblPlaceholder.Visible = !value;
             }
         }
@@ -39,14 +39,32 @@ namespace Compiler
         public event EventHandler NewFileClicked;
         public event EventHandler OpenFileClicked;
         public event EventHandler SaveFileClicked;
+        public event EventHandler SaveAsClicked;
+        public event EventHandler ExitClicked;
+
         public event EventHandler UndoClicked;
         public event EventHandler RedoClicked;
         public event EventHandler CopyClicked;
         public event EventHandler CutClicked;
         public event EventHandler PasteClicked;
+        public event EventHandler DeleteClicked;
+        public event EventHandler SelectAllClicked;
+
+        public event EventHandler TaskDescriptionClicked;
+        public event EventHandler GrammarClicked;
+        public event EventHandler GrammarClassificationClicked;
+        public event EventHandler AnalysisMethodClicked;
+        public event EventHandler TestExampleClicked;
+        public event EventHandler ReferencesClicked;
+        public event EventHandler SourceCodeClicked;
+
+        public event EventHandler RunClicked;
+
         public event EventHandler HelpClicked;
         public event EventHandler AboutClicked;
+
         public event EventHandler ContentChanged;
+
         public event FormClosingEventHandler ViewClosing;
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -56,20 +74,53 @@ namespace Compiler
 
         private void BindEvents()
         {
-            NewFileSB.Click += (s, e) => NewFileClicked?.Invoke(this, EventArgs.Empty);
-            OpenSB.Click += (s, e) => OpenFileClicked?.Invoke(this, EventArgs.Empty);
-            SaveSB.Click += (s, e) => SaveFileClicked?.Invoke(this, EventArgs.Empty);
+            menuCreate.Click += (s, e) => NewFileClicked?.Invoke(this, EventArgs.Empty);
+            toolCreate.Click += (s, e) => NewFileClicked?.Invoke(this, EventArgs.Empty);
 
-            CancelSB.Click += (s, e) => UndoClicked?.Invoke(this, EventArgs.Empty);
-            ReturnSB.Click += (s, e) => RedoClicked?.Invoke(this, EventArgs.Empty);
-            CopySB.Click += (s, e) => CopyClicked?.Invoke(this, EventArgs.Empty);
-            CutSB.Click += (s, e) => CutClicked?.Invoke(this, EventArgs.Empty);
-            PasteSB.Click += (s, e) => PasteClicked?.Invoke(this, EventArgs.Empty);
+            menuOpen.Click += (s, e) => OpenFileClicked?.Invoke(this, EventArgs.Empty);
+            toolOpen.Click += (s, e) => OpenFileClicked?.Invoke(this, EventArgs.Empty);
+            
+            menuSave.Click += (s, e) => SaveFileClicked?.Invoke(this, EventArgs.Empty);
+            toolSave.Click += (s, e) => SaveFileClicked?.Invoke(this, EventArgs.Empty);
 
-            HelpSB.Click += (s, e) => HelpClicked?.Invoke(this, EventArgs.Empty);
-            AboutSB.Click += (s, e) => AboutClicked?.Invoke(this, EventArgs.Empty);
+            menuSaveAs.Click += (s, e) => SaveAsClicked?.Invoke(this, EventArgs.Empty);
+            menuExit.Click += (s, e) => ExitClicked?.Invoke(this, EventArgs.Empty);
 
-            richTextBox1.TextChanged += (s, e) => ContentChanged?.Invoke(this, EventArgs.Empty);
+            menuCancel.Click += (s, e) => UndoClicked?.Invoke(this, EventArgs.Empty);
+            toolCancel.Click += (s, e) => UndoClicked?.Invoke(this, EventArgs.Empty);
+
+            menuReturn.Click += (s, e) => RedoClicked?.Invoke(this, EventArgs.Empty);
+            toolReturn.Click += (s, e) => RedoClicked?.Invoke(this, EventArgs.Empty);
+
+            menuCopy.Click += (s, e) => CopyClicked?.Invoke(this, EventArgs.Empty);
+            toolCopy.Click += (s, e) => CopyClicked?.Invoke(this, EventArgs.Empty);
+
+            menuCut.Click += (s, e) => CutClicked?.Invoke(this, EventArgs.Empty);
+            toolCut.Click += (s, e) => CutClicked?.Invoke(this, EventArgs.Empty);
+
+            menuPaste.Click += (s, e) => PasteClicked?.Invoke(this, EventArgs.Empty);
+            toolPaste.Click += (s, e) => PasteClicked?.Invoke(this, EventArgs.Empty);
+
+            menuDelete.Click += (s, e) => DeleteClicked?.Invoke(this, EventArgs.Empty);
+            menuSelectAll.Click += (s, e) => SelectAllClicked?.Invoke(this, EventArgs.Empty);
+
+            menuTaskDescription.Click += (s, e) => TaskDescriptionClicked?.Invoke(this, EventArgs.Empty);
+            menuGrammar.Click += (s, e) => GrammarClicked?.Invoke(this, EventArgs.Empty);
+            menuGrammarClassification.Click += (s, e) => GrammarClassificationClicked?.Invoke(this, EventArgs.Empty);
+            menuAnalysisMethod.Click += (s, e) => AnalysisMethodClicked?.Invoke(this, EventArgs.Empty);
+            menuTestExample.Click += (s, e) => TestExampleClicked?.Invoke(this, EventArgs.Empty);
+            menuReferences.Click += (s, e) => ReferencesClicked?.Invoke(this, EventArgs.Empty);
+            menuSourceCode.Click += (s, e) => SourceCodeClicked?.Invoke(this, EventArgs.Empty);
+
+            run.Click += (s, e) => RunClicked?.Invoke(this, EventArgs.Empty);
+
+            menuHelp.Click += (s, e) => HelpClicked?.Invoke(this, EventArgs.Empty);
+            toolHelp.Click += (s, e) => HelpClicked?.Invoke(this, EventArgs.Empty);
+
+            menuAbout.Click += (s, e) => AboutClicked?.Invoke(this, EventArgs.Empty);
+            toolAbout.Click += (s, e) => AboutClicked?.Invoke(this, EventArgs.Empty);
+
+            richTextBoxEdit.TextChanged += (s, e) => ContentChanged?.Invoke(this, EventArgs.Empty);
             this.FormClosing += (s, e) => ViewClosing?.Invoke(this, e);
 
         }
@@ -95,11 +146,36 @@ namespace Compiler
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public void PerformUndo() { if (richTextBox1.CanUndo) richTextBox1.Undo(); }
-        public void PerformRedo() { if (richTextBox1.CanRedo) richTextBox1.Redo(); }
-        public void PerformCopy() { richTextBox1.Copy(); }
-        public void PerformCut() { richTextBox1.Cut(); }
-        public void PerformPaste() { richTextBox1.Paste(); }
+        public void PerformUndo() 
+        { 
+            if (richTextBoxEdit.CanUndo) 
+                richTextBoxEdit.Undo(); 
+        }
+        public void PerformRedo() 
+        { 
+            if (richTextBoxEdit.CanRedo) 
+                richTextBoxEdit.Redo(); 
+        }
+        public void PerformCopy() 
+        { 
+            richTextBoxEdit.Copy(); 
+        }
+        public void PerformCut() 
+        { 
+            richTextBoxEdit.Cut(); 
+        }
+        public void PerformPaste() 
+        { 
+            richTextBoxEdit.Paste(); 
+        }
+        public void PerformDelete()
+        {
+            richTextBoxEdit.SelectedText = "";
+        }
+        public void PerformSelectAll()
+        {
+            richTextBoxEdit.SelectAll();
+        }
 
         public DialogResult ConfirmSaveBeforeAction()
         {

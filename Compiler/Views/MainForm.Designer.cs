@@ -56,7 +56,7 @@
             run = new ToolStripMenuItem();
             reference = new ToolStripMenuItem();
             menuHelp = new ToolStripMenuItem();
-            menuInfo = new ToolStripMenuItem();
+            menuAbout = new ToolStripMenuItem();
             tools = new ToolStrip();
             toolCreate = new ToolStripButton();
             toolOpen = new ToolStripButton();
@@ -242,7 +242,7 @@
             // 
             // reference
             // 
-            reference.DropDownItems.AddRange(new ToolStripItem[] { menuHelp, menuInfo });
+            reference.DropDownItems.AddRange(new ToolStripItem[] { menuHelp, menuAbout });
             reference.Name = "reference";
             reference.Size = new Size(65, 20);
             reference.Text = "Справка";
@@ -253,11 +253,11 @@
             menuHelp.Size = new Size(156, 22);
             menuHelp.Text = "Вызов справки";
             // 
-            // menuInfo
+            // menuAbout
             // 
-            menuInfo.Name = "menuInfo";
-            menuInfo.Size = new Size(156, 22);
-            menuInfo.Text = "О программе";
+            menuAbout.Name = "menuAbout";
+            menuAbout.Size = new Size(180, 22);
+            menuAbout.Text = "О программе";
             // 
             // tools
             // 
@@ -515,7 +515,7 @@
         private ToolStripMenuItem run;
         private ToolStripMenuItem reference;
         private ToolStripMenuItem menuHelp;
-        private ToolStripMenuItem menuInfo;
+        private ToolStripMenuItem menuAbout;
         private ToolStrip tools;
         private ToolStripButton toolCreate;
         private ToolStripButton toolOpen;
