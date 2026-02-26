@@ -58,19 +58,28 @@
             вызовСправкиToolStripMenuItem = new ToolStripMenuItem();
             оПрограммеToolStripMenuItem = new ToolStripMenuItem();
             toolStrip1 = new ToolStrip();
-            toolStripButton1 = new ToolStripButton();
-            toolStripButton2 = new ToolStripButton();
-            toolStripButton3 = new ToolStripButton();
-            toolStripButton4 = new ToolStripButton();
-            toolStripButton5 = new ToolStripButton();
-            toolStripButton6 = new ToolStripButton();
-            toolStripButton7 = new ToolStripButton();
-            toolStripButton8 = new ToolStripButton();
-            toolStripButton9 = new ToolStripButton();
-            toolStripButton10 = new ToolStripButton();
-            toolStripButton11 = new ToolStripButton();
+            NewFileSB = new ToolStripButton();
+            OpenSB = new ToolStripButton();
+            SaveSB = new ToolStripButton();
+            CancelSB = new ToolStripButton();
+            ReturnSB = new ToolStripButton();
+            CopySB = new ToolStripButton();
+            CutSB = new ToolStripButton();
+            PasteSB = new ToolStripButton();
+            PlaySB = new ToolStripButton();
+            AboutSB = new ToolStripButton();
+            HelpSB = new ToolStripButton();
+            statusStrip1 = new StatusStrip();
+            splitContainer1 = new SplitContainer();
+            lblPlaceholder = new Label();
+            richTextBox1 = new RichTextBox();
+            richTextBox2 = new RichTextBox();
             menuStrip1.SuspendLayout();
             toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -251,138 +260,216 @@
             // toolStrip1
             // 
             toolStrip1.ImageScalingSize = new Size(32, 32);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButton1, toolStripButton2, toolStripButton3, toolStripButton4, toolStripButton5, toolStripButton6, toolStripButton7, toolStripButton8, toolStripButton9, toolStripButton10, toolStripButton11 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { NewFileSB, OpenSB, SaveSB, CancelSB, ReturnSB, CopySB, CutSB, PasteSB, PlaySB, AboutSB, HelpSB });
             toolStrip1.Location = new Point(0, 24);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(784, 39);
             toolStrip1.TabIndex = 1;
             toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // NewFileSB
             // 
-            toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton1.Image = (Image)resources.GetObject("toolStripButton1.Image");
-            toolStripButton1.ImageTransparentColor = Color.Magenta;
-            toolStripButton1.Margin = new Padding(0, 1, 5, 2);
-            toolStripButton1.Name = "toolStripButton1";
-            toolStripButton1.Size = new Size(36, 36);
-            toolStripButton1.Text = "Создать";
-            toolStripButton1.ToolTipText = "Создать";
+            NewFileSB.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            NewFileSB.Image = (Image)resources.GetObject("NewFileSB.Image");
+            NewFileSB.ImageTransparentColor = Color.Magenta;
+            NewFileSB.Margin = new Padding(0, 1, 5, 2);
+            NewFileSB.Name = "NewFileSB";
+            NewFileSB.Size = new Size(36, 36);
+            NewFileSB.Text = "Создать";
+            NewFileSB.ToolTipText = "Создать";
             // 
-            // toolStripButton2
+            // OpenSB
             // 
-            toolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton2.Image = (Image)resources.GetObject("toolStripButton2.Image");
-            toolStripButton2.ImageTransparentColor = Color.Magenta;
-            toolStripButton2.Margin = new Padding(0, 1, 5, 2);
-            toolStripButton2.Name = "toolStripButton2";
-            toolStripButton2.Size = new Size(36, 36);
-            toolStripButton2.Text = "Открыть";
+            OpenSB.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            OpenSB.Image = (Image)resources.GetObject("OpenSB.Image");
+            OpenSB.ImageTransparentColor = Color.Magenta;
+            OpenSB.Margin = new Padding(0, 1, 5, 2);
+            OpenSB.Name = "OpenSB";
+            OpenSB.Size = new Size(36, 36);
+            OpenSB.Text = "Открыть";
             // 
-            // toolStripButton3
+            // SaveSB
             // 
-            toolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton3.Image = (Image)resources.GetObject("toolStripButton3.Image");
-            toolStripButton3.ImageTransparentColor = Color.Magenta;
-            toolStripButton3.Margin = new Padding(0, 1, 40, 2);
-            toolStripButton3.Name = "toolStripButton3";
-            toolStripButton3.Size = new Size(36, 36);
-            toolStripButton3.Text = "Сохранить";
+            SaveSB.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            SaveSB.Image = (Image)resources.GetObject("SaveSB.Image");
+            SaveSB.ImageTransparentColor = Color.Magenta;
+            SaveSB.Margin = new Padding(0, 1, 40, 2);
+            SaveSB.Name = "SaveSB";
+            SaveSB.Size = new Size(36, 36);
+            SaveSB.Text = "Сохранить";
             // 
-            // toolStripButton4
+            // CancelSB
             // 
-            toolStripButton4.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton4.Image = (Image)resources.GetObject("toolStripButton4.Image");
-            toolStripButton4.ImageTransparentColor = Color.Magenta;
-            toolStripButton4.Margin = new Padding(0, 1, 5, 2);
-            toolStripButton4.Name = "toolStripButton4";
-            toolStripButton4.Size = new Size(36, 36);
-            toolStripButton4.Text = "Отменить";
+            CancelSB.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            CancelSB.Image = (Image)resources.GetObject("CancelSB.Image");
+            CancelSB.ImageTransparentColor = Color.Magenta;
+            CancelSB.Margin = new Padding(0, 1, 5, 2);
+            CancelSB.Name = "CancelSB";
+            CancelSB.Size = new Size(36, 36);
+            CancelSB.Text = "Отменить";
             // 
-            // toolStripButton5
+            // ReturnSB
             // 
-            toolStripButton5.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton5.Image = (Image)resources.GetObject("toolStripButton5.Image");
-            toolStripButton5.ImageTransparentColor = Color.Magenta;
-            toolStripButton5.Margin = new Padding(0, 1, 40, 2);
-            toolStripButton5.Name = "toolStripButton5";
-            toolStripButton5.Size = new Size(36, 36);
-            toolStripButton5.Text = "Вернуть";
+            ReturnSB.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            ReturnSB.Image = (Image)resources.GetObject("ReturnSB.Image");
+            ReturnSB.ImageTransparentColor = Color.Magenta;
+            ReturnSB.Margin = new Padding(0, 1, 40, 2);
+            ReturnSB.Name = "ReturnSB";
+            ReturnSB.Size = new Size(36, 36);
+            ReturnSB.Text = "Вернуть";
             // 
-            // toolStripButton6
+            // CopySB
             // 
-            toolStripButton6.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton6.Image = (Image)resources.GetObject("toolStripButton6.Image");
-            toolStripButton6.ImageTransparentColor = Color.Magenta;
-            toolStripButton6.Margin = new Padding(0, 1, 5, 2);
-            toolStripButton6.Name = "toolStripButton6";
-            toolStripButton6.Size = new Size(36, 36);
-            toolStripButton6.Text = "Копировать";
+            CopySB.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            CopySB.Image = (Image)resources.GetObject("CopySB.Image");
+            CopySB.ImageTransparentColor = Color.Magenta;
+            CopySB.Margin = new Padding(0, 1, 5, 2);
+            CopySB.Name = "CopySB";
+            CopySB.Size = new Size(36, 36);
+            CopySB.Text = "Копировать";
             // 
-            // toolStripButton7
+            // CutSB
             // 
-            toolStripButton7.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton7.Image = (Image)resources.GetObject("toolStripButton7.Image");
-            toolStripButton7.ImageTransparentColor = Color.Magenta;
-            toolStripButton7.Margin = new Padding(0, 1, 5, 2);
-            toolStripButton7.Name = "toolStripButton7";
-            toolStripButton7.Size = new Size(36, 36);
-            toolStripButton7.Text = "Вырезать";
+            CutSB.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            CutSB.Image = (Image)resources.GetObject("CutSB.Image");
+            CutSB.ImageTransparentColor = Color.Magenta;
+            CutSB.Margin = new Padding(0, 1, 5, 2);
+            CutSB.Name = "CutSB";
+            CutSB.Size = new Size(36, 36);
+            CutSB.Text = "Вырезать";
             // 
-            // toolStripButton8
+            // PasteSB
             // 
-            toolStripButton8.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton8.Image = (Image)resources.GetObject("toolStripButton8.Image");
-            toolStripButton8.ImageTransparentColor = Color.Magenta;
-            toolStripButton8.Margin = new Padding(0, 1, 80, 2);
-            toolStripButton8.Name = "toolStripButton8";
-            toolStripButton8.Size = new Size(36, 36);
-            toolStripButton8.Text = "Вставить";
+            PasteSB.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            PasteSB.Image = (Image)resources.GetObject("PasteSB.Image");
+            PasteSB.ImageTransparentColor = Color.Magenta;
+            PasteSB.Margin = new Padding(0, 1, 80, 2);
+            PasteSB.Name = "PasteSB";
+            PasteSB.Size = new Size(36, 36);
+            PasteSB.Text = "Вставить";
             // 
-            // toolStripButton9
+            // PlaySB
             // 
-            toolStripButton9.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton9.Image = (Image)resources.GetObject("toolStripButton9.Image");
-            toolStripButton9.ImageTransparentColor = Color.Magenta;
-            toolStripButton9.Name = "toolStripButton9";
-            toolStripButton9.Size = new Size(36, 36);
-            toolStripButton9.Text = "Пуск";
+            PlaySB.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            PlaySB.Image = (Image)resources.GetObject("PlaySB.Image");
+            PlaySB.ImageTransparentColor = Color.Magenta;
+            PlaySB.Name = "PlaySB";
+            PlaySB.Size = new Size(36, 36);
+            PlaySB.Text = "Пуск";
             // 
-            // toolStripButton10
+            // AboutSB
             // 
-            toolStripButton10.Alignment = ToolStripItemAlignment.Right;
-            toolStripButton10.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton10.Image = (Image)resources.GetObject("toolStripButton10.Image");
-            toolStripButton10.ImageTransparentColor = Color.Magenta;
-            toolStripButton10.Name = "toolStripButton10";
-            toolStripButton10.Size = new Size(36, 36);
-            toolStripButton10.Text = "О программе";
+            AboutSB.Alignment = ToolStripItemAlignment.Right;
+            AboutSB.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            AboutSB.Image = (Image)resources.GetObject("AboutSB.Image");
+            AboutSB.ImageTransparentColor = Color.Magenta;
+            AboutSB.Name = "AboutSB";
+            AboutSB.Size = new Size(36, 36);
+            AboutSB.Text = "О программе";
             // 
-            // toolStripButton11
+            // HelpSB
             // 
-            toolStripButton11.Alignment = ToolStripItemAlignment.Right;
-            toolStripButton11.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton11.Image = (Image)resources.GetObject("toolStripButton11.Image");
-            toolStripButton11.ImageTransparentColor = Color.Magenta;
-            toolStripButton11.Name = "toolStripButton11";
-            toolStripButton11.Size = new Size(36, 36);
-            toolStripButton11.Text = "Вызов справки";
+            HelpSB.Alignment = ToolStripItemAlignment.Right;
+            HelpSB.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            HelpSB.Image = (Image)resources.GetObject("HelpSB.Image");
+            HelpSB.ImageTransparentColor = Color.Magenta;
+            HelpSB.Name = "HelpSB";
+            HelpSB.Size = new Size(36, 36);
+            HelpSB.Text = "Вызов справки";
+            // 
+            // statusStrip1
+            // 
+            statusStrip1.Location = new Point(0, 439);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(784, 22);
+            statusStrip1.TabIndex = 3;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // splitContainer1
+            // 
+            splitContainer1.BorderStyle = BorderStyle.Fixed3D;
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.FixedPanel = FixedPanel.Panel2;
+            splitContainer1.Location = new Point(0, 63);
+            splitContainer1.Name = "splitContainer1";
+            splitContainer1.Orientation = Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(lblPlaceholder);
+            splitContainer1.Panel1.Controls.Add(richTextBox1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(richTextBox2);
+            splitContainer1.Size = new Size(784, 376);
+            splitContainer1.SplitterDistance = 238;
+            splitContainer1.TabIndex = 2;
+            // 
+            // lblPlaceholder
+            // 
+            lblPlaceholder.AutoSize = true;
+            lblPlaceholder.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            lblPlaceholder.Location = new Point(155, 114);
+            lblPlaceholder.Name = "lblPlaceholder";
+            lblPlaceholder.Size = new Size(464, 25);
+            lblPlaceholder.TabIndex = 2;
+            lblPlaceholder.Text = "Создайте или откройте файл, чтобы начать работу";
+            lblPlaceholder.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.AllowDrop = true;
+            richTextBox1.BorderStyle = BorderStyle.None;
+            richTextBox1.Dock = DockStyle.Fill;
+            richTextBox1.Font = new Font("Segoe UI", 12F);
+            richTextBox1.Location = new Point(0, 0);
+            richTextBox1.Margin = new Padding(0);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(780, 234);
+            richTextBox1.TabIndex = 1;
+            richTextBox1.Text = "";
+            richTextBox1.WordWrap = false;
+            // 
+            // richTextBox2
+            // 
+            richTextBox2.BackColor = Color.White;
+            richTextBox2.BorderStyle = BorderStyle.None;
+            richTextBox2.Dock = DockStyle.Fill;
+            richTextBox2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            richTextBox2.ForeColor = Color.Black;
+            richTextBox2.Location = new Point(0, 0);
+            richTextBox2.Margin = new Padding(0);
+            richTextBox2.Name = "richTextBox2";
+            richTextBox2.ReadOnly = true;
+            richTextBox2.Size = new Size(780, 130);
+            richTextBox2.TabIndex = 1;
+            richTextBox2.Text = ">";
+            richTextBox2.WordWrap = false;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(784, 461);
+            Controls.Add(splitContainer1);
+            Controls.Add(statusStrip1);
             Controls.Add(toolStrip1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             MinimumSize = new Size(800, 500);
             Name = "MainForm";
             Text = "Компилятор";
+            Load += MainForm_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel1.PerformLayout();
+            splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -418,16 +505,21 @@
         private ToolStripMenuItem вызовСправкиToolStripMenuItem;
         private ToolStripMenuItem оПрограммеToolStripMenuItem;
         private ToolStrip toolStrip1;
-        private ToolStripButton toolStripButton1;
-        private ToolStripButton toolStripButton2;
-        private ToolStripButton toolStripButton3;
-        private ToolStripButton toolStripButton4;
-        private ToolStripButton toolStripButton5;
-        private ToolStripButton toolStripButton6;
-        private ToolStripButton toolStripButton7;
-        private ToolStripButton toolStripButton8;
-        private ToolStripButton toolStripButton9;
-        private ToolStripButton toolStripButton10;
-        private ToolStripButton toolStripButton11;
+        private ToolStripButton NewFileSB;
+        private ToolStripButton OpenSB;
+        private ToolStripButton SaveSB;
+        private ToolStripButton CancelSB;
+        private ToolStripButton ReturnSB;
+        private ToolStripButton CopySB;
+        private ToolStripButton CutSB;
+        private ToolStripButton PasteSB;
+        private ToolStripButton PlaySB;
+        private ToolStripButton AboutSB;
+        private ToolStripButton HelpSB;
+        private SplitContainer splitContainer1;
+        private RichTextBox richTextBox1;
+        private RichTextBox richTextBox2;
+        private Label lblPlaceholder;
+        private StatusStrip statusStrip1;
     }
 }
