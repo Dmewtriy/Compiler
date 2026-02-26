@@ -26,6 +26,11 @@ namespace Compiler
             }
         }
 
+        public string WindowTitle
+        {
+            set => this.Text = value;
+        }
+
         public event EventHandler NewFileClicked;
         public event EventHandler OpenFileClicked;
         public event EventHandler SaveFileClicked;
