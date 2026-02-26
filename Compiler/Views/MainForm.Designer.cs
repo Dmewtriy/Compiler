@@ -146,43 +146,43 @@
             // menuCancel
             // 
             menuCancel.Name = "menuCancel";
-            menuCancel.Size = new Size(180, 22);
+            menuCancel.Size = new Size(148, 22);
             menuCancel.Text = "Отменить";
             // 
             // menuReturn
             // 
             menuReturn.Name = "menuReturn";
-            menuReturn.Size = new Size(180, 22);
+            menuReturn.Size = new Size(148, 22);
             menuReturn.Text = "Вернуть";
             // 
             // menuCut
             // 
             menuCut.Name = "menuCut";
-            menuCut.Size = new Size(180, 22);
+            menuCut.Size = new Size(148, 22);
             menuCut.Text = "Вырезать";
             // 
             // menuCopy
             // 
             menuCopy.Name = "menuCopy";
-            menuCopy.Size = new Size(180, 22);
+            menuCopy.Size = new Size(148, 22);
             menuCopy.Text = "Копировать";
             // 
             // menuPaste
             // 
             menuPaste.Name = "menuPaste";
-            menuPaste.Size = new Size(180, 22);
+            menuPaste.Size = new Size(148, 22);
             menuPaste.Text = "Вставить";
             // 
             // menuDelete
             // 
             menuDelete.Name = "menuDelete";
-            menuDelete.Size = new Size(180, 22);
+            menuDelete.Size = new Size(148, 22);
             menuDelete.Text = "Удалить";
             // 
             // menuSelectAll
             // 
             menuSelectAll.Name = "menuSelectAll";
-            menuSelectAll.Size = new Size(180, 22);
+            menuSelectAll.Size = new Size(148, 22);
             menuSelectAll.Text = "Выделить все";
             // 
             // text
@@ -250,7 +250,7 @@
             // menuHelp
             // 
             menuHelp.Name = "menuHelp";
-            menuHelp.Size = new Size(156, 22);
+            menuHelp.Size = new Size(180, 22);
             menuHelp.Text = "Вызов справки";
             // 
             // menuAbout

@@ -17,16 +17,31 @@ namespace Compiler.Controllers
 
             _view.NewFileClicked += OnNewFile;
             _view.OpenFileClicked += OnOpenFile;
-            _view.SaveFileClicked += OnSaveFile;
+            _view.SaveFileClicked += (s, e) => TrySave(false);
+            _view.SaveAsClicked += (s, e) => TrySave(true);
+            _view.ExitClicked += OnExitRequest;
 
             _view.UndoClicked += (s, e) => _view.PerformUndo();
             _view.RedoClicked += (s, e) => _view.PerformRedo();
             _view.CopyClicked += (s, e) => _view.PerformCopy();
             _view.CutClicked += (s, e) => _view.PerformCut();
             _view.PasteClicked += (s, e) => _view.PerformPaste();
+            _view.DeleteClicked += (s, e) => _view.PerformDelete();
+            _view.SelectAllClicked += (s, e) => _view.PerformSelectAll();
+
+            _view.TaskDescriptionClicked += (s, e) => { };
+            _view.GrammarClicked += (s, e) => { };
+            _view.GrammarClassificationClicked += (s, e) => { };
+            _view.AnalysisMethodClicked += (s, e) => { };
+            _view.TestExampleClicked += (s, e) => { };
+            _view.ReferencesClicked += (s, e) => { };
+            _view.SourceCodeClicked += (s, e) => { };
+
+            _view.RunClicked += (s, e) => { };
 
             _view.HelpClicked += OnHelp;
             _view.AboutClicked += OnAbout;
+
             _view.ContentChanged += OnContentChanged;
 
             _view.ViewClosing += OnViewClosing;
@@ -94,32 +109,50 @@ namespace Compiler.Controllers
             }
         }
 
-        private void OnSaveFile(object sender, EventArgs e)
+        private bool TrySave(bool isSaveAs)
         {
-            TrySave();
-        }
-            
-        private bool TrySave()
-        {
-            try
+            if (isSaveAs || string.IsNullOrEmpty(_model.CurrentFilePath))
             {
-                string filePath = _model.CurrentFilePath ?? _view.ShowSaveFileDialog();
-
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    _model.SaveFile(filePath, _view.EditorContent);
-                    _isModified = false;
-                    UpdateTitle();
-
-                    return true;
-                }
+                return PerformSaveAs();
             }
-            catch (Exception ex)
+            else
             {
-                _view.ShowMessage("Ошибка", $"Не удалось сохранить файл: {ex.Message}");
+                return PerformSave();
+            }
+        }
+
+        private bool PerformSave()
+        {
+            return ExecuteFileWrite(_model.CurrentFilePath);
+        }
+
+        private bool PerformSaveAs()
+        {
+            string newPath = _view.ShowSaveFileDialog();
+
+            if (!string.IsNullOrEmpty(newPath))
+            {
+                return ExecuteFileWrite(newPath);
             }
 
             return false;
+        }
+
+        private bool ExecuteFileWrite(string path)
+        {
+            try
+            {
+                _model.SaveFile(path, _view.EditorContent);
+                _isModified = false;
+                UpdateTitle();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _view.ShowMessage("Ошибка сохранения", ex.Message);
+                return false;
+            }
         }
 
         private void OnHelp(object sender, EventArgs e)
@@ -140,7 +173,7 @@ namespace Compiler.Controllers
 
             if (result == DialogResult.Yes)
             {
-                return TrySave();
+                return TrySave(false);
             }
 
             return result == DialogResult.No;
@@ -155,7 +188,7 @@ namespace Compiler.Controllers
                 switch (result)
                 {
                     case DialogResult.Yes:
-                        if (!TrySave())
+                        if (!TrySave(false))
                         {
                             e.Cancel = true;
                         }
@@ -169,6 +202,11 @@ namespace Compiler.Controllers
                         break;
                 }
             }
+        }
+
+        private void OnExitRequest(object sender, EventArgs e)
+        {
+            _view.CloseView();
         }
     }
 
