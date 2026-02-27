@@ -31,9 +31,9 @@ namespace Compiler
             set => this.Text = value;
         }
 
-        public string StatusText 
-        { 
-            set => FilePathStatusLabel.Text = value; 
+        public string StatusText
+        {
+            set => FilePathStatusLabel.Text = value;
         }
 
         public event EventHandler NewFileClicked;
@@ -79,7 +79,7 @@ namespace Compiler
 
             menuOpen.Click += (s, e) => OpenFileClicked?.Invoke(this, EventArgs.Empty);
             toolOpen.Click += (s, e) => OpenFileClicked?.Invoke(this, EventArgs.Empty);
-            
+
             menuSave.Click += (s, e) => SaveFileClicked?.Invoke(this, EventArgs.Empty);
             toolSave.Click += (s, e) => SaveFileClicked?.Invoke(this, EventArgs.Empty);
 
@@ -146,27 +146,27 @@ namespace Compiler
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        public void PerformUndo() 
-        { 
-            if (richTextBoxEdit.CanUndo) 
-                richTextBoxEdit.Undo(); 
+        public void PerformUndo()
+        {
+            if (richTextBoxEdit.CanUndo)
+                richTextBoxEdit.Undo();
         }
-        public void PerformRedo() 
-        { 
-            if (richTextBoxEdit.CanRedo) 
-                richTextBoxEdit.Redo(); 
+        public void PerformRedo()
+        {
+            if (richTextBoxEdit.CanRedo)
+                richTextBoxEdit.Redo();
         }
-        public void PerformCopy() 
-        { 
-            richTextBoxEdit.Copy(); 
+        public void PerformCopy()
+        {
+            richTextBoxEdit.Copy();
         }
-        public void PerformCut() 
-        { 
-            richTextBoxEdit.Cut(); 
+        public void PerformCut()
+        {
+            richTextBoxEdit.Cut();
         }
-        public void PerformPaste() 
-        { 
-            richTextBoxEdit.Paste(); 
+        public void PerformPaste()
+        {
+            richTextBoxEdit.Paste();
         }
         public void PerformDelete()
         {
@@ -185,5 +185,12 @@ namespace Compiler
 
         public void CloseView() => Application.Exit();
 
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter) 
+            { 
+                richTextBoxEdit.SelectionFont = richTextBoxEdit.SelectionFont; 
+            }
+        }
     }
 }

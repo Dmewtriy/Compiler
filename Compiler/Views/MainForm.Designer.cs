@@ -250,13 +250,13 @@
             // menuHelp
             // 
             menuHelp.Name = "menuHelp";
-            menuHelp.Size = new Size(180, 22);
+            menuHelp.Size = new Size(156, 22);
             menuHelp.Text = "Вызов справки";
             // 
             // menuAbout
             // 
             menuAbout.Name = "menuAbout";
-            menuAbout.Size = new Size(180, 22);
+            menuAbout.Size = new Size(156, 22);
             menuAbout.Text = "О программе";
             // 
             // tools
@@ -440,6 +440,7 @@
             richTextBoxEdit.TabIndex = 1;
             richTextBoxEdit.Text = "";
             richTextBoxEdit.WordWrap = false;
+            richTextBoxEdit.KeyDown += OnKeyDown;
             // 
             // richTextBoxResult
             // 
