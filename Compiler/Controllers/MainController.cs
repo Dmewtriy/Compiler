@@ -1,5 +1,7 @@
 ﻿using Compiler.Models;
+using Compiler.Views;
 using Compiler.Views.Interfaces;
+using Markdig;
 
 namespace Compiler.Controllers
 {
@@ -9,11 +11,13 @@ namespace Compiler.Controllers
         private readonly FileService _model;
         private bool _isModified = false;
         private const string AppName = "Compiler";
+        private readonly InfoService _infoService;
 
-        public MainController(IMainView view, FileService model)
+        public MainController(IMainView view, FileService model, InfoService infoModel)
         {
             _view = view;
             _model = model;
+            _infoService = infoModel;
 
             _view.NewFileClicked += OnNewFile;
             _view.OpenFileClicked += OnOpenFile;
@@ -41,8 +45,8 @@ namespace Compiler.Controllers
             // Добавить проверку на открытый файл
             _view.RunClicked += (s, e) => { };
 
-            _view.HelpClicked += OnHelp;
-            _view.AboutClicked += OnAbout;
+            _view.HelpClicked += (s, e) => ShowInfoWindow("Справка", _infoService.GetHelpText());
+            _view.AboutClicked += (s, e) => ShowInfoWindow("О программе", _infoService.GetAboutText());
 
             _view.ContentChanged += OnContentChanged;
 
@@ -216,6 +220,34 @@ namespace Compiler.Controllers
             if (_view.IsEditorVisible)
             {
                 editorAction.Invoke();
+            }
+        }
+
+        private void ShowInfoWindow(string title, string markdownContent)
+        {
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+
+            string htmlBody = Markdown.ToHtml(markdownContent, pipeline);
+
+            string finalHtml = $@"
+            <html>
+            <head>
+                <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+                <style>
+                    body {{ font-family: 'Segoe UI', sans-serif; padding: 20px; line-height: 1.6; }}
+                    code {{ background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }}
+                    pre {{ background-color: #f4f4f4; padding: 10px; border: 1px solid #ddd; overflow: auto; }}
+                    h1, h2 {{ color: #2c3e50; border-bottom: 1px solid #eee; }}
+                </style>
+            </head>
+            <body>
+                {htmlBody}
+            </body>
+            </html>";
+
+            using (var infoForm = new InfoForm(title, finalHtml))
+            {
+                infoForm.ShowDialog();
             }
         }
     }

@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             menuStrip = new MenuStrip();
-            menu = new ToolStripMenuItem();
+            file = new ToolStripMenuItem();
             menuCreate = new ToolStripMenuItem();
             menuOpen = new ToolStripMenuItem();
             menuSave = new ToolStripMenuItem();
@@ -87,19 +87,19 @@
             // menuStrip
             // 
             menuStrip.BackColor = SystemColors.Control;
-            menuStrip.Items.AddRange(new ToolStripItem[] { menu, editing, text, run, reference });
+            menuStrip.Items.AddRange(new ToolStripItem[] { file, editing, text, run, reference });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
             menuStrip.Size = new Size(784, 24);
             menuStrip.TabIndex = 0;
             menuStrip.Text = "menuStrip1";
             // 
-            // menu
+            // file
             // 
-            menu.DropDownItems.AddRange(new ToolStripItem[] { menuCreate, menuOpen, menuSave, menuSaveAs, toolStripSeparator1, menuExit });
-            menu.Name = "menu";
-            menu.Size = new Size(53, 20);
-            menu.Text = "Меню";
+            file.DropDownItems.AddRange(new ToolStripItem[] { menuCreate, menuOpen, menuSave, menuSaveAs, toolStripSeparator1, menuExit });
+            file.Name = "file";
+            file.Size = new Size(48, 20);
+            file.Text = "Файл";
             // 
             // menuCreate
             // 
@@ -490,7 +490,7 @@
         #endregion
 
         private MenuStrip menuStrip;
-        private ToolStripMenuItem menu;
+        private ToolStripMenuItem file;
         private ToolStripMenuItem menuCreate;
         private ToolStripMenuItem menuOpen;
         private ToolStripMenuItem menuSave;

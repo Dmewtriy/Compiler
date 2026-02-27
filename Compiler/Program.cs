@@ -15,8 +15,9 @@ namespace Compiler
             Application.SetCompatibleTextRenderingDefault(false);
 
             FileService model = new FileService();
+            InfoService infoModel = new InfoService();
             MainForm view = new MainForm();
-            MainController controller = new MainController(view, model);
+            MainController controller = new MainController(view, model, infoModel);
 
             Application.Run(view);
         }
