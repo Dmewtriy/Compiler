@@ -21,14 +21,15 @@ namespace Compiler.Controllers
             _view.SaveAsClicked += (s, e) => TrySave(true);
             _view.ExitClicked += OnExitRequest;
 
-            _view.UndoClicked += (s, e) => _view.PerformUndo();
-            _view.RedoClicked += (s, e) => _view.PerformRedo();
-            _view.CopyClicked += (s, e) => _view.PerformCopy();
-            _view.CutClicked += (s, e) => _view.PerformCut();
-            _view.PasteClicked += (s, e) => _view.PerformPaste();
-            _view.DeleteClicked += (s, e) => _view.PerformDelete();
-            _view.SelectAllClicked += (s, e) => _view.PerformSelectAll();
+            _view.UndoClicked += (s, e) => ExecuteIfEditorActive(_view.PerformUndo);
+            _view.RedoClicked += (s, e) => ExecuteIfEditorActive(_view.PerformRedo);
+            _view.CopyClicked += (s, e) => ExecuteIfEditorActive(_view.PerformCopy);
+            _view.CutClicked += (s, e) => ExecuteIfEditorActive(_view.PerformCut);
+            _view.PasteClicked += (s, e) => ExecuteIfEditorActive(_view.PerformPaste);
+            _view.DeleteClicked += (s, e) => ExecuteIfEditorActive(_view.PerformDelete);
+            _view.SelectAllClicked += (s, e) => ExecuteIfEditorActive(_view.PerformSelectAll);
 
+            // Добавить проверку на открытый файл
             _view.TaskDescriptionClicked += (s, e) => { };
             _view.GrammarClicked += (s, e) => { };
             _view.GrammarClassificationClicked += (s, e) => { };
@@ -37,6 +38,7 @@ namespace Compiler.Controllers
             _view.ReferencesClicked += (s, e) => { };
             _view.SourceCodeClicked += (s, e) => { };
 
+            // Добавить проверку на открытый файл
             _view.RunClicked += (s, e) => { };
 
             _view.HelpClicked += OnHelp;
@@ -207,6 +209,14 @@ namespace Compiler.Controllers
         private void OnExitRequest(object sender, EventArgs e)
         {
             _view.CloseView();
+        }
+
+        private void ExecuteIfEditorActive(Action editorAction)
+        {
+            if (_view.IsEditorVisible)
+            {
+                editorAction.Invoke();
+            }
         }
     }
 
