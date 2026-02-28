@@ -55,6 +55,7 @@ dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=
 
 
 ## Описание интерфейса и функций
+<img width="786" height="493" alt="image" src="https://github.com/user-attachments/assets/ff0c8aa9-fe6e-4ab5-a6cf-43f1fbd56c04" />
 
 ### Главное меню и горячие клавиши
 
@@ -81,7 +82,10 @@ dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=
 
 * **Область редактирования:** Поле `RichTextBox`, которое становится видимым только после инициализации файла.
 * **Панель состояния:** Отображает путь к текущему открытому файлу.
-* **Индикатор изменений:** Звездочка `*` в заголовке окна рядом с именем файла появляется при внесении любых изменений.
+* **Индикатор изменений:** Звездочка `*` в заголовке окна рядом с именем файла появляется при внесении любых изменений.<br>
+<img width="786" height="493" alt="image" src="https://github.com/user-attachments/assets/6693a4c0-fc89-477a-bf9c-4d2c3ead0476" /><br>
+<img width="196" height="32" alt="image" src="https://github.com/user-attachments/assets/5423f3fc-40c1-4c14-9b18-bc6857450353" />   
+
 
 
 ## Ограничения
