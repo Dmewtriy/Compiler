@@ -16,8 +16,9 @@ namespace Compiler
 
             FileService model = new FileService();
             InfoService infoModel = new InfoService();
+            Scanner scanner = new Scanner();
             MainForm view = new MainForm();
-            MainController controller = new MainController(view, model, infoModel);
+            MainController controller = new MainController(view, model, infoModel, scanner);
 
             Application.Run(view);
         }
