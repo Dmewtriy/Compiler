@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             menuStrip = new MenuStrip();
             file = new ToolStripMenuItem();
             menuCreate = new ToolStripMenuItem();
@@ -74,6 +75,7 @@
             mainPanel = new SplitContainer();
             lblPlaceholder = new Label();
             richTextBoxEdit = new RichTextBox();
+            dgvScannerResults = new DataGridView();
             richTextBoxResult = new RichTextBox();
             menuStrip.SuspendLayout();
             tools.SuspendLayout();
@@ -82,6 +84,7 @@
             mainPanel.Panel1.SuspendLayout();
             mainPanel.Panel2.SuspendLayout();
             mainPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvScannerResults).BeginInit();
             SuspendLayout();
             // 
             // menuStrip
@@ -410,6 +413,7 @@
             // 
             // mainPanel.Panel2
             // 
+            mainPanel.Panel2.Controls.Add(dgvScannerResults);
             mainPanel.Panel2.Controls.Add(richTextBoxResult);
             mainPanel.Size = new Size(784, 376);
             mainPanel.SplitterDistance = 238;
@@ -429,6 +433,7 @@
             // 
             // richTextBoxEdit
             // 
+            richTextBoxEdit.AcceptsTab = true;
             richTextBoxEdit.AllowDrop = true;
             richTextBoxEdit.BorderStyle = BorderStyle.None;
             richTextBoxEdit.Dock = DockStyle.Fill;
@@ -441,6 +446,34 @@
             richTextBoxEdit.Text = "";
             richTextBoxEdit.WordWrap = false;
             richTextBoxEdit.KeyDown += OnKeyDown;
+            // 
+            // dgvScannerResults
+            // 
+            dgvScannerResults.AllowUserToAddRows = false;
+            dgvScannerResults.AllowUserToDeleteRows = false;
+            dgvScannerResults.AllowUserToResizeColumns = false;
+            dgvScannerResults.AllowUserToResizeRows = false;
+            dgvScannerResults.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvScannerResults.BackgroundColor = SystemColors.Window;
+            dgvScannerResults.BorderStyle = BorderStyle.None;
+            dgvScannerResults.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            dgvScannerResults.DefaultCellStyle = dataGridViewCellStyle1;
+            dgvScannerResults.Dock = DockStyle.Fill;
+            dgvScannerResults.Location = new Point(0, 0);
+            dgvScannerResults.MultiSelect = false;
+            dgvScannerResults.Name = "dgvScannerResults";
+            dgvScannerResults.ReadOnly = true;
+            dgvScannerResults.RowHeadersVisible = false;
+            dgvScannerResults.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvScannerResults.Size = new Size(780, 130);
+            dgvScannerResults.TabIndex = 2;
             // 
             // richTextBoxResult
             // 
@@ -483,6 +516,7 @@
             mainPanel.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)mainPanel).EndInit();
             mainPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvScannerResults).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -535,5 +569,6 @@
         private Label lblPlaceholder;
         private StatusStrip statusStrip;
         private ToolStripStatusLabel FilePathStatusLabel;
+        private DataGridView dgvScannerResults;
     }
 }
