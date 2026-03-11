@@ -63,6 +63,8 @@ namespace Compiler.Views.Interfaces
         void ShowTokens(List<Token> tokens);
         void SelectTextInEditor(int start, int length);
 
+        void SetParserResult(string message, bool isSuccess);
+
         void CloseView();
     }
 }

@@ -194,9 +194,9 @@ namespace Compiler
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter) 
-            { 
-                richTextBoxEdit.SelectionFont = richTextBoxEdit.SelectionFont; 
+            if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter)
+            {
+                richTextBoxEdit.SelectionFont = richTextBoxEdit.SelectionFont;
             }
         }
 
@@ -265,5 +265,18 @@ namespace Compiler
             richTextBoxEdit.Focus();
             richTextBoxEdit.Select(start, length);
         }
+
+        public void SetParserResult(string message, bool isSuccess)
+        {
+            if (!isSuccess)
+            {
+                MessageBox.Show(message, "Ошибка синтаксиса", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show(message, "Ошибок не обнаружено", MessageBoxButtons.OK, MessageBoxIcon.None);
+            }
+        }
+
     }
 }

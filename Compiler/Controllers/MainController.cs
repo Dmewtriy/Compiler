@@ -13,13 +13,15 @@ namespace Compiler.Controllers
         private const string AppName = "Compiler";
         private readonly InfoService _infoService;
         private readonly Scanner _scanner;
+        private readonly ParserService _parserService;
 
-        public MainController(IMainView view, FileService model, InfoService infoModel, Scanner scanner)
+        public MainController(IMainView view, FileService model, InfoService infoModel, Scanner scanner, ParserService parserService)
         {
             _view = view;
             _model = model;
             _infoService = infoModel;
             _scanner = scanner;
+            _parserService = parserService;
 
             _view.NewFileClicked += OnNewFile;
             _view.OpenFileClicked += OnOpenFile;
@@ -56,7 +58,6 @@ namespace Compiler.Controllers
             _view.ViewClosing += OnViewClosing;
 
             UpdateTitle();
-
         }
 
         private void UpdateTitle()
@@ -265,6 +266,15 @@ namespace Compiler.Controllers
             var tokens = _scanner.Analyze(_view.EditorContent);
 
             _view.ShowTokens(tokens);
+            OnParseRequested();
+        }
+
+        private void OnParseRequested()
+        {
+            string code = _view.EditorContent;
+
+            var result = _parserService.Parse(code);
+            _view.SetParserResult(result.Message, result.IsSuccess);
         }
     }
 
