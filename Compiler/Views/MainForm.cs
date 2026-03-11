@@ -1,3 +1,4 @@
+using Compiler.Models;
 using Compiler.Views.Interfaces;
 
 namespace Compiler
@@ -7,6 +8,7 @@ namespace Compiler
         public MainForm()
         {
             InitializeComponent();
+            CreateColumns();
             BindEvents();
         }
 
@@ -65,6 +67,8 @@ namespace Compiler
 
         public event EventHandler ContentChanged;
 
+        public event Action<int, int> NavigateToErrorRequested;
+
         public event FormClosingEventHandler ViewClosing;
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -113,6 +117,7 @@ namespace Compiler
             menuSourceCode.Click += (s, e) => SourceCodeClicked?.Invoke(this, EventArgs.Empty);
 
             run.Click += (s, e) => RunClicked?.Invoke(this, EventArgs.Empty);
+            toolRun.Click += (s, e) => RunClicked?.Invoke(this, EventArgs.Empty);
 
             menuHelp.Click += (s, e) => HelpClicked?.Invoke(this, EventArgs.Empty);
             toolHelp.Click += (s, e) => HelpClicked?.Invoke(this, EventArgs.Empty);
@@ -121,6 +126,8 @@ namespace Compiler
             toolAbout.Click += (s, e) => AboutClicked?.Invoke(this, EventArgs.Empty);
 
             richTextBoxEdit.TextChanged += (s, e) => ContentChanged?.Invoke(this, EventArgs.Empty);
+
+            dgvScannerResults.CellClick += dgvScannerResults_CellClick;
             this.FormClosing += (s, e) => ViewClosing?.Invoke(this, e);
 
         }
@@ -187,10 +194,89 @@ namespace Compiler
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter) 
-            { 
-                richTextBoxEdit.SelectionFont = richTextBoxEdit.SelectionFont; 
+            if (e.KeyCode == Keys.Space || e.KeyCode == Keys.Enter)
+            {
+                richTextBoxEdit.SelectionFont = richTextBoxEdit.SelectionFont;
             }
         }
+
+        private void CreateColumns()
+        {
+            dgvScannerResults.Columns.Clear();
+
+            dgvScannerResults.Columns.Add("colCode", "Код");
+            dgvScannerResults.Columns["colCode"].FillWeight = 30;
+
+            dgvScannerResults.Columns.Add("colType", "Тип лексемы");
+            dgvScannerResults.Columns["colType"].FillWeight = 100;
+
+            dgvScannerResults.Columns.Add("colLexeme", "Лексема");
+            dgvScannerResults.Columns["colLexeme"].FillWeight = 100;
+
+            dgvScannerResults.Columns.Add("colPos", "Местоположение");
+            dgvScannerResults.Columns["colPos"].FillWeight = 80;
+
+            dgvScannerResults.Columns.Add("colAbsIndex", "Index");
+            dgvScannerResults.Columns["colAbsIndex"].Visible = false;
+
+            foreach (DataGridViewColumn column in dgvScannerResults.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+        }
+
+        public void ClearResults()
+        {
+            dgvScannerResults.Rows.Clear();
+        }
+
+        public void ShowTokens(List<Token> tokens)
+        {
+            ClearResults();
+            foreach (var token in tokens)
+            {
+                string pos = $"строка {token.Line}, {token.StartPos}-{token.EndPos}";
+                dgvScannerResults.Rows.Add(token.NumericCode, token.TypeName, token.Lexeme, pos, token.AbsoluteIndex);
+
+                if (token.Type == TokenType.INVALID_TOKEN)
+                {
+                    dgvScannerResults.Rows[dgvScannerResults.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightPink;
+                }
+            }
+        }
+
+        private void dgvScannerResults_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                var row = dgvScannerResults.Rows[e.RowIndex];
+
+                if ((int)row.Cells[0].Value == (int)TokenCodes.ERROR)
+                {
+                    int absIndex = (int)row.Cells[4].Value;
+                    int length = row.Cells[2].Value.ToString().Length;
+                    NavigateToErrorRequested?.Invoke(absIndex, length);
+                }
+            }
+        }
+
+        public void SelectTextInEditor(int start, int length)
+        {
+            richTextBoxEdit.Focus();
+            richTextBoxEdit.Select(start, length);
+        }
+
+        public void SetParserResult(string message, bool isSuccess)
+        {
+            if (!isSuccess)
+            {
+                MessageBox.Show(message, "Ошибка синтаксиса", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show(message, "Ошибок не обнаружено", MessageBoxButtons.OK, MessageBoxIcon.None);
+            }
+        }
+
     }
 }

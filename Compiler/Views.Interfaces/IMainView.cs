@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Compiler.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,6 +42,7 @@ namespace Compiler.Views.Interfaces
         event EventHandler AboutClicked;
 
         event EventHandler ContentChanged;
+        event Action<int, int> NavigateToErrorRequested;
 
         event FormClosingEventHandler ViewClosing;
 
@@ -57,6 +59,11 @@ namespace Compiler.Views.Interfaces
         void PerformSelectAll();
 
         DialogResult ConfirmSaveBeforeAction();
+
+        void ShowTokens(List<Token> tokens);
+        void SelectTextInEditor(int start, int length);
+
+        void SetParserResult(string message, bool isSuccess);
 
         void CloseView();
     }

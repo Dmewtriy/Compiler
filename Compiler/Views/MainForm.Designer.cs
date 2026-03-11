@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             menuStrip = new MenuStrip();
             file = new ToolStripMenuItem();
             menuCreate = new ToolStripMenuItem();
@@ -72,9 +73,10 @@
             statusStrip = new StatusStrip();
             FilePathStatusLabel = new ToolStripStatusLabel();
             mainPanel = new SplitContainer();
-            lblPlaceholder = new Label();
             richTextBoxEdit = new RichTextBox();
+            dgvScannerResults = new DataGridView();
             richTextBoxResult = new RichTextBox();
+            lblPlaceholder = new Label();
             menuStrip.SuspendLayout();
             tools.SuspendLayout();
             statusStrip.SuspendLayout();
@@ -82,6 +84,7 @@
             mainPanel.Panel1.SuspendLayout();
             mainPanel.Panel2.SuspendLayout();
             mainPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvScannerResults).BeginInit();
             SuspendLayout();
             // 
             // menuStrip
@@ -398,7 +401,6 @@
             // 
             mainPanel.BorderStyle = BorderStyle.Fixed3D;
             mainPanel.Dock = DockStyle.Fill;
-            mainPanel.FixedPanel = FixedPanel.Panel2;
             mainPanel.Location = new Point(0, 63);
             mainPanel.Name = "mainPanel";
             mainPanel.Orientation = Orientation.Horizontal;
@@ -410,25 +412,15 @@
             // 
             // mainPanel.Panel2
             // 
+            mainPanel.Panel2.Controls.Add(dgvScannerResults);
             mainPanel.Panel2.Controls.Add(richTextBoxResult);
             mainPanel.Size = new Size(784, 376);
             mainPanel.SplitterDistance = 238;
             mainPanel.TabIndex = 2;
             // 
-            // lblPlaceholder
-            // 
-            lblPlaceholder.AutoSize = true;
-            lblPlaceholder.Dock = DockStyle.Fill;
-            lblPlaceholder.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            lblPlaceholder.Location = new Point(0, 0);
-            lblPlaceholder.Name = "lblPlaceholder";
-            lblPlaceholder.Size = new Size(464, 25);
-            lblPlaceholder.TabIndex = 2;
-            lblPlaceholder.Text = "Создайте или откройте файл, чтобы начать работу";
-            lblPlaceholder.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // richTextBoxEdit
             // 
+            richTextBoxEdit.AcceptsTab = true;
             richTextBoxEdit.AllowDrop = true;
             richTextBoxEdit.BorderStyle = BorderStyle.None;
             richTextBoxEdit.Dock = DockStyle.Fill;
@@ -441,6 +433,34 @@
             richTextBoxEdit.Text = "";
             richTextBoxEdit.WordWrap = false;
             richTextBoxEdit.KeyDown += OnKeyDown;
+            // 
+            // dgvScannerResults
+            // 
+            dgvScannerResults.AllowUserToAddRows = false;
+            dgvScannerResults.AllowUserToDeleteRows = false;
+            dgvScannerResults.AllowUserToResizeColumns = false;
+            dgvScannerResults.AllowUserToResizeRows = false;
+            dgvScannerResults.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvScannerResults.BackgroundColor = SystemColors.Window;
+            dgvScannerResults.BorderStyle = BorderStyle.None;
+            dgvScannerResults.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvScannerResults.DefaultCellStyle = dataGridViewCellStyle2;
+            dgvScannerResults.Dock = DockStyle.Fill;
+            dgvScannerResults.Location = new Point(0, 0);
+            dgvScannerResults.MultiSelect = false;
+            dgvScannerResults.Name = "dgvScannerResults";
+            dgvScannerResults.ReadOnly = true;
+            dgvScannerResults.RowHeadersVisible = false;
+            dgvScannerResults.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvScannerResults.Size = new Size(780, 130);
+            dgvScannerResults.TabIndex = 2;
             // 
             // richTextBoxResult
             // 
@@ -457,6 +477,17 @@
             richTextBoxResult.TabIndex = 1;
             richTextBoxResult.Text = ">";
             richTextBoxResult.WordWrap = false;
+            // 
+            // lblPlaceholder
+            // 
+            lblPlaceholder.Dock = DockStyle.Fill;
+            lblPlaceholder.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            lblPlaceholder.Location = new Point(0, 0);
+            lblPlaceholder.Name = "lblPlaceholder";
+            lblPlaceholder.Size = new Size(780, 234);
+            lblPlaceholder.TabIndex = 3;
+            lblPlaceholder.Text = "Создайте или откройте файл, чтобы начать работу";
+            lblPlaceholder.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
@@ -479,10 +510,10 @@
             statusStrip.ResumeLayout(false);
             statusStrip.PerformLayout();
             mainPanel.Panel1.ResumeLayout(false);
-            mainPanel.Panel1.PerformLayout();
             mainPanel.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)mainPanel).EndInit();
             mainPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvScannerResults).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -532,8 +563,9 @@
         private SplitContainer mainPanel;
         private RichTextBox richTextBoxEdit;
         private RichTextBox richTextBoxResult;
-        private Label lblPlaceholder;
         private StatusStrip statusStrip;
         private ToolStripStatusLabel FilePathStatusLabel;
+        private DataGridView dgvScannerResults;
+        private Label lblPlaceholder;
     }
 }

@@ -12,12 +12,16 @@ namespace Compiler.Controllers
         private bool _isModified = false;
         private const string AppName = "Compiler";
         private readonly InfoService _infoService;
+        private readonly Scanner _scanner;
+        private readonly ParserService _parserService;
 
-        public MainController(IMainView view, FileService model, InfoService infoModel)
+        public MainController(IMainView view, FileService model, InfoService infoModel, Scanner scanner, ParserService parserService)
         {
             _view = view;
             _model = model;
             _infoService = infoModel;
+            _scanner = scanner;
+            _parserService = parserService;
 
             _view.NewFileClicked += OnNewFile;
             _view.OpenFileClicked += OnOpenFile;
@@ -42,18 +46,18 @@ namespace Compiler.Controllers
             _view.ReferencesClicked += (s, e) => { };
             _view.SourceCodeClicked += (s, e) => { };
 
-            // Добавить проверку на открытый файл
-            _view.RunClicked += (s, e) => { };
+            _view.RunClicked += OnRunClicked;
 
             _view.HelpClicked += (s, e) => ShowInfoWindow("Справка", _infoService.GetHelpText());
             _view.AboutClicked += (s, e) => ShowInfoWindow("О программе", _infoService.GetAboutText());
 
             _view.ContentChanged += OnContentChanged;
 
+            _view.NavigateToErrorRequested += (start, len) => _view.SelectTextInEditor(start, len);
+
             _view.ViewClosing += OnViewClosing;
 
             UpdateTitle();
-
         }
 
         private void UpdateTitle()
@@ -249,6 +253,28 @@ namespace Compiler.Controllers
             {
                 infoForm.ShowDialog();
             }
+        }
+
+        private void OnRunClicked(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(_view.EditorContent))
+            {
+                _view.ShowMessage("Внимание", "Редактор пуст. Нечего анализировать.");
+                return;
+            }
+
+            var tokens = _scanner.Analyze(_view.EditorContent);
+
+            _view.ShowTokens(tokens);
+            OnParseRequested();
+        }
+
+        private void OnParseRequested()
+        {
+            string code = _view.EditorContent;
+
+            var result = _parserService.Parse(code);
+            _view.SetParserResult(result.Message, result.IsSuccess);
         }
     }
 
