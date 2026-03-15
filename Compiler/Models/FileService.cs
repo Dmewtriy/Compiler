@@ -8,7 +8,7 @@ namespace Compiler.Models
 {
     public class FileService
     {
-        public string CurrentFilePath { get; private set; }
+        public string? CurrentFilePath { get; private set; }
 
         public string OpenFile(string filePath)
         {

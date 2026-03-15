@@ -47,8 +47,8 @@ namespace Compiler.Views.Interfaces
         event FormClosingEventHandler ViewClosing;
 
         void ShowMessage(string title, string message);
-        string ShowOpenFileDialog();
-        string ShowSaveFileDialog();
+        string? ShowOpenFileDialog();
+        string? ShowSaveFileDialog();
 
         void PerformUndo();
         void PerformRedo();

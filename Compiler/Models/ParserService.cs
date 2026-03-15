@@ -14,17 +14,17 @@ namespace Compiler.Models
             [MarshalAs(UnmanagedType.LPUTF8Str)] string sourceCode,
             ErrorCallbackDelegate errorCb);
 
-        public (bool IsSuccess, string Message) Parse(string sourceCode)
+        public static (bool IsSuccess, string Message) Parse(string sourceCode)
         {
             var errorBuilder = new StringBuilder();
 
-            ErrorCallbackDelegate callback = (line, msg) =>
+            void Callback(int line, string msg)
             {
                 errorBuilder.AppendLine($"Строка {line}: {msg}");
-            };
+            }
 
-            int result = ParseSourceCode(sourceCode, callback);
-            string errors = errorBuilder.ToString().Trim();
+            var result = ParseSourceCode(sourceCode, Callback);
+            var errors = errorBuilder.ToString().Trim();
 
             if (result == 0 && string.IsNullOrEmpty(errors))
             {

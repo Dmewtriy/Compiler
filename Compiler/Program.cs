@@ -9,17 +9,16 @@ namespace Compiler
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            FileService model = new FileService();
-            InfoService infoModel = new InfoService();
-            Scanner scanner = new Scanner();
-            MainForm view = new MainForm();
-            ParserService parserService = new ParserService();
-            MainController controller = new MainController(view, model, infoModel, scanner, parserService);
+            var model = new FileService();
+            var infoModel = new InfoService();
+            var scanner = new Scanner();
+            var view = new MainForm();
+            _ = new MainController(view, model, infoModel, scanner);
 
             Application.Run(view);
         }

@@ -132,25 +132,21 @@ namespace Compiler
 
         }
 
-        public string ShowOpenFileDialog()
+        public string? ShowOpenFileDialog()
         {
-            using (var ofd = new OpenFileDialog { Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*" })
-            {
-                return ofd.ShowDialog() == DialogResult.OK ? ofd.FileName : null;
-            }
+            using var ofd = new OpenFileDialog { Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*" };
+            return ofd.ShowDialog() == DialogResult.OK ? ofd.FileName : null;
         }
 
-        public string ShowSaveFileDialog()
+        public string? ShowSaveFileDialog()
         {
-            using (var sfd = new SaveFileDialog { Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*" })
-            {
-                return sfd.ShowDialog() == DialogResult.OK ? sfd.FileName : null;
-            }
+            using var sfd = new SaveFileDialog { Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*" };
+            return sfd.ShowDialog() == DialogResult.OK ? sfd.FileName : null;
         }
 
         public void ShowMessage(string title, string message)
         {
-            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CenteredMessageBox.Show(this, message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void PerformUndo()
@@ -186,7 +182,7 @@ namespace Compiler
 
         public DialogResult ConfirmSaveBeforeAction()
         {
-            return MessageBox.Show("В файле есть несохраненные изменения. Сохранить их?",
+            return CenteredMessageBox.Show(this, "В файле есть несохраненные изменения. Сохранить их?",
                 "Внимание", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
         }
 
@@ -240,24 +236,29 @@ namespace Compiler
 
                 if (token.Type == TokenType.INVALID_TOKEN)
                 {
-                    dgvScannerResults.Rows[dgvScannerResults.Rows.Count - 1].DefaultCellStyle.BackColor = Color.LightPink;
+                    dgvScannerResults.Rows[^1].DefaultCellStyle.BackColor = Color.LightPink;
                 }
             }
         }
 
         private void dgvScannerResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex < 0)
             {
-                var row = dgvScannerResults.Rows[e.RowIndex];
-
-                if ((int)row.Cells[0].Value == (int)TokenCodes.ERROR)
-                {
-                    int absIndex = (int)row.Cells[4].Value;
-                    int length = row.Cells[2].Value.ToString().Length;
-                    NavigateToErrorRequested?.Invoke(absIndex, length);
-                }
+                return;
             }
+
+            var row = dgvScannerResults.Rows[e.RowIndex];
+
+            if ((int)row.Cells[0].Value != (int)TokenCodes.ERROR)
+            {
+                return;
+            }
+
+            var absIndex = (int)row.Cells[4].Value;
+            var length = row.Cells[2].Value?.ToString()?.Length ?? 0;
+
+            NavigateToErrorRequested?.Invoke(absIndex, length);
         }
 
         public void SelectTextInEditor(int start, int length)
@@ -270,11 +271,11 @@ namespace Compiler
         {
             if (!isSuccess)
             {
-                MessageBox.Show(message, "Ошибка синтаксиса", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CenteredMessageBox.Show(this, message, "Ошибка синтаксиса", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show(message, "Ошибок не обнаружено", MessageBoxButtons.OK, MessageBoxIcon.None);
+                CenteredMessageBox.Show(this, message, "Ошибок не обнаружено", MessageBoxButtons.OK, MessageBoxIcon.None);
             }
         }
 

@@ -9,19 +9,16 @@ namespace Compiler.Controllers
     {
         private readonly IMainView _view;
         private readonly FileService _model;
-        private bool _isModified = false;
+        private bool _isModified;
         private const string AppName = "Compiler";
-        private readonly InfoService _infoService;
         private readonly Scanner _scanner;
-        private readonly ParserService _parserService;
 
-        public MainController(IMainView view, FileService model, InfoService infoModel, Scanner scanner, ParserService parserService)
+        public MainController(IMainView view, FileService model, InfoService infoServ, Scanner scanner)
         {
             _view = view;
             _model = model;
-            _infoService = infoModel;
+            var infoService = infoServ;
             _scanner = scanner;
-            _parserService = parserService;
 
             _view.NewFileClicked += OnNewFile;
             _view.OpenFileClicked += OnOpenFile;
@@ -48,8 +45,8 @@ namespace Compiler.Controllers
 
             _view.RunClicked += OnRunClicked;
 
-            _view.HelpClicked += (s, e) => ShowInfoWindow("Справка", _infoService.GetHelpText());
-            _view.AboutClicked += (s, e) => ShowInfoWindow("О программе", _infoService.GetAboutText());
+            _view.HelpClicked += (s, e) => ShowInfoWindow("Справка", infoService.GetHelpText());
+            _view.AboutClicked += (s, e) => ShowInfoWindow("О программе", infoService.GetAboutText());
 
             _view.ContentChanged += OnContentChanged;
 
@@ -62,11 +59,11 @@ namespace Compiler.Controllers
 
         private void UpdateTitle()
         {
-            string fileName = string.IsNullOrEmpty(_model.CurrentFilePath)
+            var fileName = string.IsNullOrEmpty(_model.CurrentFilePath)
                 ? "Новый файл"
                 : Path.GetFileName(_model.CurrentFilePath);
 
-            string modifiedMark = _isModified ? "*" : "";
+            var modifiedMark = _isModified ? "*" : "";
 
             _view.WindowTitle = $"{AppName} - [{fileName}{modifiedMark}]";
             _view.StatusText = _model.CurrentFilePath ?? "Путь не определен";
@@ -74,23 +71,27 @@ namespace Compiler.Controllers
 
         private void OnContentChanged(object sender, EventArgs e)
         {
-            if (!_isModified)
+            if (_isModified)
             {
-                _isModified = true;
-                UpdateTitle();
+                return;
             }
+
+            _isModified = true;
+            UpdateTitle();
         }
 
         private void OnNewFile(object sender, EventArgs e)
         {
-            if (EnsureChangesSaved())
+            if (!EnsureChangesSaved())
             {
-                _model.ClearCurrentFile();
-                _view.EditorContent = string.Empty;
-                _view.IsEditorVisible = true;
-                _isModified = false;
-                UpdateTitle();
+                return;
             }
+
+            _model.ClearCurrentFile();
+            _view.EditorContent = string.Empty;
+            _view.IsEditorVisible = true;
+            _isModified = false;
+            UpdateTitle();
         }
 
         private void OnOpenFile(object sender, EventArgs e)
@@ -102,16 +103,19 @@ namespace Compiler.Controllers
 
             try
             {
-                string filePath = _view.ShowOpenFileDialog();
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    string content = _model.OpenFile(filePath);
-                    _view.EditorContent = content;
+                var filePath = _view.ShowOpenFileDialog();
 
-                    _view.IsEditorVisible = true;
-                    _isModified = false;
-                    UpdateTitle();
+                if (string.IsNullOrEmpty(filePath))
+                {
+                    return;
                 }
+
+                var content = _model.OpenFile(filePath);
+                _view.EditorContent = content;
+
+                _view.IsEditorVisible = true;
+                _isModified = false;
+                UpdateTitle();
             }
             catch (Exception ex)
             {
@@ -124,11 +128,9 @@ namespace Compiler.Controllers
             if (isSaveAs || string.IsNullOrEmpty(_model.CurrentFilePath))
             {
                 return PerformSaveAs();
-            }
-            else
-            {
-                return PerformSave();
-            }
+            } 
+            return PerformSave();
+
         }
 
         private bool PerformSave()
@@ -138,14 +140,9 @@ namespace Compiler.Controllers
 
         private bool PerformSaveAs()
         {
-            string newPath = _view.ShowSaveFileDialog();
+            var newPath = _view.ShowSaveFileDialog();
 
-            if (!string.IsNullOrEmpty(newPath))
-            {
-                return ExecuteFileWrite(newPath);
-            }
-
-            return false;
+            return !string.IsNullOrEmpty(newPath) && ExecuteFileWrite(newPath);
         }
 
         private bool ExecuteFileWrite(string path)
@@ -165,16 +162,6 @@ namespace Compiler.Controllers
             }
         }
 
-        private void OnHelp(object sender, EventArgs e)
-        {
-            _view.ShowMessage("Справка", "Справка по компилятору.\n\nИспользуйте редактор для написания кода.");
-        }
-
-        private void OnAbout(object sender, EventArgs e)
-        {
-            _view.ShowMessage("О программе", "Compiler GUI v1.0\nРазработано с использованием паттерна MVC на WinForms.");
-        }
-
         private bool EnsureChangesSaved()
         {
             if (!_isModified) return true;
@@ -191,26 +178,36 @@ namespace Compiler.Controllers
 
         private void OnViewClosing(object sender, FormClosingEventArgs e)
         {
-            if (_isModified)
+            if (!_isModified)
             {
-                DialogResult result = _view.ConfirmSaveBeforeAction();
+                return;
+            }
+            var result = _view.ConfirmSaveBeforeAction();
 
-                switch (result)
-                {
-                    case DialogResult.Yes:
-                        if (!TrySave(false))
-                        {
-                            e.Cancel = true;
-                        }
-                        break;
-
-                    case DialogResult.No:
-                        break;
-
-                    case DialogResult.Cancel:
+            switch (result)
+            {
+                case DialogResult.Yes:
+                    if (!TrySave(false))
+                    {
                         e.Cancel = true;
-                        break;
-                }
+                    }
+                    break;
+
+                case DialogResult.No:
+                    break;
+
+                case DialogResult.Cancel:
+                    e.Cancel = true;
+                    break;
+                case DialogResult.Abort:
+                case DialogResult.Retry:
+                case DialogResult.None:
+                case DialogResult.Ignore:
+                case DialogResult.Continue:
+                case DialogResult.OK:
+                case DialogResult.TryAgain:
+                default:
+                    break;
             }
         }
 
@@ -227,13 +224,13 @@ namespace Compiler.Controllers
             }
         }
 
-        private void ShowInfoWindow(string title, string markdownContent)
+        private static void ShowInfoWindow(string title, string markdownContent)
         {
             var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
 
-            string htmlBody = Markdown.ToHtml(markdownContent, pipeline);
+            var htmlBody = Markdown.ToHtml(markdownContent, pipeline);
 
-            string finalHtml = $@"
+            var finalHtml = $@"
             <html>
             <head>
                 <meta http-equiv='X-UA-Compatible' content='IE=edge' />
@@ -249,10 +246,8 @@ namespace Compiler.Controllers
             </body>
             </html>";
 
-            using (var infoForm = new InfoForm(title, finalHtml))
-            {
-                infoForm.ShowDialog();
-            }
+            using var infoForm = new InfoForm(title, finalHtml);
+            infoForm.ShowDialog();
         }
 
         private void OnRunClicked(object sender, EventArgs e)
@@ -271,9 +266,9 @@ namespace Compiler.Controllers
 
         private void OnParseRequested()
         {
-            string code = _view.EditorContent;
+            var code = _view.EditorContent;
 
-            var result = _parserService.Parse(code);
+            var result = ParserService.Parse(code);
             _view.SetParserResult(result.Message, result.IsSuccess);
         }
     }
