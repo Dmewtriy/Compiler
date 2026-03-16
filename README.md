@@ -73,3 +73,75 @@ code 1: для всех остальных пользовательских им
 <img width="800" height="400" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/недопустимый символ.png" /><br>
 Многострочный пример<br>
 <img width="800" height="400" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/многострочный пример.png" /><br>
+
+---
+## Грамматики
+1. Разработанная мной <br>
+G[Z] = {Vt, Vn, Z, P}<br>
+Vt = {enum, case, {, }, ;, space}<br>
+Vn = {\<Z>, \<id>, <тело enum>, <кейсы>, <кейс>}<br>
+P = {<br>
+     \<Z> -> enum \<id> {<тело enum>} ; <br>
+     \<id> -> (\_|Б)(\_|Б|Ц)*, где Б - латинские буквы, Ц - цифры от 0 до 9<br>
+     <тело enum> -> <кейсы> | &epsilon;<br>
+     <кейсы> -> <кейсы><кейс> | <кейс> <br>
+     <кейс> -> case \<id> ;<br>
+}<br>
+<br>
+2. Переписанная под Flex&Bison <br>
+lexer:
+
+```c
+[ \t\r\n]+                {}
+"enum"                  { return ENUM; }
+"case"                  { return CASE; }
+"{"                     { return '{'; }
+"}"                     { return '}'; }
+";"                     { return ';'; }
+[a-zA-Z_][a-zA-Z0-9_]*  { return ID; }
+.                       { return yytext[0]; }
+```
+parser:
+
+```c
+program: 
+    | program enum_decl ;
+
+enum_decl: 
+    | ENUM ID '{' case_list '}' ';'
+
+case_list: 
+    | case_list case_decl ;
+
+case_decl: 
+    CASE ID ';'
+```
+В грамматике под Flex&Bison специально вырезаны фрагменты нейтрализации ошибок с целью компактного изложения
+
+### Классификация грамматики
+Данная грамматика классифицируется как Контекстно-свободная грамматика (Тип 2) по иерархии Хомского. Левая часть каждого правила содержит ровно один нетерминал, а правая — любую комбинацию терминалов и нетерминалов.
+
+### Примеры допустимых строк
+Стандартный вариант:
+` enum Status { case Active; case Closed; }; `
+
+Пустой enum:
+` enum a { }; `
+
+Многострочный с подчеркиваниями:
+
+```php
+enum User_Role {
+    case Admin_User;
+    case Guest;
+};
+```
+<br>
+
+### Тестовые примеры
+<br>Строка с ошибкой<br>
+<img width="800" height="250" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/pars1.png" /><br>
+<br>Пустое тело enum<br>
+<img width="800" height="250" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/pars2.png" /><br>
+<br>Многострочный пример<br>
+<img width="800" height="250" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/pars3.png" /><br>
