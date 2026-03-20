@@ -14,7 +14,8 @@ namespace Compiler.Models
         DELIMITER = 3,
         END_OPERATOR = 4,
         WHITESPACE = 5,
-        INVALID_TOKEN = 6
+        INVALID_TOKEN = 6,
+        EOF = 7
     }
 
     public enum TokenCodes
@@ -26,7 +27,8 @@ namespace Compiler.Models
         LBRACE = 5,
         RBRACE = 6,
         SEMICOLON = 7,
-        ERROR = 8
+        ERROR = 8,
+        EOF = 9
     }
 
     public class Token
@@ -48,6 +50,7 @@ namespace Compiler.Models
             TokenType.END_OPERATOR => "Конец оператора",
             TokenType.INVALID_TOKEN => "Недопустимый символ",
             TokenType.WHITESPACE => "Пробел",
+            TokenType.EOF => "Конец файла",
             _ => "Неизвестно"
         };
     }
