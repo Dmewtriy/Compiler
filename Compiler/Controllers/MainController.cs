@@ -92,6 +92,7 @@ namespace Compiler.Controllers
             _view.IsEditorVisible = true;
             _isModified = false;
             UpdateTitle();
+            _view.SelectTextInEditor(0, 0);
         }
 
         private void OnOpenFile(object sender, EventArgs e)
@@ -116,6 +117,7 @@ namespace Compiler.Controllers
                 _view.IsEditorVisible = true;
                 _isModified = false;
                 UpdateTitle();
+                _view.SelectTextInEditor(_view.EditorContent.Length, 0);
             }
             catch (Exception ex)
             {
