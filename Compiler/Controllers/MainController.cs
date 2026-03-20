@@ -12,13 +12,15 @@ namespace Compiler.Controllers
         private bool _isModified;
         private const string AppName = "Compiler";
         private readonly Scanner _scanner;
+        private readonly Parser _parser;
 
-        public MainController(IMainView view, FileService model, InfoService infoServ, Scanner scanner)
+        public MainController(IMainView view, FileService model, InfoService infoServ, Scanner scanner, Parser parser)
         {
             _view = view;
             _model = model;
             var infoService = infoServ;
             _scanner = scanner;
+            _parser = parser;
 
             _view.NewFileClicked += OnNewFile;
             _view.OpenFileClicked += OnOpenFile;
@@ -231,24 +233,7 @@ namespace Compiler.Controllers
             var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
 
             var htmlBody = Markdown.ToHtml(markdownContent, pipeline);
-
-            var finalHtml = $@"
-            <html>
-            <head>
-                <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-                <style>
-                    body {{ font-family: 'Segoe UI', sans-serif; padding: 20px; line-height: 1.6; }}
-                    code {{ background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }}
-                    pre {{ background-color: #f4f4f4; padding: 10px; border: 1px solid #ddd; overflow: auto; }}
-                    h1, h2 {{ color: #2c3e50; border-bottom: 1px solid #eee; }}
-                </style>
-            </head>
-            <body>
-                {htmlBody}
-            </body>
-            </html>";
-
-            using var infoForm = new InfoForm(title, finalHtml);
+            using var infoForm = new InfoForm(title, htmlBody);
             infoForm.ShowDialog();
         }
 
@@ -262,16 +247,26 @@ namespace Compiler.Controllers
 
             var tokens = _scanner.Analyze(_view.EditorContent);
 
-            _view.ShowTokens(tokens);
-            OnParseRequested();
+            // _view.ShowTokens(tokens); старый фрагмент из 2 лабы
+            OnParseRequested(tokens);
         }
 
-        private void OnParseRequested()
+        private void OnParseRequested(List<Token> tokens)
         {
-            var code = _view.EditorContent;
 
-            var result = ParserService.Parse(code);
-            _view.SetParserResult(result.Message, result.IsSuccess);
+            _parser.Parse(tokens);
+            var errors = _parser.Errors;
+
+            if (errors.Count == 0)
+            {
+                _view.ShowMessage("Ошибок не обнаружено", "Синтаксический анализ пройден успешно.");
+                _view.DisplayErrors(new List<SyntaxError>());
+            }
+            else
+            {
+                _view.ShowMessage("Ошибки!", $"Найдено ошибок: {errors.Count}");
+                _view.DisplayErrors(errors);
+            }
         }
     }
 

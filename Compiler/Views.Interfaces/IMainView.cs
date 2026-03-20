@@ -65,6 +65,8 @@ namespace Compiler.Views.Interfaces
 
         void SetParserResult(string message, bool isSuccess);
 
+        void DisplayErrors(List<SyntaxError> errors);
+
         void CloseView();
     }
 }

@@ -1,4 +1,4 @@
-    using Compiler.Controllers;
+using Compiler.Controllers;
 using Compiler.Models;
 
 namespace Compiler
@@ -18,7 +18,8 @@ namespace Compiler
             var infoModel = new InfoService();
             var scanner = new Scanner();
             var view = new MainForm();
-            _ = new MainController(view, model, infoModel, scanner);
+            var parser = new Parser();
+            _ = new MainController(view, model, infoModel, scanner, parser);
 
             Application.Run(view);
         }
