@@ -198,9 +198,10 @@ namespace Compiler
 
         private void CreateColumns()
         {
-            dgvScannerResults.Columns.Clear();
+            // Таблица токенов из 2 лабы (оставил на всякий)
+            /*dgvScannerResults.Columns.Clear();
 
-            dgvScannerResults.Columns.Add("colCode", "Код");
+            dgvScannerResults.Columns.Add("colCode", "Код");      
             dgvScannerResults.Columns["colCode"].FillWeight = 30;
 
             dgvScannerResults.Columns.Add("colType", "Тип лексемы");
@@ -214,11 +215,29 @@ namespace Compiler
 
             dgvScannerResults.Columns.Add("colAbsIndex", "Index");
             dgvScannerResults.Columns["colAbsIndex"].Visible = false;
+            */
+            dgvScannerResults.Columns.Clear();
+            dgvScannerResults.Columns.Add("Fragment", "Неверный фрагмент");
+            dgvScannerResults.Columns["Fragment"].FillWeight = 50;
 
+            dgvScannerResults.Columns.Add("Location", "Местоположение");
+            dgvScannerResults.Columns["Location"].FillWeight = 80;
+
+            dgvScannerResults.Columns.Add("Description", "Описание ошибки");
+            dgvScannerResults.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            dgvScannerResults.Columns.Add("colAbsIndex", "Index");
+            dgvScannerResults.Columns["colAbsIndex"].Visible = false;
+            dgvScannerResults.Columns.Add("colLen", "Len");
+            dgvScannerResults.Columns["colLen"].Visible = false;
+
+            
             foreach (DataGridViewColumn column in dgvScannerResults.Columns)
             {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
+
+
         }
 
         public void ClearResults()
@@ -243,7 +262,8 @@ namespace Compiler
 
         private void dgvScannerResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
+            // Таблица токенов из 2 лабы (оставил на всякий)
+            /*if (e.RowIndex < 0)
             {
                 return;
             }
@@ -257,6 +277,17 @@ namespace Compiler
 
             var absIndex = (int)row.Cells[4].Value;
             var length = row.Cells[2].Value?.ToString()?.Length ?? 0;
+
+            NavigateToErrorRequested?.Invoke(absIndex, length);*/
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            var row = dgvScannerResults.Rows[e.RowIndex];
+
+            var absIndex = (int)row.Cells[3].Value;
+            var length = (int)row.Cells[4].Value;
 
             NavigateToErrorRequested?.Invoke(absIndex, length);
         }
@@ -279,5 +310,14 @@ namespace Compiler
             }
         }
 
+        public void DisplayErrors(List<SyntaxError> errors)
+        {
+            ClearResults();
+            foreach (var error in errors)
+            {
+                //var pos = $"строка {error.Line}, {error.Column}-{error.Column + error.Length}";
+                dgvScannerResults.Rows.Add(error.Fragment, error.Location, error.Description, error.AbsoluteIndex, error.Length);
+            }
+        }
     }
 }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             menuStrip = new MenuStrip();
             file = new ToolStripMenuItem();
             menuCreate = new ToolStripMenuItem();
@@ -73,10 +73,10 @@
             statusStrip = new StatusStrip();
             FilePathStatusLabel = new ToolStripStatusLabel();
             mainPanel = new SplitContainer();
+            lblPlaceholder = new Label();
             richTextBoxEdit = new RichTextBox();
             dgvScannerResults = new DataGridView();
             richTextBoxResult = new RichTextBox();
-            lblPlaceholder = new Label();
             menuStrip.SuspendLayout();
             tools.SuspendLayout();
             statusStrip.SuspendLayout();
@@ -106,37 +106,48 @@
             // 
             // menuCreate
             // 
+            menuCreate.Image = (Image)resources.GetObject("menuCreate.Image");
+            menuCreate.ImageTransparentColor = Color.White;
             menuCreate.Name = "menuCreate";
-            menuCreate.Size = new Size(153, 22);
+            menuCreate.ShortcutKeys = Keys.Control | Keys.N;
+            menuCreate.Size = new Size(225, 22);
             menuCreate.Text = "Создать";
             // 
             // menuOpen
             // 
+            menuOpen.Image = (Image)resources.GetObject("menuOpen.Image");
             menuOpen.Name = "menuOpen";
-            menuOpen.Size = new Size(153, 22);
+            menuOpen.ShortcutKeys = Keys.Control | Keys.O;
+            menuOpen.Size = new Size(225, 22);
             menuOpen.Text = "Открыть";
             // 
             // menuSave
             // 
+            menuSave.Image = (Image)resources.GetObject("menuSave.Image");
             menuSave.Name = "menuSave";
-            menuSave.Size = new Size(153, 22);
+            menuSave.ShortcutKeys = Keys.Control | Keys.S;
+            menuSave.Size = new Size(225, 22);
             menuSave.Text = "Сохранить";
             // 
             // menuSaveAs
             // 
+            menuSaveAs.Image = (Image)resources.GetObject("menuSaveAs.Image");
             menuSaveAs.Name = "menuSaveAs";
-            menuSaveAs.Size = new Size(153, 22);
+            menuSaveAs.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+            menuSaveAs.Size = new Size(225, 22);
             menuSaveAs.Text = "Сохранить как";
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(150, 6);
+            toolStripSeparator1.Size = new Size(222, 6);
             // 
             // menuExit
             // 
+            menuExit.Image = (Image)resources.GetObject("menuExit.Image");
             menuExit.Name = "menuExit";
-            menuExit.Size = new Size(153, 22);
+            menuExit.ShortcutKeys = Keys.Alt | Keys.F4;
+            menuExit.Size = new Size(225, 22);
             menuExit.Text = "Выход";
             // 
             // editing
@@ -148,44 +159,59 @@
             // 
             // menuCancel
             // 
+            menuCancel.Image = (Image)resources.GetObject("menuCancel.Image");
             menuCancel.Name = "menuCancel";
-            menuCancel.Size = new Size(148, 22);
+            menuCancel.ShortcutKeys = Keys.Control | Keys.Z;
+            menuCancel.Size = new Size(190, 22);
             menuCancel.Text = "Отменить";
             // 
             // menuReturn
             // 
+            menuReturn.Image = (Image)resources.GetObject("menuReturn.Image");
             menuReturn.Name = "menuReturn";
-            menuReturn.Size = new Size(148, 22);
+            menuReturn.ShortcutKeys = Keys.Control | Keys.Y;
+            menuReturn.Size = new Size(190, 22);
             menuReturn.Text = "Вернуть";
             // 
             // menuCut
             // 
+            menuCut.Image = (Image)resources.GetObject("menuCut.Image");
             menuCut.Name = "menuCut";
-            menuCut.Size = new Size(148, 22);
+            menuCut.ShortcutKeys = Keys.Control | Keys.X;
+            menuCut.Size = new Size(190, 22);
             menuCut.Text = "Вырезать";
             // 
             // menuCopy
             // 
+            menuCopy.Image = (Image)resources.GetObject("menuCopy.Image");
             menuCopy.Name = "menuCopy";
-            menuCopy.Size = new Size(148, 22);
+            menuCopy.ShortcutKeys = Keys.Control | Keys.C;
+            menuCopy.Size = new Size(190, 22);
             menuCopy.Text = "Копировать";
             // 
             // menuPaste
             // 
+            menuPaste.Image = (Image)resources.GetObject("menuPaste.Image");
             menuPaste.Name = "menuPaste";
-            menuPaste.Size = new Size(148, 22);
+            menuPaste.ShortcutKeys = Keys.Control | Keys.V;
+            menuPaste.Size = new Size(190, 22);
             menuPaste.Text = "Вставить";
             // 
             // menuDelete
             // 
+            menuDelete.Image = (Image)resources.GetObject("menuDelete.Image");
             menuDelete.Name = "menuDelete";
-            menuDelete.Size = new Size(148, 22);
+            menuDelete.ShortcutKeys = Keys.Delete;
+            menuDelete.Size = new Size(190, 22);
             menuDelete.Text = "Удалить";
             // 
             // menuSelectAll
             // 
+            menuSelectAll.Image = (Image)resources.GetObject("menuSelectAll.Image");
+            menuSelectAll.ImageScaling = ToolStripItemImageScaling.None;
             menuSelectAll.Name = "menuSelectAll";
-            menuSelectAll.Size = new Size(148, 22);
+            menuSelectAll.ShortcutKeys = Keys.Control | Keys.A;
+            menuSelectAll.Size = new Size(190, 22);
             menuSelectAll.Text = "Выделить все";
             // 
             // text
@@ -240,6 +266,7 @@
             // run
             // 
             run.Name = "run";
+            run.ShortcutKeys = Keys.F5;
             run.Size = new Size(46, 20);
             run.Text = "Пуск";
             // 
@@ -252,14 +279,18 @@
             // 
             // menuHelp
             // 
+            menuHelp.Image = (Image)resources.GetObject("menuHelp.Image");
             menuHelp.Name = "menuHelp";
-            menuHelp.Size = new Size(156, 22);
+            menuHelp.ShortcutKeys = Keys.Control | Keys.F1;
+            menuHelp.Size = new Size(202, 22);
             menuHelp.Text = "Вызов справки";
             // 
             // menuAbout
             // 
+            menuAbout.Image = (Image)resources.GetObject("menuAbout.Image");
             menuAbout.Name = "menuAbout";
-            menuAbout.Size = new Size(156, 22);
+            menuAbout.ShortcutKeys = Keys.Control | Keys.F2;
+            menuAbout.Size = new Size(202, 22);
             menuAbout.Text = "О программе";
             // 
             // tools
@@ -418,6 +449,17 @@
             mainPanel.SplitterDistance = 238;
             mainPanel.TabIndex = 2;
             // 
+            // lblPlaceholder
+            // 
+            lblPlaceholder.Dock = DockStyle.Fill;
+            lblPlaceholder.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            lblPlaceholder.Location = new Point(0, 0);
+            lblPlaceholder.Name = "lblPlaceholder";
+            lblPlaceholder.Size = new Size(780, 234);
+            lblPlaceholder.TabIndex = 3;
+            lblPlaceholder.Text = "Создайте или откройте файл, чтобы начать работу";
+            lblPlaceholder.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // richTextBoxEdit
             // 
             richTextBoxEdit.AcceptsTab = true;
@@ -444,14 +486,14 @@
             dgvScannerResults.BackgroundColor = SystemColors.Window;
             dgvScannerResults.BorderStyle = BorderStyle.None;
             dgvScannerResults.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvScannerResults.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            dgvScannerResults.DefaultCellStyle = dataGridViewCellStyle1;
             dgvScannerResults.Dock = DockStyle.Fill;
             dgvScannerResults.Location = new Point(0, 0);
             dgvScannerResults.MultiSelect = false;
@@ -478,17 +520,6 @@
             richTextBoxResult.Text = ">";
             richTextBoxResult.WordWrap = false;
             // 
-            // lblPlaceholder
-            // 
-            lblPlaceholder.Dock = DockStyle.Fill;
-            lblPlaceholder.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            lblPlaceholder.Location = new Point(0, 0);
-            lblPlaceholder.Name = "lblPlaceholder";
-            lblPlaceholder.Size = new Size(780, 234);
-            lblPlaceholder.TabIndex = 3;
-            lblPlaceholder.Text = "Создайте или откройте файл, чтобы начать работу";
-            lblPlaceholder.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -498,9 +529,11 @@
             Controls.Add(statusStrip);
             Controls.Add(tools);
             Controls.Add(menuStrip);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip;
             MinimumSize = new Size(800, 500);
             Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Компилятор";
             Load += MainForm_Load;
             menuStrip.ResumeLayout(false);
