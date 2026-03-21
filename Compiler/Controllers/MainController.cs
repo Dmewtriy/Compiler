@@ -2,6 +2,8 @@
 using Compiler.Views;
 using Compiler.Views.Interfaces;
 using Markdig;
+using ParserANTLR;
+using System.Text.RegularExpressions;
 
 namespace Compiler.Controllers
 {
@@ -13,14 +15,16 @@ namespace Compiler.Controllers
         private const string AppName = "Compiler";
         private readonly Scanner _scanner;
         private readonly Parser _parser;
+        private readonly AntlrParserService _antlrParser;
 
-        public MainController(IMainView view, FileService model, InfoService infoServ, Scanner scanner, Parser parser)
+        public MainController(IMainView view, FileService model, InfoService infoServ, Scanner scanner)
         {
             _view = view;
             _model = model;
             var infoService = infoServ;
             _scanner = scanner;
-            _parser = parser;
+            _parser = new Parser();
+            _antlrParser = new AntlrParserService();
 
             _view.NewFileClicked += OnNewFile;
             _view.OpenFileClicked += OnOpenFile;
@@ -241,32 +245,63 @@ namespace Compiler.Controllers
         {
             if (string.IsNullOrWhiteSpace(_view.EditorContent))
             {
+                _view.ClearResults();
                 _view.ShowMessage("Внимание", "Редактор пуст. Нечего анализировать.");
                 return;
             }
 
             var tokens = _scanner.Analyze(_view.EditorContent);
 
-            // _view.ShowTokens(tokens); старый фрагмент из 2 лабы
+            _view.ShowTokens(tokens);
+
             OnParseRequested(tokens);
         }
 
         private void OnParseRequested(List<Token> tokens)
         {
 
-            _parser.Parse(tokens);
-            var errors = _parser.Errors;
+            var defaultParserRes = ParseDefaultParser(tokens);
+            var flexBisonParserRes = ParseFlexBison(_view.EditorContent);
+            var antlrParserRes = ParseAntlr(_view.EditorContent);
 
-            if (errors.Count == 0)
+            _view.DisplayErrorsParser(defaultParserRes);
+            _view.DisplayErrorsFlexBison(flexBisonParserRes);
+            _view.DisplayErrorsAntlr(antlrParserRes);
+        }
+
+        private List<SyntaxError> ParseDefaultParser(List<Token> tokens)
+        {
+            _parser.Parse(tokens);
+            return _parser.Errors;
+        }
+
+        private List<SyntaxError> ParseFlexBison(string sourceCode)
+        {
+            var res = ParserService.Parse(sourceCode);
+
+            var errors = new List<SyntaxError>();
+
+            string pattern = @"(?<location>.*?):\s*(?<description>syntax error,\s*unexpected\s+(?<quote>['""]?)(?<fragment>.*?)\k<quote>(?:,|$).*)$";
+
+            var matches = Regex.Matches(res, pattern, RegexOptions.Multiline);
+
+            foreach (Match match in matches)
             {
-                _view.ShowMessage("Ошибок не обнаружено", "Синтаксический анализ пройден успешно.");
-                _view.DisplayErrors(new List<SyntaxError>());
+                errors.Add(new SyntaxError
+                {
+                    Location = match.Groups["location"].Value.Trim(),
+                    Description = match.Groups["description"].Value.Trim(),
+                    Fragment = match.Groups["fragment"].Value.Trim()
+                });
             }
-            else
-            {
-                _view.ShowMessage("Ошибки!", $"Найдено ошибок: {errors.Count}");
-                _view.DisplayErrors(errors);
-            }
+
+            return errors;
+        }
+
+        private List<SyntaxError> ParseAntlr(string sourceCode)
+        {
+            var res = _antlrParser.Parse(sourceCode);
+            return res;
         }
     }
 

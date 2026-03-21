@@ -1,5 +1,6 @@
 using Compiler.Controllers;
 using Compiler.Models;
+using ParserANTLR;
 
 namespace Compiler
 {
@@ -18,8 +19,7 @@ namespace Compiler
             var infoModel = new InfoService();
             var scanner = new Scanner();
             var view = new MainForm();
-            var parser = new Parser();
-            _ = new MainController(view, model, infoModel, scanner, parser);
+            _ = new MainController(view, model, infoModel, scanner);
 
             Application.Run(view);
         }

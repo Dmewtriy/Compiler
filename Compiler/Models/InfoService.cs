@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -104,7 +104,7 @@ dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=
 
         public string GetAboutText() => @"
 # О программе
-**Версия:** 0.1.0-alpha
+**Версия:** 0.3.1-alpha
 **Автор:** Студент группы АВТ-314 Данькин Дмитрий Витальевич  
 
 ---

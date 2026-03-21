@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Compiler.Models
@@ -14,7 +13,7 @@ namespace Compiler.Models
             [MarshalAs(UnmanagedType.LPUTF8Str)] string sourceCode,
             ErrorCallbackDelegate errorCb);
 
-        public static (bool IsSuccess, string Message) Parse(string sourceCode)
+        public static string Parse(string sourceCode)
         {
             var errorBuilder = new StringBuilder();
 
@@ -26,14 +25,7 @@ namespace Compiler.Models
             var result = ParseSourceCode(sourceCode, Callback);
             var errors = errorBuilder.ToString().Trim();
 
-            if (result == 0 && string.IsNullOrEmpty(errors))
-            {
-                return (true, "Синтаксический анализ пройден успешно!");
-            }
-            else
-            {
-                return (false, errors);
-            }
+            return errors;
         }
     }
 }

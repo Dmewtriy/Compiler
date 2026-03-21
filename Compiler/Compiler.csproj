@@ -21,6 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
     <PackageReference Include="Markdig" Version="1.0.0" />
   </ItemGroup>
 
@@ -31,6 +32,10 @@
 			<ExcludeFromSingleFile>false</ExcludeFromSingleFile>
 			<AssetType>native</AssetType>
 		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ParserANTLR\ParserANTLR.csproj" />
 	</ItemGroup>
 
   <ItemGroup>

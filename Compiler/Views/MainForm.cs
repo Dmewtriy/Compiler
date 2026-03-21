@@ -1,5 +1,6 @@
 using Compiler.Models;
 using Compiler.Views.Interfaces;
+using ParserANTLR;
 
 namespace Compiler
 {
@@ -127,7 +128,8 @@ namespace Compiler
 
             richTextBoxEdit.TextChanged += (s, e) => ContentChanged?.Invoke(this, EventArgs.Empty);
 
-            dgvScannerResults.CellClick += dgvScannerResults_CellClick;
+            tabControlOutput.DrawItem += new DrawItemEventHandler(tabControlOutput_DrawItem);
+
             this.FormClosing += (s, e) => ViewClosing?.Invoke(this, e);
 
         }
@@ -198,99 +200,129 @@ namespace Compiler
 
         private void CreateColumns()
         {
-            // Таблица токенов из 2 лабы (оставил на всякий)
-            /*dgvScannerResults.Columns.Clear();
+            CreateColumnsLexer();
+            CreateColumnsParser();
+            CreateColumnsFlexBison();
+            CreateColumnsAntlr();
+        }
 
-            dgvScannerResults.Columns.Add("colCode", "Код");      
-            dgvScannerResults.Columns["colCode"].FillWeight = 30;
+        private void CreateColumnsLexer()
+        {
+            dgvLexer.Columns.Clear();
 
-            dgvScannerResults.Columns.Add("colType", "Тип лексемы");
-            dgvScannerResults.Columns["colType"].FillWeight = 100;
+            dgvLexer.Columns.Add("colCode", "Код");
+            dgvLexer.Columns["colCode"].FillWeight = 30;
 
-            dgvScannerResults.Columns.Add("colLexeme", "Лексема");
-            dgvScannerResults.Columns["colLexeme"].FillWeight = 100;
+            dgvLexer.Columns.Add("colType", "Тип лексемы");
+            dgvLexer.Columns["colType"].FillWeight = 100;
 
-            dgvScannerResults.Columns.Add("colPos", "Местоположение");
-            dgvScannerResults.Columns["colPos"].FillWeight = 80;
+            dgvLexer.Columns.Add("colLexeme", "Лексема");
+            dgvLexer.Columns["colLexeme"].FillWeight = 100;
 
-            dgvScannerResults.Columns.Add("colAbsIndex", "Index");
-            dgvScannerResults.Columns["colAbsIndex"].Visible = false;
-            */
-            dgvScannerResults.Columns.Clear();
-            dgvScannerResults.Columns.Add("Fragment", "Неверный фрагмент");
-            dgvScannerResults.Columns["Fragment"].FillWeight = 50;
+            dgvLexer.Columns.Add("colPos", "Местоположение");
+            dgvLexer.Columns["colPos"].FillWeight = 80;
 
-            dgvScannerResults.Columns.Add("Location", "Местоположение");
-            dgvScannerResults.Columns["Location"].FillWeight = 80;
+            dgvLexer.Columns.Add("colAbsIndex", "Index");
+            dgvLexer.Columns["colAbsIndex"].Visible = false;
 
-            dgvScannerResults.Columns.Add("Description", "Описание ошибки");
-            dgvScannerResults.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-            dgvScannerResults.Columns.Add("colAbsIndex", "Index");
-            dgvScannerResults.Columns["colAbsIndex"].Visible = false;
-            dgvScannerResults.Columns.Add("colLen", "Len");
-            dgvScannerResults.Columns["colLen"].Visible = false;
-
-            
-            foreach (DataGridViewColumn column in dgvScannerResults.Columns)
+            foreach (DataGridViewColumn column in dgvLexer.Columns)
             {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
+        }
 
+        private void CreateColumnsParser()
+        {
+            dgvParser.Columns.Clear();
+            dgvParser.Columns.Add("Fragment", "Неверный фрагмент");
+            dgvParser.Columns["Fragment"].FillWeight = 50;
 
+            dgvParser.Columns.Add("Location", "Местоположение");
+            dgvParser.Columns["Location"].FillWeight = 80;
+
+            dgvParser.Columns.Add("Description", "Описание ошибки");
+            dgvParser.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            dgvParser.Columns.Add("colAbsIndex", "Index");
+            dgvParser.Columns["colAbsIndex"].Visible = false;
+            dgvParser.Columns.Add("colLen", "Len");
+            dgvParser.Columns["colLen"].Visible = false;
+
+            foreach (DataGridViewColumn column in dgvParser.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+        }
+
+        private void CreateColumnsFlexBison()
+        {
+            dgvFlexBison.Columns.Clear();
+            dgvFlexBison.Columns.Add("Fragment", "Неверный фрагмент");
+            dgvFlexBison.Columns["Fragment"].FillWeight = 50;
+
+            dgvFlexBison.Columns.Add("Location", "Местоположение");
+            dgvFlexBison.Columns["Location"].FillWeight = 80;
+
+            dgvFlexBison.Columns.Add("Description", "Описание ошибки");
+            dgvFlexBison.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            dgvFlexBison.Columns.Add("colAbsIndex", "Index");
+            dgvFlexBison.Columns["colAbsIndex"].Visible = false;
+            dgvFlexBison.Columns.Add("colLen", "Len");
+            dgvFlexBison.Columns["colLen"].Visible = false;
+
+            foreach (DataGridViewColumn column in dgvFlexBison.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+        }
+
+        private void CreateColumnsAntlr()
+        {
+            dgvAntlr.Columns.Clear();
+            dgvAntlr.Columns.Add("Fragment", "Неверный фрагмент");
+            dgvAntlr.Columns["Fragment"].FillWeight = 50;
+
+            dgvAntlr.Columns.Add("Location", "Местоположение");
+            dgvAntlr.Columns["Location"].FillWeight = 80;
+
+            dgvAntlr.Columns.Add("Description", "Описание ошибки");
+            dgvAntlr.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
+            dgvAntlr.Columns.Add("colAbsIndex", "Index");
+            dgvAntlr.Columns["colAbsIndex"].Visible = false;
+            dgvAntlr.Columns.Add("colLen", "Len");
+            dgvAntlr.Columns["colLen"].Visible = false;
+
+            foreach (DataGridViewColumn column in dgvAntlr.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
         }
 
         public void ClearResults()
         {
-            dgvScannerResults.Rows.Clear();
+            dgvLexer.Rows.Clear();
+            dgvParser.Rows.Clear();
+            dgvFlexBison.Rows.Clear();
+            dgvAntlr.Rows.Clear();
         }
 
         public void ShowTokens(List<Token> tokens)
         {
-            ClearResults();
+            dgvLexer.Rows.Clear();
             foreach (var token in tokens)
             {
                 string pos = $"строка {token.Line}, {token.StartPos}-{token.EndPos}";
-                dgvScannerResults.Rows.Add(token.NumericCode, token.TypeName, token.Lexeme, pos, token.AbsoluteIndex);
+                dgvLexer.Rows.Add(token.NumericCode, token.TypeName, token.Lexeme, pos, token.AbsoluteIndex);
 
                 if (token.Type == TokenType.INVALID_TOKEN)
                 {
-                    dgvScannerResults.Rows[^1].DefaultCellStyle.BackColor = Color.LightPink;
+                    dgvLexer.Rows[^1].DefaultCellStyle.BackColor = Color.LightPink;
                 }
             }
         }
 
-        private void dgvScannerResults_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Таблица токенов из 2 лабы (оставил на всякий)
-            /*if (e.RowIndex < 0)
-            {
-                return;
-            }
-
-            var row = dgvScannerResults.Rows[e.RowIndex];
-
-            if ((int)row.Cells[0].Value != (int)TokenCodes.ERROR)
-            {
-                return;
-            }
-
-            var absIndex = (int)row.Cells[4].Value;
-            var length = row.Cells[2].Value?.ToString()?.Length ?? 0;
-
-            NavigateToErrorRequested?.Invoke(absIndex, length);*/
-            if (e.RowIndex < 0)
-            {
-                return;
-            }
-
-            var row = dgvScannerResults.Rows[e.RowIndex];
-
-            var absIndex = (int)row.Cells[3].Value;
-            var length = (int)row.Cells[4].Value;
-
-            NavigateToErrorRequested?.Invoke(absIndex, length);
-        }
 
         public void SelectTextInEditor(int start, int length)
         {
@@ -310,14 +342,139 @@ namespace Compiler
             }
         }
 
-        public void DisplayErrors(List<SyntaxError> errors)
+        public void DisplayErrorsParser(List<SyntaxError> errors)
         {
-            ClearResults();
+            dgvParser.Rows.Clear();
             foreach (var error in errors)
             {
-                //var pos = $"строка {error.Line}, {error.Column}-{error.Column + error.Length}";
-                dgvScannerResults.Rows.Add(error.Fragment, error.Location, error.Description, error.AbsoluteIndex, error.Length);
+                dgvParser.Rows.Add(error.Fragment, error.Location, error.Description, error.AbsoluteIndex, error.Length);
             }
+            if (errors.Count > 0) dgvParser.Rows.Add("Общее количество ошибок:", dgvParser.Rows.Count);
+        }
+
+        public void DisplayErrorsFlexBison(List<SyntaxError> errors)
+        {
+            dgvFlexBison.Rows.Clear();
+            foreach (var error in errors)
+            {
+                dgvFlexBison.Rows.Add(error.Fragment, error.Location, error.Description, error.AbsoluteIndex, error.Length);
+            }
+            if (errors.Count > 0) dgvFlexBison.Rows.Add("Общее количество ошибок:", dgvFlexBison.Rows.Count);
+        }
+
+        public void DisplayErrorsAntlr(List<SyntaxError> errors)
+        {
+            dgvAntlr.Rows.Clear();
+            foreach (var error in errors)
+            {
+                dgvAntlr.Rows.Add(error.Fragment, error.Location, error.Description, error.AbsoluteIndex, error.Length);
+            }
+            if (errors.Count > 0) dgvAntlr.Rows.Add("Общее количество ошибок:", dgvAntlr.Rows.Count);
+        }
+
+        private void dgvLexer_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+
+            var row = dgvLexer.Rows[e.RowIndex];
+
+            if ((int)row.Cells[0].Value != (int)TokenCodes.ERROR)
+            {
+                return;
+            }
+
+            var absIndex = (int)row.Cells[4].Value;
+            var length = row.Cells[2].Value?.ToString()?.Length ?? 0;
+
+            NavigateToErrorRequested?.Invoke(absIndex, length);
+        }
+
+        private void dgvParser_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex == dgvParser.Rows.Count - 1)
+            {
+                return;
+            }
+
+            var row = dgvParser.Rows[e.RowIndex];
+
+            var absIndex = (int)row.Cells[3].Value;
+            var length = (int)row.Cells[4].Value;
+
+            NavigateToErrorRequested?.Invoke(absIndex, length);
+        }
+
+        private void dgvFlexBison_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex == dgvFlexBison.Rows.Count - 1)
+            {
+                return;
+            }
+
+            var row = dgvFlexBison.Rows[e.RowIndex];
+
+            var absIndex = (int)row.Cells[3].Value;
+            var length = (int)row.Cells[4].Value;
+
+            NavigateToErrorRequested?.Invoke(absIndex, length);
+        }
+
+        private void dgvAntlr_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex == dgvAntlr.Rows.Count - 1)
+            {
+                return;
+            }
+
+            var row = dgvAntlr.Rows[e.RowIndex];
+
+            var absIndex = (int)row.Cells[3].Value;
+            var length = (int)row.Cells[4].Value;
+
+            NavigateToErrorRequested?.Invoke(absIndex, length);
+        }
+
+        private void tabControlOutput_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            TabPage page = tabControlOutput.TabPages[e.Index];
+            Rectangle rect = tabControlOutput.GetTabRect(e.Index);
+
+            Color activeBorderColor = Color.FromArgb(0, 122, 204);
+            Color inactiveTextColor = Color.FromArgb(150, 150, 150);
+            Color backgroundColor = Color.White;
+
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            g.FillRectangle(new SolidBrush(backgroundColor), rect);
+
+            if (e.State == DrawItemState.Selected)
+            {
+                using (Pen p = new Pen(activeBorderColor, 2))
+                {
+                    g.DrawLine(p, rect.Left, rect.Bottom, rect.Left, rect.Top);
+                    g.DrawLine(p, rect.Left, rect.Top, rect.Right, rect.Top);
+                    g.DrawLine(p, rect.Right, rect.Top, rect.Right, rect.Bottom);
+                }
+
+                TextRenderer.DrawText(g, page.Text, new Font(e.Font, FontStyle.Bold),
+                    rect, Color.Black, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
+            }
+            else
+            {
+                TextRenderer.DrawText(g, page.Text, e.Font,
+                    rect, inactiveTextColor, TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter);
+
+                g.DrawLine(Pens.LightGray, rect.Left, rect.Bottom - 1, rect.Right, rect.Bottom - 1);
+            }
+        }
+
+        private void tabControlOutput_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.ActiveControl = null;
         }
     }
 }
