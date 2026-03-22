@@ -109,7 +109,6 @@ dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=
 * **Область редактирования:** Поле `RichTextBox`, которое становится видимым только после инициализации файла.
 * **Панель состояния:** Отображает путь к текущему открытому файлу.
 * **Индикатор изменений:** Звездочка `*` в заголовке окна рядом с именем файла появляется при внесении любых изменений.
-* **Индикатор изменений:** Звездочка `*` в заголовке окна рядом с именем файла появляется при внесении любых изменений.<br>
 <img width="786" height="493" alt="image" src="https://github.com/user-attachments/assets/6693a4c0-fc89-477a-bf9c-4d2c3ead0476" /><br>
 <img width="196" height="32" alt="image" src="https://github.com/user-attachments/assets/5423f3fc-40c1-4c14-9b18-bc6857450353" />   
 
@@ -133,7 +132,7 @@ dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=
 Разработать модуль лексического анализатора (сканера) и интегрировать его в графический интерфейс (GUI), созданный в Лабораторной работе №1.
 
 ## Диаграмма состояний
-<img width="562" height="680" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/диаграмма.png" />
+<img width="562" height="680" alt="диаграмма" src="https://github.com/user-attachments/assets/7594e915-92bb-4755-a859-d9a4cf227292" /><br>
 Краткое описание принципа его работы:
 
 1. Начало работы (Состояние 0)
@@ -164,11 +163,11 @@ code 1: для всех остальных пользовательских им
 
 ## Тестовые примеры
 Рабочая строка<br>
-<img width="800" height="400" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/рабочая строка.png" /><br>
+<img width="800" height="400" alt="рабочая строка" src="https://github.com/user-attachments/assets/502e07b7-8d35-456e-b15f-5e5bb398fad9" /><br>
 Недопустимый символ<br>
-<img width="800" height="400" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/недопустимый символ.png" /><br>
+<img width="800" height="400" alt="недопустимый символ" src="https://github.com/user-attachments/assets/91fd586b-65b9-4c88-86bd-36286bbe29ed" /><br>
 Многострочный пример<br>
-<img width="800" height="400" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/многострочный пример.png" /><br>
+<img width="800" height="400" alt="многострочный пример" src="https://github.com/user-attachments/assets/29053c8b-b43f-4276-b1cf-7034f55820e6" /><br>
 
 ---
 ## Грамматики
@@ -230,11 +229,11 @@ enum User_Role {
 
 ### Тестовые примеры
 <br>Строка с ошибкой<br>
-<img width="800" height="250" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/pars1.png" /><br>
+<img width="800" height="250" alt="pars1" src="https://github.com/user-attachments/assets/c95d29fb-180c-43ea-8caa-6f55172b7105" /><br>
 <br>Пустое тело enum<br>
-<img width="800" height="250" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/pars2.png" /><br>
+<img width="800" height="250" alt="pars2" src="https://github.com/user-attachments/assets/279966e3-7ed8-4780-b7bd-82d395d64b17" /><br>
 <br>Многострочный пример<br>
-<img width="800" height="250" alt="image" src="https://github.com/Dmewtriy/Compiler/raw/master/resources/pars3.png" /><br>
+<img width="800" height="250" alt="pars3" src="https://github.com/user-attachments/assets/06132886-bab7-468a-8c39-cfb765e5c24d" /><br>
 
 
 ## Лабораторная работа 3. Разработка синтаксического анализатора (парсера)
