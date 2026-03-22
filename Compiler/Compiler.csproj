@@ -20,15 +20,11 @@
     <Optimize>True</Optimize>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="resources\About.html" />
-    <None Remove="resources\Grammar.html" />
-    <None Remove="resources\Help.html" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
     <PackageReference Include="Markdig" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3908-prerelease" />
   </ItemGroup>
 
 	<ItemGroup>
