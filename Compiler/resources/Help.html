@@ -1,0 +1,236 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+
+    p {
+        color: #555;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    code {
+        font-family: Consolas, monospace;
+        font-size: 16px;
+    }
+
+    ul, ol {
+        margin-left: 20px;
+        margin-bottom: 20px;
+    }
+
+    li {
+        font-size: 18px;
+        color: #555;
+        margin: 5px 0px 5px 0px;
+    }
+
+    .image-container {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+    .grammar {
+        font-family: 'Courier New', Courier, monospace;
+        white-space: pre-wrap;
+        background-color: #f9f9f9;
+        padding: 5px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+</style>
+<h1 id="no1.gui">Лабораторная работа №1. Разработка пользовательского интерфейса (GUI) для языкового процессора</h1>
+<h3 id="section">Цель работы</h3>
+<p>Создание кроссплатформенного графического интерфейса (GUI) для языкового процессора в виде специализированного текстового редактора.</p>
+<h2 id="section-1">Сведения об авторе</h2>
+<ul>
+    <li><strong>ФИО:</strong> Данькин Дмитрий Витальевич</li>
+    <li><strong>Группа:</strong> АВТ-314</li>
+    <li><strong>Учебное заведение:</strong> НГТУ</li>
+</ul>
+<h2 id="section-2">Описание проекта</h2>
+<p>Приложение представляет собой текстовый редактор, который в дальнейшем будет расширен до полноценного языкового процессора для анализа исходного кода.</p>
+<p><strong>Основные возможности:</strong></p>
+<ul>
+    <li>Работа с файлами (создание, открытие, сохранение с контролем изменений).</li>
+    <li>Полноценный блок редактирования текста (отмена действий, работа с буфером обмена).</li>
+    <li>Динамический интерфейс: редактор кода скрыт до момента создания или открытия файла.</li>
+    <li>Индикация несохраненных изменений через заголовок окна (символ <code>*</code>).</li>
+    <li>Предупреждения о потере данных при выходе или создании нового файла.</li>
+</ul>
+<h2 id="section-3">Используемые технологии</h2>
+<ul>
+    <li><strong>Язык программирования:</strong> C#</li>
+    <li><strong>Платформа:</strong> .NET (Windows Forms)</li>
+    <li><strong>Архитектурный паттерн:</strong> MVC</li>
+    <li><strong>Среда разработки:</strong> Visual Studio 2026</li>
+</ul>
+<h2 id="section-4">Инструкция по сборке и запуску</h2>
+<ol>
+    <li><strong>Клонирование репозитория:</strong></li>
+</ol>
+<pre><code class="language-bash">git clone [ссылка_на_репозиторий]
+</code></pre>
+<ol start="2">
+    <li>
+        <strong>Открытие проекта:</strong>
+        Откройте файл решения <code>.sln</code> в среде разработки <strong>Visual Studio</strong>.
+    </li>
+    <li>
+        <strong>Сборка (Single File EXE):</strong>
+        Выполните следующую команду в терминале (в корневой папке проекта):
+    </li>
+</ol>
+<pre><code class="language-bash">dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true
+</code></pre>
+<ol start="4">
+    <li>
+        <strong>Запуск:</strong>
+        Готовый исполняемый файл, не требующий установки .NET Runtime, находится по пути:
+        <code>./bin/Release/net8.0-windows/win-x64/publish/Compiler.exe</code>
+    </li>
+</ol>
+<h2 id="section-5">Описание интерфейса и функций</h2>
+<h3 id="section-6">Главное меню и горячие клавиши</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Раздел</th>
+            <th>Команда</th>
+            <th>Способ вызова</th>
+            <th>Описание</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Файл</strong></td>
+            <td>Создать</td>
+            <td>Меню / Тулбар</td>
+            <td>Создает новый документ.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Открыть</td>
+            <td>Меню / Тулбар</td>
+            <td>Открывает файл с диска.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Сохранить</td>
+            <td>Меню / Тулбар</td>
+            <td>Сохраняет текущий файл.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Сохранить как</td>
+            <td>Меню</td>
+            <td>Сохраняет файл по новому пути.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Выход</td>
+            <td>Меню</td>
+            <td>Закрывает приложение с проверкой сохранений.</td>
+        </tr>
+        <tr>
+            <td><strong>Правка</strong></td>
+            <td>Отменить</td>
+            <td>Меню / Тулбар</td>
+            <td>Отмена последнего действия.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Вернуть</td>
+            <td>Меню / Тулбар</td>
+            <td>Возврат отмененного действия.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Копировать</td>
+            <td>Меню / Тулбар</td>
+            <td>Копирование текста в буфер.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Вырезать</td>
+            <td>Меню / Тулбар</td>
+            <td>Вырезание текста.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Вставить</td>
+            <td>Меню / Тулбар</td>
+            <td>Вставка из буфера.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Удалить</td>
+            <td>Меню</td>
+            <td>Удаление выделенного текста.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Выделить все</td>
+            <td>Меню</td>
+            <td>Выделение всего текста в редакторе.</td>
+        </tr>
+        <tr>
+            <td><strong>Текст</strong></td>
+            <td>(Все пункты)</td>
+            <td>Меню</td>
+            <td>Меню текст будет реализовано позже.</td>
+        </tr>
+        <tr>
+            <td><strong>Пуск</strong></td>
+            <td>Запуск</td>
+            <td>Меню / Тулбар</td>
+            <td>Будет реализовано позже.</td>
+        </tr>
+        <tr>
+            <td><strong>Справка</strong></td>
+            <td>Вызов справки</td>
+            <td>Меню</td>
+            <td>Вызов справочной системы.</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>О программе</td>
+            <td>Меню</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<h3 id="section-7">Ключевые элементы управления</h3>
+<ul>
+    <li><strong>Область редактирования:</strong> Поле <code>RichTextBox</code>, которое становится видимым только после инициализации файла.</li>
+    <li><strong>Панель состояния:</strong> Отображает путь к текущему открытому файлу.</li>
+    <li><strong>Индикатор изменений:</strong> Звездочка <code>*</code> в заголовке окна рядом с именем файла появляется при внесении любых изменений.</li>
+</ul>
+<h2 id="section-8">Ограничения</h2>
+<ul>
+    <li>Приложение предназначено для работы в операционной системе Windows.</li>
+    <li>На текущем этапе разделы меню &quot;Текст&quot; и &quot;Пуск&quot; являются функциональными заглушками и будут реализованы в следующих лабораторных работах.</li>
+    <li>Редактор поддерживает только текстовые форматы файлов (.txt, .cpp, .js и т.д.).</li>
+</ul>

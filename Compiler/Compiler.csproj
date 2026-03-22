@@ -21,6 +21,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\About.html" />
+    <None Remove="resources\Grammar.html" />
+    <None Remove="resources\Help.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
     <PackageReference Include="Markdig" Version="1.0.0" />
   </ItemGroup>
@@ -32,6 +38,17 @@
 			<ExcludeFromSingleFile>false</ExcludeFromSingleFile>
 			<AssetType>native</AssetType>
 		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="resources\About.html" />
+	  <EmbeddedResource Include="resources\Grammar.html" />
+	  <EmbeddedResource Include="resources\Classification.html" />
+	  <EmbeddedResource Include="resources\Help.html" />
+	  <EmbeddedResource Include="resources\References.html" />
+	  <EmbeddedResource Include="resources\Method.html" />
+	  <EmbeddedResource Include="resources\Tests.html" />
+	  <EmbeddedResource Include="resources\Task.html" />
 	</ItemGroup>
 
 	<ItemGroup>

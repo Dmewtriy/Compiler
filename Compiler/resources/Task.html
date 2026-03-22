@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+p {
+    color: #555;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+code {
+    font-family: Consolas, monospace;
+    font-size: 16px;
+}
+
+ul, ol {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+li {
+    font-size: 18px;
+    color: #555;
+    margin: 5px 0px 5px 0px;
+}
+
+.image-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.grammar {
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap;
+    background-color: #f9f9f9;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Постановка задачи</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
+</head>
+<body>
+
+    <h1>Постановка задачи</h1>
+
+    <h2>Оглавление</h2>
+    <ul>
+        <li><a href="#тема-работы">Тема работы</a></li>
+        <li><a href="#особенности-языка">Особенности языка</a></li>
+        <li><a href="#примеры-верных-строк">Примеры верных строк из языка</a></li>
+    </ul>
+
+    <h2 id="тема-работы">Тема работы</h2>
+    <p>Разработка текстового редактора с функциями языкового процессора. Объявление перечисления на языке PHP</p>
+
+    <h2 id="особенности-языка">Особенности языка</h2>
+    <p>Перечисления в языке PHP — это специальные объекты, которые позволяют определить набор именованных констант. Они используются для представления типов данных, которые могут принимать только одно значение из ограниченного списка (например, статусы заказа или дни недели). Значения перечислений известны на этапе написания кода и не могут быть изменены во время выполнения программы.</p>
+    <p>Для описания перечислений используется ключевое слово enum.</p>
+    <p>Формат объявления перечисления в PHP следующий:</p>
+
+    <pre><code>enum Suit {
+    case Hearts;
+    case Diamonds;
+    case Clubs;
+    case Spades;
+    };</code></pre>
+
+    <h2 id="примеры-верных-строк">Примеры верных строк из языка</h2>
+
+    <p>В соответствии с разработанной автоматной грамматикой синтаксический анализатор (парсер) перечислений будет считать верными следующие записи:</p>
+
+    <pre><code>enum Suit{};</code></pre>
+
+    <pre><code>enum B&nbsp;{ case A;};</code></pre>
+
+    <pre><code>enum _a&nbsp;{ case A;};</code></pre>
+
+    <pre><code>enum _a {
+    &nbsp; case _b1;
+    &nbsp; case _v_2_;
+    &nbsp; };</code></pre>
+
+<pre><code>enum a1 {case b1;};
+enum a2 {case b2;};</code></pre>
+
+</body>
+</html>

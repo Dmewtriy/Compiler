@@ -1,7 +1,6 @@
 ﻿using Compiler.Models;
 using Compiler.Views;
 using Compiler.Views.Interfaces;
-using Markdig;
 using ParserANTLR;
 using System.Text.RegularExpressions;
 
@@ -40,14 +39,13 @@ namespace Compiler.Controllers
             _view.DeleteClicked += (s, e) => ExecuteIfEditorActive(_view.PerformDelete);
             _view.SelectAllClicked += (s, e) => ExecuteIfEditorActive(_view.PerformSelectAll);
 
-            // Добавить проверку на открытый файл
-            _view.TaskDescriptionClicked += (s, e) => { };
-            _view.GrammarClicked += (s, e) => { };
-            _view.GrammarClassificationClicked += (s, e) => { };
-            _view.AnalysisMethodClicked += (s, e) => { };
-            _view.TestExampleClicked += (s, e) => { };
-            _view.ReferencesClicked += (s, e) => { };
-            _view.SourceCodeClicked += (s, e) => { };
+            _view.TaskDescriptionClicked += (s, e) => ShowInfoWindow("Постановка задачи", infoService.GetTaskDescriptionContent());
+            _view.GrammarClicked += (s, e) => ShowInfoWindow("Грамматика", infoService.GetGrammarContent());
+            _view.GrammarClassificationClicked += (s, e) => ShowInfoWindow("Классификация грамматики", infoService.GetGrammarClassificationContent());
+            _view.AnalysisMethodClicked += (s, e) => ShowInfoWindow("Метод анализа", infoService.GetAnalysisMethodContent());
+            _view.TestExampleClicked += (s, e) => ShowInfoWindow("Тестовый пример", infoService.GetTestExampleContent());
+            _view.ReferencesClicked += (s, e) => ShowInfoWindow("Список литературы", infoService.GetReferencesContent());
+            _view.SourceCodeClicked += (s, e) => ShowSourceCode(infoService.GetSourceCodeContent());
 
             _view.RunClicked += OnRunClicked;
 
@@ -232,12 +230,9 @@ namespace Compiler.Controllers
             }
         }
 
-        private static void ShowInfoWindow(string title, string markdownContent)
+        private static void ShowInfoWindow(string title, string content)
         {
-            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-
-            var htmlBody = Markdown.ToHtml(markdownContent, pipeline);
-            using var infoForm = new InfoForm(title, htmlBody);
+            using var infoForm = new InfoForm(title, content);
             infoForm.ShowDialog();
         }
 
@@ -302,6 +297,15 @@ namespace Compiler.Controllers
         {
             var res = _antlrParser.Parse(sourceCode);
             return res;
+        }
+
+        private void ShowSourceCode(string url)
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            });
         }
     }
 
