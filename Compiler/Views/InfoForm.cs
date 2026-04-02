@@ -43,7 +43,11 @@ namespace Compiler.Views
         {
             try
             {
-                await webBrowser.EnsureCoreWebView2Async(null);
+                string userDataFolder = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "CompilerApp_WebView2");
+
+                var environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, userDataFolder);
+
+                await webBrowser.EnsureCoreWebView2Async(environment);
 
                 webBrowser.CoreWebView2.Profile.PreferredColorScheme =
                     Microsoft.Web.WebView2.Core.CoreWebView2PreferredColorScheme.Light;
