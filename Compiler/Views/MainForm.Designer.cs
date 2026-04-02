@@ -31,15 +31,7 @@ namespace Compiler
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             menuStrip = new MenuStrip();
             file = new ToolStripMenuItem();
             menuCreate = new ToolStripMenuItem();
@@ -85,15 +77,6 @@ namespace Compiler
             mainPanel = new SplitContainer();
             lblPlaceholder = new Label();
             richTextBoxEdit = new RichTextBox();
-            tabControlOutput = new TabControl();
-            tabPageLexer = new TabPage();
-            dgvLexer = new DataGridView();
-            tabPageParser = new TabPage();
-            dgvParser = new DataGridView();
-            tabPageFlexBison = new TabPage();
-            dgvFlexBison = new DataGridView();
-            tabPageAntlr = new TabPage();
-            dgvAntlr = new DataGridView();
             dgvScannerResults = new DataGridView();
             richTextBoxResult = new RichTextBox();
             menuStrip.SuspendLayout();
@@ -103,15 +86,6 @@ namespace Compiler
             mainPanel.Panel1.SuspendLayout();
             mainPanel.Panel2.SuspendLayout();
             mainPanel.SuspendLayout();
-            tabControlOutput.SuspendLayout();
-            tabPageLexer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvLexer).BeginInit();
-            tabPageParser.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvParser).BeginInit();
-            tabPageFlexBison.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvFlexBison).BeginInit();
-            tabPageAntlr.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvAntlr).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvScannerResults).BeginInit();
             SuspendLayout();
             // 
@@ -471,7 +445,6 @@ namespace Compiler
             // 
             // mainPanel.Panel2
             // 
-            mainPanel.Panel2.Controls.Add(tabControlOutput);
             mainPanel.Panel2.Controls.Add(dgvScannerResults);
             mainPanel.Panel2.Controls.Add(richTextBoxResult);
             mainPanel.Size = new Size(784, 376);
@@ -505,209 +478,6 @@ namespace Compiler
             richTextBoxEdit.WordWrap = false;
             richTextBoxEdit.KeyDown += OnKeyDown;
             // 
-            // tabControlOutput
-            // 
-            tabControlOutput.Controls.Add(tabPageLexer);
-            tabControlOutput.Controls.Add(tabPageParser);
-            tabControlOutput.Controls.Add(tabPageFlexBison);
-            tabControlOutput.Controls.Add(tabPageAntlr);
-            tabControlOutput.Dock = DockStyle.Fill;
-            tabControlOutput.DrawMode = TabDrawMode.OwnerDrawFixed;
-            tabControlOutput.Location = new Point(0, 0);
-            tabControlOutput.Name = "tabControlOutput";
-            tabControlOutput.SelectedIndex = 0;
-            tabControlOutput.Size = new Size(780, 130);
-            tabControlOutput.TabIndex = 3;
-            tabControlOutput.SelectedIndexChanged += tabControlOutput_SelectedIndexChanged;
-            // 
-            // tabPageLexer
-            // 
-            tabPageLexer.Controls.Add(dgvLexer);
-            tabPageLexer.Location = new Point(4, 24);
-            tabPageLexer.Name = "tabPageLexer";
-            tabPageLexer.Size = new Size(772, 102);
-            tabPageLexer.TabIndex = 0;
-            tabPageLexer.Text = "Лексический анализатор";
-            tabPageLexer.UseVisualStyleBackColor = true;
-            // 
-            // dgvLexer
-            // 
-            dgvLexer.AllowUserToAddRows = false;
-            dgvLexer.AllowUserToDeleteRows = false;
-            dgvLexer.AllowUserToResizeColumns = false;
-            dgvLexer.AllowUserToResizeRows = false;
-            dgvLexer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvLexer.BackgroundColor = SystemColors.Window;
-            dgvLexer.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dgvLexer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dgvLexer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvLexer.DefaultCellStyle = dataGridViewCellStyle2;
-            dgvLexer.Dock = DockStyle.Fill;
-            dgvLexer.Location = new Point(0, 0);
-            dgvLexer.MultiSelect = false;
-            dgvLexer.Name = "dgvLexer";
-            dgvLexer.ReadOnly = true;
-            dgvLexer.RowHeadersVisible = false;
-            dgvLexer.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvLexer.Size = new Size(772, 102);
-            dgvLexer.TabIndex = 0;
-            dgvLexer.CellClick += dgvLexer_CellClick;
-            // 
-            // tabPageParser
-            // 
-            tabPageParser.Controls.Add(dgvParser);
-            tabPageParser.Location = new Point(4, 24);
-            tabPageParser.Name = "tabPageParser";
-            tabPageParser.Size = new Size(772, 102);
-            tabPageParser.TabIndex = 1;
-            tabPageParser.Text = "Синтаксический анализатор";
-            tabPageParser.UseVisualStyleBackColor = true;
-            // 
-            // dgvParser
-            // 
-            dgvParser.AllowUserToAddRows = false;
-            dgvParser.AllowUserToDeleteRows = false;
-            dgvParser.AllowUserToResizeColumns = false;
-            dgvParser.AllowUserToResizeRows = false;
-            dgvParser.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvParser.BackgroundColor = SystemColors.Window;
-            dgvParser.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dgvParser.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            dgvParser.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.Window;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
-            dgvParser.DefaultCellStyle = dataGridViewCellStyle4;
-            dgvParser.Dock = DockStyle.Fill;
-            dgvParser.Location = new Point(0, 0);
-            dgvParser.MultiSelect = false;
-            dgvParser.Name = "dgvParser";
-            dgvParser.ReadOnly = true;
-            dgvParser.RowHeadersVisible = false;
-            dgvParser.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvParser.Size = new Size(772, 102);
-            dgvParser.TabIndex = 0;
-            dgvParser.CellClick += dgvParser_CellClick;
-            // 
-            // tabPageFlexBison
-            // 
-            tabPageFlexBison.Controls.Add(dgvFlexBison);
-            tabPageFlexBison.Location = new Point(4, 24);
-            tabPageFlexBison.Name = "tabPageFlexBison";
-            tabPageFlexBison.Size = new Size(772, 102);
-            tabPageFlexBison.TabIndex = 2;
-            tabPageFlexBison.Text = "Flex&Bison";
-            tabPageFlexBison.UseVisualStyleBackColor = true;
-            // 
-            // dgvFlexBison
-            // 
-            dgvFlexBison.AllowUserToAddRows = false;
-            dgvFlexBison.AllowUserToDeleteRows = false;
-            dgvFlexBison.AllowUserToResizeColumns = false;
-            dgvFlexBison.AllowUserToResizeRows = false;
-            dgvFlexBison.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvFlexBison.BackgroundColor = SystemColors.Window;
-            dgvFlexBison.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvFlexBison.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            dgvFlexBison.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = SystemColors.Window;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            dgvFlexBison.DefaultCellStyle = dataGridViewCellStyle6;
-            dgvFlexBison.Dock = DockStyle.Fill;
-            dgvFlexBison.Location = new Point(0, 0);
-            dgvFlexBison.MultiSelect = false;
-            dgvFlexBison.Name = "dgvFlexBison";
-            dgvFlexBison.ReadOnly = true;
-            dgvFlexBison.RowHeadersVisible = false;
-            dgvFlexBison.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvFlexBison.Size = new Size(772, 102);
-            dgvFlexBison.TabIndex = 0;
-            dgvFlexBison.CellClick += dgvFlexBison_CellClick;
-            // 
-            // tabPageAntlr
-            // 
-            tabPageAntlr.Controls.Add(dgvAntlr);
-            tabPageAntlr.Location = new Point(4, 24);
-            tabPageAntlr.Name = "tabPageAntlr";
-            tabPageAntlr.Size = new Size(772, 102);
-            tabPageAntlr.TabIndex = 3;
-            tabPageAntlr.Text = "ANTLR";
-            tabPageAntlr.UseVisualStyleBackColor = true;
-            // 
-            // dgvAntlr
-            // 
-            dgvAntlr.AllowUserToAddRows = false;
-            dgvAntlr.AllowUserToDeleteRows = false;
-            dgvAntlr.AllowUserToResizeColumns = false;
-            dgvAntlr.AllowUserToResizeRows = false;
-            dgvAntlr.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvAntlr.BackgroundColor = SystemColors.Window;
-            dgvAntlr.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = SystemColors.Control;
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            dgvAntlr.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            dgvAntlr.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = SystemColors.Window;
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            dgvAntlr.DefaultCellStyle = dataGridViewCellStyle8;
-            dgvAntlr.Dock = DockStyle.Fill;
-            dgvAntlr.Location = new Point(0, 0);
-            dgvAntlr.MultiSelect = false;
-            dgvAntlr.Name = "dgvAntlr";
-            dgvAntlr.ReadOnly = true;
-            dgvAntlr.RowHeadersVisible = false;
-            dgvAntlr.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvAntlr.Size = new Size(772, 102);
-            dgvAntlr.TabIndex = 0;
-            dgvAntlr.CellClick += dgvAntlr_CellClick;
-            // 
             // dgvScannerResults
             // 
             dgvScannerResults.AllowUserToAddRows = false;
@@ -718,14 +488,14 @@ namespace Compiler
             dgvScannerResults.BackgroundColor = SystemColors.Window;
             dgvScannerResults.BorderStyle = BorderStyle.None;
             dgvScannerResults.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = SystemColors.Window;
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle9.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
-            dgvScannerResults.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvScannerResults.DefaultCellStyle = dataGridViewCellStyle2;
             dgvScannerResults.Dock = DockStyle.Fill;
             dgvScannerResults.Location = new Point(0, 0);
             dgvScannerResults.MultiSelect = false;
@@ -735,6 +505,7 @@ namespace Compiler
             dgvScannerResults.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvScannerResults.Size = new Size(780, 130);
             dgvScannerResults.TabIndex = 2;
+            dgvScannerResults.CellClick += dgvScannerResults_CellClick;
             // 
             // richTextBoxResult
             // 
@@ -778,15 +549,6 @@ namespace Compiler
             mainPanel.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)mainPanel).EndInit();
             mainPanel.ResumeLayout(false);
-            tabControlOutput.ResumeLayout(false);
-            tabPageLexer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvLexer).EndInit();
-            tabPageParser.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvParser).EndInit();
-            tabPageFlexBison.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvFlexBison).EndInit();
-            tabPageAntlr.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvAntlr).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvScannerResults).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -841,14 +603,5 @@ namespace Compiler
         private ToolStripStatusLabel FilePathStatusLabel;
         private DataGridView dgvScannerResults;
         private Label lblPlaceholder;
-        private TabControl tabControlOutput;
-        private TabPage tabPageLexer;
-        private DataGridView dgvLexer;
-        private TabPage tabPageParser;
-        private DataGridView dgvParser;
-        private TabPage tabPageFlexBison;
-        private DataGridView dgvFlexBison;
-        private TabPage tabPageAntlr;
-        private DataGridView dgvAntlr;
     }
 }

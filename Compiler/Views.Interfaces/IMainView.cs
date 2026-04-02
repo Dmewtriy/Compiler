@@ -1,16 +1,11 @@
 ﻿using Compiler.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ParserANTLR;
 
 namespace Compiler.Views.Interfaces
 {
     public interface IMainView
     {
         string EditorContent { get; set; }
+        string SelectedPattern { get; }
         bool IsEditorVisible { get; set; }
         string WindowTitle { set; }
         public string StatusText { set; }
@@ -47,6 +42,8 @@ namespace Compiler.Views.Interfaces
 
         event FormClosingEventHandler ViewClosing;
 
+        event EventHandler<RegexSearchResult> ResultSelected;
+
         void ShowMessage(string title, string message);
         string? ShowOpenFileDialog();
         string? ShowSaveFileDialog();
@@ -61,16 +58,10 @@ namespace Compiler.Views.Interfaces
 
         DialogResult ConfirmSaveBeforeAction();
 
-        void ShowTokens(List<Token> tokens);
+        void DisplayResults(List<RegexSearchResult> results);
         void SelectTextInEditor(int start, int length);
 
-        void SetParserResult(string message, bool isSuccess);
-
         void ClearResults();
-
-        void DisplayErrorsParser(List<SyntaxError> errors);
-        void DisplayErrorsFlexBison(List<SyntaxError> errors);
-        void DisplayErrorsAntlr(List<SyntaxError> errors);
 
         void CloseView();
     }

@@ -1,8 +1,6 @@
 ﻿using Compiler.Models;
 using Compiler.Views;
 using Compiler.Views.Interfaces;
-using ParserANTLR;
-using System.Text.RegularExpressions;
 
 namespace Compiler.Controllers
 {
@@ -10,20 +8,16 @@ namespace Compiler.Controllers
     {
         private readonly IMainView _view;
         private readonly FileService _model;
+        private readonly RegexSearchService _searchService;
         private bool _isModified;
         private const string AppName = "Compiler";
-        private readonly Scanner _scanner;
-        private readonly Parser _parser;
-        private readonly AntlrParserService _antlrParser;
 
-        public MainController(IMainView view, FileService model, InfoService infoServ, Scanner scanner)
+        public MainController(IMainView view, FileService model, InfoService infoServ, RegexSearchService searchService)
         {
             _view = view;
             _model = model;
             var infoService = infoServ;
-            _scanner = scanner;
-            _parser = new Parser();
-            _antlrParser = new AntlrParserService();
+            _searchService = searchService;
 
             _view.NewFileClicked += OnNewFile;
             _view.OpenFileClicked += OnOpenFile;
@@ -47,7 +41,7 @@ namespace Compiler.Controllers
             _view.ReferencesClicked += (s, e) => ShowInfoWindow("Список литературы", infoService.GetReferencesContent());
             _view.SourceCodeClicked += (s, e) => ShowSourceCode(infoService.GetSourceCodeContent());
 
-            _view.RunClicked += OnRunClicked;
+            _view.RunClicked += OnSearchClicked;
 
             _view.HelpClicked += (s, e) => ShowInfoWindow("Справка", infoService.GetHelpText());
             _view.AboutClicked += (s, e) => ShowInfoWindow("О программе", infoService.GetAboutText());
@@ -57,6 +51,8 @@ namespace Compiler.Controllers
             _view.NavigateToErrorRequested += (start, len) => _view.SelectTextInEditor(start, len);
 
             _view.ViewClosing += OnViewClosing;
+
+            _view.ResultSelected += OnResultSelected;
 
             UpdateTitle();
         }
@@ -236,69 +232,6 @@ namespace Compiler.Controllers
             infoForm.ShowDialog();
         }
 
-        private void OnRunClicked(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(_view.EditorContent))
-            {
-                _view.ClearResults();
-                _view.ShowMessage("Внимание", "Редактор пуст. Нечего анализировать.");
-                return;
-            }
-
-            var tokens = _scanner.Analyze(_view.EditorContent);
-
-            _view.ShowTokens(tokens);
-
-            OnParseRequested(tokens);
-        }
-
-        private void OnParseRequested(List<Token> tokens)
-        {
-
-            var defaultParserRes = ParseDefaultParser(tokens);
-            var flexBisonParserRes = ParseFlexBison(_view.EditorContent);
-            var antlrParserRes = ParseAntlr(_view.EditorContent);
-
-            _view.DisplayErrorsParser(defaultParserRes);
-            _view.DisplayErrorsFlexBison(flexBisonParserRes);
-            _view.DisplayErrorsAntlr(antlrParserRes);
-        }
-
-        private List<SyntaxError> ParseDefaultParser(List<Token> tokens)
-        {
-            _parser.Parse(tokens);
-            return _parser.Errors;
-        }
-
-        private List<SyntaxError> ParseFlexBison(string sourceCode)
-        {
-            var res = ParserService.Parse(sourceCode);
-
-            var errors = new List<SyntaxError>();
-
-            string pattern = @"(?<location>.*?):\s*(?<description>syntax error,\s*unexpected\s+(?<quote>['""]?)(?<fragment>.*?)\k<quote>(?:,|$).*)$";
-
-            var matches = Regex.Matches(res, pattern, RegexOptions.Multiline);
-
-            foreach (Match match in matches)
-            {
-                errors.Add(new SyntaxError
-                {
-                    Location = match.Groups["location"].Value.Trim(),
-                    Description = match.Groups["description"].Value.Trim(),
-                    Fragment = match.Groups["fragment"].Value.Trim()
-                });
-            }
-
-            return errors;
-        }
-
-        private List<SyntaxError> ParseAntlr(string sourceCode)
-        {
-            var res = _antlrParser.Parse(sourceCode);
-            return res;
-        }
-
         private void ShowSourceCode(string url)
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
@@ -306,6 +239,30 @@ namespace Compiler.Controllers
                 FileName = url,
                 UseShellExecute = true
             });
+        }
+
+        private void OnSearchClicked(object sender, EventArgs e)
+        {
+            var text = _view.EditorContent;
+            var pattern = _view.SelectedPattern;
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                _view.ClearResults();
+                _view.ShowMessage("Внимание", "Редактор пуст. Нечего анализировать.");
+                return;
+            }
+
+            var results = _searchService.Search(text, pattern);
+            _view.DisplayResults(results);
+        }
+
+        private void OnResultSelected(object sender, RegexSearchResult result)
+        {
+            if (result != null)
+            {
+                _view.SelectTextInEditor(result.AbsoluteIndex, result.Length);
+            }
         }
     }
 
