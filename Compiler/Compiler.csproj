@@ -29,11 +29,6 @@
 
 	<ItemGroup>
 		<Content Include="kon'.ico" />
-		<Content Include="parser.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<ExcludeFromSingleFile>false</ExcludeFromSingleFile>
-			<AssetType>native</AssetType>
-		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -45,10 +40,6 @@
 	  <EmbeddedResource Include="resources\Method.html" />
 	  <EmbeddedResource Include="resources\Tests.html" />
 	  <EmbeddedResource Include="resources\Task.html" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\ParserANTLR\ParserANTLR.csproj" />
 	</ItemGroup>
 
   <ItemGroup>
@@ -64,12 +55,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="parser.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

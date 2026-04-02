@@ -25,7 +25,7 @@ namespace Compiler.Models
                 results.Add(new RegexSearchResult
                 {
                     Fragment = match.Value,
-                    Location = $"Строка {line}, позиция {posInLine}",
+                    Position = $"Строка {line}, позиция {posInLine}",
                     AbsoluteIndex = match.Index,
                     Length = match.Length
                 });

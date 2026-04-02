@@ -31,7 +31,7 @@ namespace Compiler
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             menuStrip = new MenuStrip();
             file = new ToolStripMenuItem();
             menuCreate = new ToolStripMenuItem();
@@ -72,6 +72,7 @@ namespace Compiler
             toolRun = new ToolStripButton();
             toolAbout = new ToolStripButton();
             toolHelp = new ToolStripButton();
+            cbRegexTasks = new ToolStripComboBox();
             statusStrip = new StatusStrip();
             FilePathStatusLabel = new ToolStripStatusLabel();
             mainPanel = new SplitContainer();
@@ -95,7 +96,7 @@ namespace Compiler
             menuStrip.Items.AddRange(new ToolStripItem[] { file, editing, text, run, reference });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
-            menuStrip.Size = new Size(784, 24);
+            menuStrip.Size = new Size(984, 24);
             menuStrip.TabIndex = 0;
             menuStrip.Text = "menuStrip1";
             // 
@@ -298,10 +299,10 @@ namespace Compiler
             // tools
             // 
             tools.ImageScalingSize = new Size(32, 32);
-            tools.Items.AddRange(new ToolStripItem[] { toolCreate, toolOpen, toolSave, toolCancel, toolReturn, toolCopy, toolCut, toolPaste, toolRun, toolAbout, toolHelp });
+            tools.Items.AddRange(new ToolStripItem[] { toolCreate, toolOpen, toolSave, toolCancel, toolReturn, toolCopy, toolCut, toolPaste, toolRun, toolAbout, toolHelp, cbRegexTasks });
             tools.Location = new Point(0, 24);
             tools.Name = "tools";
-            tools.Size = new Size(784, 39);
+            tools.Size = new Size(984, 39);
             tools.TabIndex = 1;
             tools.Text = "toolStrip1";
             // 
@@ -331,7 +332,7 @@ namespace Compiler
             toolSave.DisplayStyle = ToolStripItemDisplayStyle.Image;
             toolSave.Image = (Image)resources.GetObject("toolSave.Image");
             toolSave.ImageTransparentColor = Color.Magenta;
-            toolSave.Margin = new Padding(0, 1, 40, 2);
+            toolSave.Margin = new Padding(0, 1, 30, 2);
             toolSave.Name = "toolSave";
             toolSave.Size = new Size(36, 36);
             toolSave.Text = "Сохранить";
@@ -351,7 +352,7 @@ namespace Compiler
             toolReturn.DisplayStyle = ToolStripItemDisplayStyle.Image;
             toolReturn.Image = (Image)resources.GetObject("toolReturn.Image");
             toolReturn.ImageTransparentColor = Color.Magenta;
-            toolReturn.Margin = new Padding(0, 1, 40, 2);
+            toolReturn.Margin = new Padding(0, 1, 30, 2);
             toolReturn.Name = "toolReturn";
             toolReturn.Size = new Size(36, 36);
             toolReturn.Text = "Вернуть";
@@ -381,7 +382,7 @@ namespace Compiler
             toolPaste.DisplayStyle = ToolStripItemDisplayStyle.Image;
             toolPaste.Image = (Image)resources.GetObject("toolPaste.Image");
             toolPaste.ImageTransparentColor = Color.Magenta;
-            toolPaste.Margin = new Padding(0, 1, 80, 2);
+            toolPaste.Margin = new Padding(0, 1, 30, 2);
             toolPaste.Name = "toolPaste";
             toolPaste.Size = new Size(36, 36);
             toolPaste.Text = "Вставить";
@@ -415,12 +416,21 @@ namespace Compiler
             toolHelp.Size = new Size(36, 36);
             toolHelp.Text = "Вызов справки";
             // 
+            // cbRegexTasks
+            // 
+            cbRegexTasks.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbRegexTasks.FlatStyle = FlatStyle.System;
+            cbRegexTasks.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            cbRegexTasks.Margin = new Padding(20, 0, 1, 0);
+            cbRegexTasks.Name = "cbRegexTasks";
+            cbRegexTasks.Size = new Size(320, 39);
+            // 
             // statusStrip
             // 
             statusStrip.Items.AddRange(new ToolStripItem[] { FilePathStatusLabel });
-            statusStrip.Location = new Point(0, 439);
+            statusStrip.Location = new Point(0, 539);
             statusStrip.Name = "statusStrip";
-            statusStrip.Size = new Size(784, 22);
+            statusStrip.Size = new Size(984, 22);
             statusStrip.TabIndex = 3;
             statusStrip.Text = "statusStrip1";
             // 
@@ -447,8 +457,8 @@ namespace Compiler
             // 
             mainPanel.Panel2.Controls.Add(dgvScannerResults);
             mainPanel.Panel2.Controls.Add(richTextBoxResult);
-            mainPanel.Size = new Size(784, 376);
-            mainPanel.SplitterDistance = 238;
+            mainPanel.Size = new Size(984, 476);
+            mainPanel.SplitterDistance = 301;
             mainPanel.TabIndex = 2;
             // 
             // lblPlaceholder
@@ -457,7 +467,7 @@ namespace Compiler
             lblPlaceholder.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
             lblPlaceholder.Location = new Point(0, 0);
             lblPlaceholder.Name = "lblPlaceholder";
-            lblPlaceholder.Size = new Size(780, 234);
+            lblPlaceholder.Size = new Size(980, 297);
             lblPlaceholder.TabIndex = 3;
             lblPlaceholder.Text = "Создайте или откройте файл, чтобы начать работу";
             lblPlaceholder.TextAlign = ContentAlignment.MiddleCenter;
@@ -472,7 +482,7 @@ namespace Compiler
             richTextBoxEdit.Location = new Point(0, 0);
             richTextBoxEdit.Margin = new Padding(0);
             richTextBoxEdit.Name = "richTextBoxEdit";
-            richTextBoxEdit.Size = new Size(780, 234);
+            richTextBoxEdit.Size = new Size(980, 297);
             richTextBoxEdit.TabIndex = 1;
             richTextBoxEdit.Text = "";
             richTextBoxEdit.WordWrap = false;
@@ -488,14 +498,14 @@ namespace Compiler
             dgvScannerResults.BackgroundColor = SystemColors.Window;
             dgvScannerResults.BorderStyle = BorderStyle.None;
             dgvScannerResults.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dgvScannerResults.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            dgvScannerResults.DefaultCellStyle = dataGridViewCellStyle1;
             dgvScannerResults.Dock = DockStyle.Fill;
             dgvScannerResults.Location = new Point(0, 0);
             dgvScannerResults.MultiSelect = false;
@@ -503,7 +513,7 @@ namespace Compiler
             dgvScannerResults.ReadOnly = true;
             dgvScannerResults.RowHeadersVisible = false;
             dgvScannerResults.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvScannerResults.Size = new Size(780, 130);
+            dgvScannerResults.Size = new Size(980, 167);
             dgvScannerResults.TabIndex = 2;
             dgvScannerResults.CellClick += dgvScannerResults_CellClick;
             // 
@@ -518,7 +528,7 @@ namespace Compiler
             richTextBoxResult.Margin = new Padding(0);
             richTextBoxResult.Name = "richTextBoxResult";
             richTextBoxResult.ReadOnly = true;
-            richTextBoxResult.Size = new Size(780, 130);
+            richTextBoxResult.Size = new Size(980, 167);
             richTextBoxResult.TabIndex = 1;
             richTextBoxResult.Text = ">";
             richTextBoxResult.WordWrap = false;
@@ -527,14 +537,14 @@ namespace Compiler
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(784, 461);
+            ClientSize = new Size(984, 561);
             Controls.Add(mainPanel);
             Controls.Add(statusStrip);
             Controls.Add(tools);
             Controls.Add(menuStrip);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip;
-            MinimumSize = new Size(800, 500);
+            MinimumSize = new Size(1000, 500);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Компилятор";
@@ -603,5 +613,6 @@ namespace Compiler
         private ToolStripStatusLabel FilePathStatusLabel;
         private DataGridView dgvScannerResults;
         private Label lblPlaceholder;
+        private ToolStripComboBox cbRegexTasks;
     }
 }

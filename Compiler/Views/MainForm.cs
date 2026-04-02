@@ -8,6 +8,7 @@ namespace Compiler
         public MainForm()
         {
             InitializeComponent();
+            InitPatterns();
             CreateColumns();
             BindEvents();
         }
@@ -81,6 +82,18 @@ namespace Compiler
         private void MainForm_Load(object sender, EventArgs e)
         {
             IsEditorVisible = false;
+        }
+
+        private void InitPatterns()
+        {
+            _patterns = new Dictionary<string, string>
+            {
+                { "Задача 1: Номер социального страхования США", @"\d{3}-\d{2}-\d{4}" },
+                { "Задача 2: Инициалы и фамилия", @"[А-Я]\.\s?[А-Я]\.\s[А-Я][а-я]+" },
+                { "Задача 3: Денежные суммы в разных валютах", @"(?:0|[1-9]\d{0,2}(?:\s\d{3})*|[1-9]\d*)(?:[.,]\d{1,2})?\s?[\$₽₸€£]" }
+            };
+            cbRegexTasks.Items.AddRange(new List<string>(_patterns.Keys).ToArray());
+            cbRegexTasks.SelectedIndex = 0;
         }
 
         private void BindEvents()
@@ -237,6 +250,15 @@ namespace Compiler
             richTextBoxEdit.Select(start, length);
         }
 
+        public void DisplayResults(List<RegexSearchResult> result)
+        {
+            ClearResults();
+            foreach (var res in result)
+            {
+                dgvScannerResults.Rows.Add(res.Fragment, res.Position, res.Length, res.AbsoluteIndex);
+            }
+            if (result.Count > 0) dgvScannerResults.Rows.Add("Общее количество совпадений:", dgvScannerResults.Rows.Count);
+        }
         private void dgvScannerResults_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -246,10 +268,13 @@ namespace Compiler
 
             var row = dgvScannerResults.Rows[e.RowIndex];
 
+            if (row.Index == dgvScannerResults.Rows[^1].Index) return;
+
             var absIndex = (int)row.Cells[3].Value;
             var length = (int)row.Cells[2].Value;
 
             NavigateToErrorRequested?.Invoke(absIndex, length);
         }
+
     }
 }

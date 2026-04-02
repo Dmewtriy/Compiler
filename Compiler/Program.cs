@@ -1,6 +1,5 @@
 using Compiler.Controllers;
 using Compiler.Models;
-using ParserANTLR;
 
 namespace Compiler
 {
@@ -17,9 +16,9 @@ namespace Compiler
 
             var model = new FileService();
             var infoModel = new InfoService();
-            var scanner = new Scanner();
+            var regService = new RegexSearchService();
             var view = new MainForm();
-            _ = new MainController(view, model, infoModel, scanner);
+            _ = new MainController(view, model, infoModel, regService);
 
             Application.Run(view);
         }

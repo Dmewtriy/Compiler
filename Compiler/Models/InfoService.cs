@@ -13,8 +13,6 @@ namespace Compiler.Models
         private string LoadResource(string fileName)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            // Важно: проверьте полное имя ресурса в свойствах или через GetManifestResourceNames()
-            // Обычно это: [ПространствоИмен].[Папка].[ИмяФайла]
             string resourcePath = $"Compiler.resources.{fileName}";
 
             using (Stream stream = assembly.GetManifestResourceStream(resourcePath))

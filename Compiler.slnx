@@ -5,5 +5,4 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="Compiler/Compiler.csproj" />
-  <Project Path="ParserANTLR/ParserANTLR.csproj" Id="4dc0070f-0814-42c7-9245-55e93758fc74" />
 </Solution>
