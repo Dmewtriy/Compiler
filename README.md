@@ -371,5 +371,7 @@ enum User_Role {
 <img width="986" height="493" alt="пр3" src="https://github.com/user-attachments/assets/96eb4d1a-4547-447d-8634-d7565f21d07f" /><br><br>
 <img width="986" height="493" alt="пр4" src="https://github.com/user-attachments/assets/9764a0e5-68b2-40f1-9e60-6c21d58c387b" /><br><br>
 <br><br>
-<br><br>
-<br><br>
+
+### Граф автомата для второга варинта
+<img width="822" height="651" alt="схема доп 4 лаба" src="https://github.com/user-attachments/assets/8d4c8f26-3179-45f6-a894-ab905ca9f3ed" /><br><br>
+
