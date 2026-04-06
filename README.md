@@ -375,3 +375,7 @@ enum User_Role {
 ### Граф автомата для второга варинта
 <img width="822" height="651" alt="схема доп 4 лаба" src="https://github.com/user-attachments/assets/8d4c8f26-3179-45f6-a894-ab905ca9f3ed" /><br><br>
 
+Тестовая проверка автоматом
+<img width="986" height="493" alt="доп4" src="https://github.com/user-attachments/assets/ef332cb2-ea89-46e6-ab81-361ebd700317" />
+
+
