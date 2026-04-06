@@ -428,7 +428,7 @@ namespace Compiler
             // statusStrip
             // 
             statusStrip.Items.AddRange(new ToolStripItem[] { FilePathStatusLabel });
-            statusStrip.Location = new Point(0, 539);
+            statusStrip.Location = new Point(0, 439);
             statusStrip.Name = "statusStrip";
             statusStrip.Size = new Size(984, 22);
             statusStrip.TabIndex = 3;
@@ -457,8 +457,8 @@ namespace Compiler
             // 
             mainPanel.Panel2.Controls.Add(dgvScannerResults);
             mainPanel.Panel2.Controls.Add(richTextBoxResult);
-            mainPanel.Size = new Size(984, 476);
-            mainPanel.SplitterDistance = 301;
+            mainPanel.Size = new Size(984, 376);
+            mainPanel.SplitterDistance = 237;
             mainPanel.TabIndex = 2;
             // 
             // lblPlaceholder
@@ -467,7 +467,7 @@ namespace Compiler
             lblPlaceholder.Font = new Font("Segoe UI Semibold", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
             lblPlaceholder.Location = new Point(0, 0);
             lblPlaceholder.Name = "lblPlaceholder";
-            lblPlaceholder.Size = new Size(980, 297);
+            lblPlaceholder.Size = new Size(980, 233);
             lblPlaceholder.TabIndex = 3;
             lblPlaceholder.Text = "Создайте или откройте файл, чтобы начать работу";
             lblPlaceholder.TextAlign = ContentAlignment.MiddleCenter;
@@ -482,7 +482,7 @@ namespace Compiler
             richTextBoxEdit.Location = new Point(0, 0);
             richTextBoxEdit.Margin = new Padding(0);
             richTextBoxEdit.Name = "richTextBoxEdit";
-            richTextBoxEdit.Size = new Size(980, 297);
+            richTextBoxEdit.Size = new Size(980, 233);
             richTextBoxEdit.TabIndex = 1;
             richTextBoxEdit.Text = "";
             richTextBoxEdit.WordWrap = false;
@@ -513,7 +513,7 @@ namespace Compiler
             dgvScannerResults.ReadOnly = true;
             dgvScannerResults.RowHeadersVisible = false;
             dgvScannerResults.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvScannerResults.Size = new Size(980, 167);
+            dgvScannerResults.Size = new Size(980, 131);
             dgvScannerResults.TabIndex = 2;
             dgvScannerResults.CellClick += dgvScannerResults_CellClick;
             // 
@@ -528,7 +528,7 @@ namespace Compiler
             richTextBoxResult.Margin = new Padding(0);
             richTextBoxResult.Name = "richTextBoxResult";
             richTextBoxResult.ReadOnly = true;
-            richTextBoxResult.Size = new Size(980, 167);
+            richTextBoxResult.Size = new Size(980, 131);
             richTextBoxResult.TabIndex = 1;
             richTextBoxResult.Text = ">";
             richTextBoxResult.WordWrap = false;
@@ -537,7 +537,7 @@ namespace Compiler
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(984, 561);
+            ClientSize = new Size(984, 461);
             Controls.Add(mainPanel);
             Controls.Add(statusStrip);
             Controls.Add(tools);
