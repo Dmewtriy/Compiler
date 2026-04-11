@@ -1,9 +1,4 @@
 ﻿using Compiler.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ParserANTLR;
 
 namespace Compiler.Views.Interfaces
@@ -69,8 +64,6 @@ namespace Compiler.Views.Interfaces
         void ClearResults();
 
         void DisplayErrorsParser(List<SyntaxError> errors);
-        void DisplayErrorsFlexBison(List<SyntaxError> errors);
-        void DisplayErrorsAntlr(List<SyntaxError> errors);
 
         void CloseView();
     }

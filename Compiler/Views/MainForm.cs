@@ -202,8 +202,6 @@ namespace Compiler
         {
             CreateColumnsLexer();
             CreateColumnsParser();
-            CreateColumnsFlexBison();
-            CreateColumnsAntlr();
         }
 
         private void CreateColumnsLexer()
@@ -254,58 +252,10 @@ namespace Compiler
             }
         }
 
-        private void CreateColumnsFlexBison()
-        {
-            dgvFlexBison.Columns.Clear();
-            dgvFlexBison.Columns.Add("Fragment", "Неверный фрагмент");
-            dgvFlexBison.Columns["Fragment"].FillWeight = 50;
-
-            dgvFlexBison.Columns.Add("Location", "Местоположение");
-            dgvFlexBison.Columns["Location"].FillWeight = 80;
-
-            dgvFlexBison.Columns.Add("Description", "Описание ошибки");
-            dgvFlexBison.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-            dgvFlexBison.Columns.Add("colAbsIndex", "Index");
-            dgvFlexBison.Columns["colAbsIndex"].Visible = false;
-            dgvFlexBison.Columns.Add("colLen", "Len");
-            dgvFlexBison.Columns["colLen"].Visible = false;
-
-            foreach (DataGridViewColumn column in dgvFlexBison.Columns)
-            {
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-        }
-
-        private void CreateColumnsAntlr()
-        {
-            dgvAntlr.Columns.Clear();
-            dgvAntlr.Columns.Add("Fragment", "Неверный фрагмент");
-            dgvAntlr.Columns["Fragment"].FillWeight = 50;
-
-            dgvAntlr.Columns.Add("Location", "Местоположение");
-            dgvAntlr.Columns["Location"].FillWeight = 80;
-
-            dgvAntlr.Columns.Add("Description", "Описание ошибки");
-            dgvAntlr.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-            dgvAntlr.Columns.Add("colAbsIndex", "Index");
-            dgvAntlr.Columns["colAbsIndex"].Visible = false;
-            dgvAntlr.Columns.Add("colLen", "Len");
-            dgvAntlr.Columns["colLen"].Visible = false;
-
-            foreach (DataGridViewColumn column in dgvAntlr.Columns)
-            {
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-        }
-
         public void ClearResults()
         {
             dgvLexer.Rows.Clear();
             dgvParser.Rows.Clear();
-            dgvFlexBison.Rows.Clear();
-            dgvAntlr.Rows.Clear();
         }
 
         public void ShowTokens(List<Token> tokens)
@@ -352,26 +302,6 @@ namespace Compiler
             if (errors.Count > 0) dgvParser.Rows.Add("Общее количество ошибок:", dgvParser.Rows.Count);
         }
 
-        public void DisplayErrorsFlexBison(List<SyntaxError> errors)
-        {
-            dgvFlexBison.Rows.Clear();
-            foreach (var error in errors)
-            {
-                dgvFlexBison.Rows.Add(error.Fragment, error.Location, error.Description, error.AbsoluteIndex, error.Length);
-            }
-            if (errors.Count > 0) dgvFlexBison.Rows.Add("Общее количество ошибок:", dgvFlexBison.Rows.Count);
-        }
-
-        public void DisplayErrorsAntlr(List<SyntaxError> errors)
-        {
-            dgvAntlr.Rows.Clear();
-            foreach (var error in errors)
-            {
-                dgvAntlr.Rows.Add(error.Fragment, error.Location, error.Description, error.AbsoluteIndex, error.Length);
-            }
-            if (errors.Count > 0) dgvAntlr.Rows.Add("Общее количество ошибок:", dgvAntlr.Rows.Count);
-        }
-
         private void dgvLexer_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -400,36 +330,6 @@ namespace Compiler
             }
 
             var row = dgvParser.Rows[e.RowIndex];
-
-            var absIndex = (int)row.Cells[3].Value;
-            var length = (int)row.Cells[4].Value;
-
-            NavigateToErrorRequested?.Invoke(absIndex, length);
-        }
-
-        private void dgvFlexBison_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.RowIndex == dgvFlexBison.Rows.Count - 1)
-            {
-                return;
-            }
-
-            var row = dgvFlexBison.Rows[e.RowIndex];
-
-            var absIndex = (int)row.Cells[3].Value;
-            var length = (int)row.Cells[4].Value;
-
-            NavigateToErrorRequested?.Invoke(absIndex, length);
-        }
-
-        private void dgvAntlr_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.RowIndex == dgvAntlr.Rows.Count - 1)
-            {
-                return;
-            }
-
-            var row = dgvAntlr.Rows[e.RowIndex];
 
             var absIndex = (int)row.Cells[3].Value;
             var length = (int)row.Cells[4].Value;

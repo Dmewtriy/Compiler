@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.LinkLabel;
-
-namespace Compiler.Models
+﻿namespace Compiler.Models
 {
     public enum TokenType
     {
@@ -71,7 +64,7 @@ namespace Compiler.Models
                 int startCol = col;
                 int startAbs = i;
 
-                if (c == '\n')
+                if (c == '\n' || c == '\v')
                 {
                     line++;
                     col = 1;
