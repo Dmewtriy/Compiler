@@ -301,11 +301,13 @@
 <p>Разработать синтаксический анализатор для распознавания объявлений перечислений. Парсер должен принимать поток лексем, проверять их на соответствие грамматике и, в случае обнаружения ошибок, нейтрализовать их методом Айронса.</p>
 <h3 id="-">Разработка грамматики</h3>
 <div>
-	<p>
-		G[Z] = {Vt, Vn, Z, P}<br />Vt = {&#39;enum&#39;, &#39;case&#39;, &#39;{&#39;, &#39;}&#39;, &#39;;&#39;, &#39;space&#39;, &#39;a&#39;...&#39;z&#39;, &#39;A&#39;...&#39;Z&#39;<span data-mx-given-colors="{&quot;background-color&quot;:&quot;rgb(249, 249, 249)&quot;}">, &lsquo;0&rsquo;&hellip;&rsquo;9&rsquo;</span>}<br />Vn = {Z, ENUM, SPACE, ID, ENUM_BODY, CASE, SPACE_BTWN, CASE_ID, END_CASE, END<em>BODY, END, Б, Ц}</p>
-	<p>
-		P = {<br />&nbsp;&nbsp;&nbsp;&nbsp;Z -&gt; &#39;enum&#39; ENUM<br />&nbsp;&nbsp;&nbsp;&nbsp;ENUM -&gt; &#39;space&#39; SPACE<br />&nbsp;&nbsp;&nbsp;&nbsp;SPACE -&gt;&nbsp;(&#39;</em>&#39; | Б){Б | Ц | &lsquo;_&rsquo;} ID<br />&nbsp;&nbsp;&nbsp;&nbsp;ID-&gt; &#39;{&#39; ENUM_BODY<br />&nbsp;&nbsp;&nbsp;&nbsp;ENUM_BODY -&gt; &#39;case&#39; CASE | &#39;}&#39; END_BODY<br />&nbsp;&nbsp;&nbsp;&nbsp;CASE-&gt; &#39;space&#39; SPACE_BTWN<br />&nbsp;&nbsp;&nbsp;&nbsp;SPACE<em>BTWN-&gt;&nbsp;(&#39;</em>&#39; | Б){Б | Ц | &lsquo;_&rsquo;}&nbsp;CASE_ID<br />&nbsp;&nbsp;&nbsp;&nbsp;CASE_ID-&gt; &#39;;&#39; END_CASE<br />&nbsp;&nbsp;&nbsp;&nbsp;END_CASE&nbsp;-&gt; &#39;case&#39; CASE | &#39;}&#39;&nbsp;END_BODY<br />&nbsp;&nbsp;&nbsp;&nbsp;END_BODY&nbsp;-&gt; &#39;;&#39; END<br />&nbsp;&nbsp;&nbsp;&nbsp;Б &rarr; &lsquo;a&rsquo; | &lsquo;b&rsquo; | &hellip; | &lsquo;z&rsquo; | &lsquo;A&rsquo; | &lsquo;B&rsquo; | &hellip; | &lsquo;Z&rsquo;<br />&nbsp;&nbsp;&nbsp;&nbsp;Ц &rarr; &lsquo;0&rsquo; | &lsquo;1&rsquo; | &hellip; | &lsquo;9&rsquo;<br />}
-	</p>
+	<pre>
+		<p>
+			G[Z] = {Vt, Vn, Z, P}<br />Vt = {&#39;enum&#39;, &#39;case&#39;, &#39;{&#39;, &#39;}&#39;, &#39;;&#39;, &#39;space&#39;, &#39;a&#39;...&#39;z&#39;, &#39;A&#39;...&#39;Z&#39;<span data-mx-given-colors="{&quot;background-color&quot;:&quot;rgb(249, 249, 249)&quot;}">, &lsquo;0&rsquo;&hellip;&rsquo;9&rsquo;</span>}<br />Vn = {Z, ENUM, SPACE, ID, ENUM_BODY, CASE, SPACE_BTWN, CASE_ID, END_CASE, END<em>BODY, END, Б, Ц}</p>
+		<p>
+			P = {<br />&nbsp;&nbsp;&nbsp;&nbsp;Z -&gt; &#39;enum&#39; ENUM<br />&nbsp;&nbsp;&nbsp;&nbsp;ENUM -&gt; &#39;space&#39; SPACE<br />&nbsp;&nbsp;&nbsp;&nbsp;SPACE -&gt;&nbsp;(&#39;</em>&#39; | Б){Б | Ц | &lsquo;_&rsquo;} ID<br />&nbsp;&nbsp;&nbsp;&nbsp;ID-&gt; &#39;{&#39; ENUM_BODY<br />&nbsp;&nbsp;&nbsp;&nbsp;ENUM_BODY -&gt; &#39;case&#39; CASE | &#39;}&#39; END_BODY<br />&nbsp;&nbsp;&nbsp;&nbsp;CASE-&gt; &#39;space&#39; SPACE_BTWN<br />&nbsp;&nbsp;&nbsp;&nbsp;SPACE<em>BTWN-&gt;&nbsp;(&#39;</em>&#39; | Б){Б | Ц | &lsquo;_&rsquo;}&nbsp;CASE_ID<br />&nbsp;&nbsp;&nbsp;&nbsp;CASE_ID-&gt; &#39;;&#39; END_CASE<br />&nbsp;&nbsp;&nbsp;&nbsp;END_CASE&nbsp;-&gt; &#39;case&#39; CASE | &#39;}&#39;&nbsp;END_BODY<br />&nbsp;&nbsp;&nbsp;&nbsp;END_BODY&nbsp;-&gt; &#39;;&#39; END<br />&nbsp;&nbsp;&nbsp;&nbsp;Б &rarr; &lsquo;a&rsquo; | &lsquo;b&rsquo; | &hellip; | &lsquo;z&rsquo; | &lsquo;A&rsquo; | &lsquo;B&rsquo; | &hellip; | &lsquo;Z&rsquo;<br />&nbsp;&nbsp;&nbsp;&nbsp;Ц &rarr; &lsquo;0&rsquo; | &lsquo;1&rsquo; | &hellip; | &lsquo;9&rsquo;<br />}
+		</p>
+	</pre>
 </div>
 
 <h3 id="-">Классификация грамматики</h3>

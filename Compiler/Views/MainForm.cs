@@ -136,7 +136,7 @@ namespace Compiler
 
         public string? ShowOpenFileDialog()
         {
-            using var ofd = new OpenFileDialog { Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*" };
+            using var ofd = new OpenFileDialog { Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*", InitialDirectory = AppDomain.CurrentDomain.BaseDirectory };
             return ofd.ShowDialog() == DialogResult.OK ? ofd.FileName : null;
         }
 
