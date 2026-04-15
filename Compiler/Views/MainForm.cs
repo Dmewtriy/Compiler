@@ -1,6 +1,7 @@
 using Compiler.Models;
 using Compiler.Views.Interfaces;
 using ParserANTLR;
+using System.IO;
 
 namespace Compiler
 {
@@ -134,10 +135,33 @@ namespace Compiler
 
         }
 
-        public string? ShowOpenFileDialog()
+        public string ShowOpenFileDialog()
         {
-            using var ofd = new OpenFileDialog { Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*", InitialDirectory = AppDomain.CurrentDomain.BaseDirectory };
-            return ofd.ShowDialog() == DialogResult.OK ? ofd.FileName : null;
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                string exePath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+                string exeDirectory = Path.GetDirectoryName(exePath);
+
+                string testsPath = Path.Combine(exeDirectory, "Tests");
+
+                if (Directory.Exists(testsPath))
+                {
+                    openFileDialog.InitialDirectory = testsPath;
+                }
+                else
+                {
+                    openFileDialog.InitialDirectory = exeDirectory;
+                }
+
+                openFileDialog.RestoreDirectory = true;
+                openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    return openFileDialog.FileName;
+                }
+            }
+            return null;
         }
 
         public string? ShowSaveFileDialog()
