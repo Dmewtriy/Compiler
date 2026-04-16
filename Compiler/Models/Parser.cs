@@ -1,7 +1,14 @@
-﻿using ParserANTLR;
-
-namespace Compiler.Models
+﻿namespace Compiler.Models
 {
+    public class SyntaxError
+    {
+        public string Fragment { get; set; } = "";
+        public string Location { get; set; } = "";
+        public string Description { get; set; } = "";
+        public int AbsoluteIndex { get; set; }
+        public int Length { get; set; }
+    }
+
     public class Parser
     {
         private List<Token> _tokens;
@@ -64,11 +71,11 @@ namespace Compiler.Models
         {
             if (followSet == null || followSet.Length == 0) return;
 
-            while (CurrentToken != null )
+            while (CurrentToken != null)
             {
                 if (followSet.Contains(CurrentToken.Code))
                 {
-                    if (CurrentToken.Code == TokenCodes.ID && (_index+1 < _tokens.Count ? _tokens[_index+1] : null).Code == TokenCodes.ID) _index++;
+                    if (CurrentToken.Code == TokenCodes.ID && (_index + 1 < _tokens.Count ? _tokens[_index + 1] : null).Code == TokenCodes.ID) _index++;
                     return;
                 }
                 if (_index < _tokens.Count - 1) _index++;

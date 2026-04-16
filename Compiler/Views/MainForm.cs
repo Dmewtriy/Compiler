@@ -1,6 +1,5 @@
 using Compiler.Models;
 using Compiler.Views.Interfaces;
-using ParserANTLR;
 using System.IO;
 
 namespace Compiler
@@ -199,7 +198,18 @@ namespace Compiler
         }
         public void PerformDelete()
         {
-            richTextBoxEdit.SelectedText = "";
+            if (richTextBoxEdit.Focused)
+            {
+                if (richTextBoxEdit.SelectionLength > 0)
+                {
+                    richTextBoxEdit.SelectedText = "";
+                }
+                else if (richTextBoxEdit.SelectionStart < richTextBoxEdit.TextLength)
+                {
+                    richTextBoxEdit.Select(richTextBoxEdit.SelectionStart, 1);
+                    richTextBoxEdit.SelectedText = "";
+                }
+            }
         }
         public void PerformSelectAll()
         {
