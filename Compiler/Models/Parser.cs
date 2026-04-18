@@ -16,7 +16,6 @@
         public List<SyntaxError> Errors { get; } = new List<SyntaxError>();
 
         private Token CurrentToken => _index < _tokens.Count ? _tokens[_index] : null;
-        private bool CurrentTokenIsEOF => CurrentToken.Code == TokenCodes.EOF;
 
 
         public void Parse(List<Token> tokens)
@@ -89,43 +88,16 @@
         private void ParseZ()
         {
             Match(TokenCodes.ENUM, TokenCodes.ID, TokenCodes.EOF);
-            if (!EnsureNotEOF()) return;
             Match(TokenCodes.ID, TokenCodes.LBRACE, TokenCodes.CASE, TokenCodes.RBRACE, TokenCodes.EOF);
 
-            if (!EnsureNotEOF()) return;
             Match(TokenCodes.LBRACE, TokenCodes.CASE, TokenCodes.RBRACE, TokenCodes.EOF);
-
-            if (!EnsureNotEOF()) return;
             ParseEnumBody();
 
-            if (!EnsureNotEOF()) return;
             Match(TokenCodes.RBRACE, TokenCodes.SEMICOLON, TokenCodes.ID, TokenCodes.EOF);
 
             Match(TokenCodes.SEMICOLON, TokenCodes.ENUM, TokenCodes.EOF);
         }
-        private bool EnsureNotEOF()
-        {
-            if (CurrentTokenIsEOF)
-            {
-                EndOfFileHasCome();
-                return false;
-            }
-            return true;
-        }
-        private void EndOfFileHasCome()
-        {
-            Token errorToken = CurrentToken ?? _tokens.LastOrDefault();
-            string lexeme = errorToken?.Lexeme ?? "Конец файла (EOF)";
 
-            Errors.Add(new SyntaxError
-            {
-                Fragment = lexeme,
-                Location = $"Строка: {errorToken?.Line ?? 0}, Позиция: {errorToken?.StartPos ?? 0}",
-                Description = $"Незаконченное выражение",
-                AbsoluteIndex = errorToken?.AbsoluteIndex ?? 0,
-                Length = errorToken?.Lexeme?.Length ?? 1
-            });
-        }
 
         private void ParseEnumBody()
         {
@@ -148,7 +120,7 @@
         {
             Match(TokenCodes.CASE, TokenCodes.ID, TokenCodes.SEMICOLON, TokenCodes.EOF);
             Match(TokenCodes.ID, TokenCodes.SEMICOLON, TokenCodes.CASE, TokenCodes.RBRACE, TokenCodes.EOF);
-            Match(TokenCodes.SEMICOLON, TokenCodes.CASE, TokenCodes.ID, TokenCodes.RBRACE, TokenCodes.EOF);
+            Match(TokenCodes.SEMICOLON, TokenCodes.CASE, TokenCodes.ID, TokenCodes.SEMICOLON, TokenCodes.RBRACE, TokenCodes.EOF);
         }
     }
 }
