@@ -9,6 +9,8 @@ namespace Compiler.Views.Interfaces
         string WindowTitle { set; }
         public string StatusText { set; }
 
+        public string AstContent { set; }
+
         event EventHandler NewFileClicked;
         event EventHandler OpenFileClicked;
         event EventHandler SaveFileClicked;
@@ -63,6 +65,8 @@ namespace Compiler.Views.Interfaces
         void ClearResults();
 
         void DisplayErrorsParser(List<SyntaxError> errors);
+
+        void ShowSemanticErrors(List<SemanticError> errors);
 
         void CloseView();
     }

@@ -39,6 +39,11 @@ namespace Compiler
             set => FilePathStatusLabel.Text = value;
         }
 
+        public string AstContent
+        {
+            set => richTextBoxAST.Text = value;
+        }
+
         public event EventHandler NewFileClicked;
         public event EventHandler OpenFileClicked;
         public event EventHandler SaveFileClicked;
@@ -236,6 +241,7 @@ namespace Compiler
         {
             CreateColumnsLexer();
             CreateColumnsParser();
+            CreateColumnsSemanter();
         }
 
         private void CreateColumnsLexer()
@@ -286,10 +292,26 @@ namespace Compiler
             }
         }
 
+        private void CreateColumnsSemanter()
+        {
+            dgvSemant.Rows.Clear();
+            dgvSemant.Columns.Add("Message", "Сообщение");
+            dgvSemant.Columns["Message"].FillWeight = 160;
+
+            dgvSemant.Columns.Add("Location", "Местоположение");
+            dgvSemant.Columns["Location"].FillWeight = 80;
+
+            foreach (DataGridViewColumn column in dgvSemant.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+        }
+
         public void ClearResults()
         {
             dgvLexer.Rows.Clear();
             dgvParser.Rows.Clear();
+            dgvSemant.Rows.Clear();
         }
 
         public void ShowTokens(List<Token> tokens)
@@ -334,6 +356,15 @@ namespace Compiler
                 dgvParser.Rows.Add(error.Fragment, error.Location, error.Description, error.AbsoluteIndex, error.Length);
             }
             if (errors.Count > 0) dgvParser.Rows.Add("Общее количество ошибок:", dgvParser.Rows.Count);
+        }
+
+        public void ShowSemanticErrors(List<SemanticError> errors)
+        {
+            dgvSemant.Rows.Clear();
+            foreach (var err in errors)
+            {
+                dgvSemant.Rows.Add(err.Message, err);
+            }
         }
 
         private void dgvLexer_CellClick(object sender, DataGridViewCellEventArgs e)

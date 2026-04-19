@@ -18,10 +18,10 @@
         private Token CurrentToken => _index < _tokens.Count ? _tokens[_index] : null;
 
 
-        public void Parse(List<Token> tokens)
+        public List<EnumDeclNode> Parse(List<Token> tokens)
         {
             _tokens = tokens.Where(t => t.Code != TokenCodes.SPACE).ToList();
-            if (_tokens.Count == 0) return;
+            if (_tokens.Count == 0) return [];
             Errors.Clear();
             _index = 0;
             var lastToken = _tokens.LastOrDefault();
@@ -36,17 +36,24 @@
                 EndPos = lastToken != null ? lastToken.EndPos + 4 : 4
             });
 
+            var astNodes = new List<EnumDeclNode>();
+
             while (_index < _tokens.Count && _tokens[_index].Code != TokenCodes.EOF)
             {
-                ParseZ();
+                var node = ParseZ();
+                if (node != null) astNodes.Add(node);
             }
+
+            return astNodes;
         }
 
-        private void Match(TokenCodes expectedCode, params TokenCodes[] followSet)
+        private Token Match(TokenCodes expectedCode, params TokenCodes[] followSet)
         {
-            if (CurrentToken != null && CurrentToken.Code == expectedCode)
+            Token current = CurrentToken;
+            if (current != null && current.Code == expectedCode)
             {
                 _index++;
+                return current;
             }
             else
             {
@@ -63,6 +70,7 @@
                 });
 
                 Recover(followSet);
+                return null;
             }
         }
 
@@ -85,42 +93,62 @@
             }
         }
 
-        private void ParseZ()
+        private EnumDeclNode ParseZ()
         {
-            Match(TokenCodes.ENUM, TokenCodes.ID, TokenCodes.EOF);
-            Match(TokenCodes.ID, TokenCodes.LBRACE, TokenCodes.CASE, TokenCodes.RBRACE, TokenCodes.EOF);
+            var enumKeyword = Match(TokenCodes.ENUM, TokenCodes.ID, TokenCodes.EOF);
+            var idToken = Match(TokenCodes.ID, TokenCodes.LBRACE, TokenCodes.CASE, TokenCodes.RBRACE, TokenCodes.EOF);
+
+            var node = new EnumDeclNode
+            {
+                Name = idToken?.Lexeme ?? "Unknown",
+                Line = enumKeyword?.Line ?? 0,
+                Position = enumKeyword?.StartPos ?? 0
+            };
 
             Match(TokenCodes.LBRACE, TokenCodes.CASE, TokenCodes.RBRACE, TokenCodes.EOF);
-            ParseEnumBody();
+            node.Cases = ParseEnumBody();
 
             Match(TokenCodes.RBRACE, TokenCodes.SEMICOLON, TokenCodes.ID, TokenCodes.EOF);
 
             Match(TokenCodes.SEMICOLON, TokenCodes.ENUM, TokenCodes.EOF);
+
+            return node;
         }
 
 
-        private void ParseEnumBody()
+        private List<EnumCaseNode> ParseEnumBody()
         {
-            if (CurrentToken != null && CurrentToken.Code == TokenCodes.EOF) return;
-            else if (CurrentToken != null)
-            {
-                ParseCases();
-            }
+            if (CurrentToken != null && (CurrentToken.Code == TokenCodes.RBRACE || CurrentToken.Code == TokenCodes.EOF))
+                return new List<EnumCaseNode>();
+
+            return ParseCases();
         }
 
-        private void ParseCases()
+        private List<EnumCaseNode> ParseCases()
         {
+            var cases = new List<EnumCaseNode>();
             while (CurrentToken != null && CurrentToken.Code != TokenCodes.EOF && CurrentToken.Code != TokenCodes.SEMICOLON && CurrentToken.Code != TokenCodes.RBRACE)
             {
-                ParseCase();
+                var c = ParseCase();
+                if (c != null) cases.Add(c);
             }
+            return cases;
         }
 
-        private void ParseCase()
+        private EnumCaseNode ParseCase()
         {
             Match(TokenCodes.CASE, TokenCodes.ID, TokenCodes.SEMICOLON, TokenCodes.EOF);
-            Match(TokenCodes.ID, TokenCodes.SEMICOLON, TokenCodes.CASE, TokenCodes.RBRACE, TokenCodes.EOF);
+            var idToken = Match(TokenCodes.ID, TokenCodes.SEMICOLON, TokenCodes.CASE, TokenCodes.RBRACE, TokenCodes.EOF);
             Match(TokenCodes.SEMICOLON, TokenCodes.CASE, TokenCodes.ID, TokenCodes.SEMICOLON, TokenCodes.RBRACE, TokenCodes.EOF);
+
+            if (idToken == null) return null;
+
+            return new EnumCaseNode
+            {
+                Name = idToken.Lexeme,
+                Line = idToken.Line,
+                Position = idToken.StartPos
+            };
         }
     }
 }

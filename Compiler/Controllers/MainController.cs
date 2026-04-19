@@ -1,6 +1,7 @@
 ﻿using Compiler.Models;
 using Compiler.Views;
 using Compiler.Views.Interfaces;
+using System.Security.AccessControl;
 
 namespace Compiler.Controllers
 {
@@ -12,6 +13,8 @@ namespace Compiler.Controllers
         private const string AppName = "Compiler";
         private readonly Scanner _scanner;
         private readonly Parser _parser;
+        private readonly SemanticAnalyzer _semanticAnalyzer;
+        private readonly AstVisualizer _visualizer;
 
         public MainController(IMainView view, FileService model, InfoService infoServ, Scanner scanner)
         {
@@ -20,6 +23,8 @@ namespace Compiler.Controllers
             var infoService = infoServ;
             _scanner = scanner;
             _parser = new Parser();
+            _semanticAnalyzer = new SemanticAnalyzer();
+            _visualizer = new AstVisualizer();
 
             _view.NewFileClicked += OnNewFile;
             _view.OpenFileClicked += OnOpenFile;
@@ -258,8 +263,19 @@ namespace Compiler.Controllers
 
         private List<SyntaxError> ParseDefaultParser(List<Token> tokens)
         {
-            _parser.Parse(tokens);
+
+            SemanticAnaliz(_parser.Parse(tokens));
+
             return _parser.Errors;
+        }
+
+        private void SemanticAnaliz(List<EnumDeclNode> enumDeclNodes)
+        {
+            var cleanAst = _semanticAnalyzer.Analyze(enumDeclNodes);
+
+            _view.ShowSemanticErrors(_semanticAnalyzer.Errors);
+
+            _view.AstContent = _visualizer.GenerateTreeText(cleanAst);
         }
 
         private void ShowSourceCode(string url)
