@@ -31,11 +31,11 @@ namespace Compiler
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             menuStrip = new MenuStrip();
             file = new ToolStripMenuItem();
             menuCreate = new ToolStripMenuItem();
@@ -86,12 +86,10 @@ namespace Compiler
             dgvLexer = new DataGridView();
             tabPageParser = new TabPage();
             dgvParser = new DataGridView();
-            tabPageSemant = new TabPage();
-            dgvSemant = new DataGridView();
-            tabPageAST = new TabPage();
+            tabPagePoliz = new TabPage();
+            txtTerminal = new RichTextBox();
             dgvScannerResults = new DataGridView();
             richTextBoxResult = new RichTextBox();
-            richTextBoxAST = new RichTextBox();
             menuStrip.SuspendLayout();
             tools.SuspendLayout();
             statusStrip.SuspendLayout();
@@ -104,9 +102,7 @@ namespace Compiler
             ((System.ComponentModel.ISupportInitialize)dgvLexer).BeginInit();
             tabPageParser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvParser).BeginInit();
-            tabPageSemant.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvSemant).BeginInit();
-            tabPageAST.SuspendLayout();
+            tabPagePoliz.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvScannerResults).BeginInit();
             SuspendLayout();
             // 
@@ -504,8 +500,7 @@ namespace Compiler
             // 
             tabControlOutput.Controls.Add(tabPageLexer);
             tabControlOutput.Controls.Add(tabPageParser);
-            tabControlOutput.Controls.Add(tabPageSemant);
-            tabControlOutput.Controls.Add(tabPageAST);
+            tabControlOutput.Controls.Add(tabPagePoliz);
             tabControlOutput.Dock = DockStyle.Fill;
             tabControlOutput.DrawMode = TabDrawMode.OwnerDrawFixed;
             tabControlOutput.Location = new Point(0, 0);
@@ -522,7 +517,7 @@ namespace Compiler
             tabPageLexer.Name = "tabPageLexer";
             tabPageLexer.Size = new Size(772, 102);
             tabPageLexer.TabIndex = 0;
-            tabPageLexer.Text = "Лексический анализатор";
+            tabPageLexer.Text = "Тетрады";
             tabPageLexer.UseVisualStyleBackColor = true;
             // 
             // dgvLexer
@@ -534,23 +529,23 @@ namespace Compiler
             dgvLexer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvLexer.BackgroundColor = SystemColors.Window;
             dgvLexer.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = SystemColors.Control;
-            dataGridViewCellStyle7.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            dgvLexer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvLexer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dgvLexer.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = SystemColors.Window;
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle8.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
-            dgvLexer.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dgvLexer.DefaultCellStyle = dataGridViewCellStyle2;
             dgvLexer.Dock = DockStyle.Fill;
             dgvLexer.Location = new Point(0, 0);
             dgvLexer.MultiSelect = false;
@@ -560,7 +555,6 @@ namespace Compiler
             dgvLexer.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvLexer.Size = new Size(772, 102);
             dgvLexer.TabIndex = 0;
-            dgvLexer.CellClick += dgvLexer_CellClick;
             // 
             // tabPageParser
             // 
@@ -569,7 +563,7 @@ namespace Compiler
             tabPageParser.Name = "tabPageParser";
             tabPageParser.Size = new Size(772, 102);
             tabPageParser.TabIndex = 1;
-            tabPageParser.Text = "Синтаксический анализатор";
+            tabPageParser.Text = "Ошибки";
             tabPageParser.UseVisualStyleBackColor = true;
             // 
             // dgvParser
@@ -581,23 +575,23 @@ namespace Compiler
             dgvParser.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvParser.BackgroundColor = SystemColors.Window;
             dgvParser.BorderStyle = BorderStyle.None;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.BackColor = SystemColors.Control;
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle9.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
-            dgvParser.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            dgvParser.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dgvParser.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = SystemColors.Window;
-            dataGridViewCellStyle10.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle10.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle10.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.False;
-            dgvParser.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.Window;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dgvParser.DefaultCellStyle = dataGridViewCellStyle4;
             dgvParser.Dock = DockStyle.Fill;
             dgvParser.Location = new Point(0, 0);
             dgvParser.MultiSelect = false;
@@ -607,50 +601,29 @@ namespace Compiler
             dgvParser.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvParser.Size = new Size(772, 102);
             dgvParser.TabIndex = 0;
-            dgvParser.CellClick += dgvParser_CellClick;
             // 
-            // tabPageSemant
+            // tabPagePoliz
             // 
-            tabPageSemant.Controls.Add(dgvSemant);
-            tabPageSemant.Location = new Point(4, 24);
-            tabPageSemant.Name = "tabPageSemant";
-            tabPageSemant.Size = new Size(772, 102);
-            tabPageSemant.TabIndex = 2;
-            tabPageSemant.Text = "Семантический анализатор";
-            tabPageSemant.UseVisualStyleBackColor = true;
+            tabPagePoliz.Controls.Add(txtTerminal);
+            tabPagePoliz.Location = new Point(4, 24);
+            tabPagePoliz.Name = "tabPagePoliz";
+            tabPagePoliz.Size = new Size(772, 102);
+            tabPagePoliz.TabIndex = 2;
+            tabPagePoliz.Text = "ПОЛИЗ";
+            tabPagePoliz.UseVisualStyleBackColor = true;
             // 
-            // dgvSemant
+            // txtTerminal
             // 
-            dgvSemant.AllowUserToAddRows = false;
-            dgvSemant.AllowUserToDeleteRows = false;
-            dgvSemant.AllowUserToResizeColumns = false;
-            dgvSemant.AllowUserToResizeRows = false;
-            dgvSemant.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvSemant.BackgroundColor = SystemColors.Window;
-            dgvSemant.BorderStyle = BorderStyle.None;
-            dgvSemant.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
-            dgvSemant.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSemant.DefaultCellStyle = dataGridViewCellStyle10;
-            dgvSemant.Dock = DockStyle.Fill;
-            dgvSemant.Location = new Point(0, 0);
-            dgvSemant.MultiSelect = false;
-            dgvSemant.Name = "dgvSemant";
-            dgvSemant.ReadOnly = true;
-            dgvSemant.RowHeadersVisible = false;
-            dgvSemant.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvSemant.Size = new Size(772, 102);
-            dgvSemant.TabIndex = 0;
-            dgvSemant.CellClick += dgvLexer_CellClick;
-            // 
-            // tabPageAST
-            // 
-            tabPageAST.Controls.Add(richTextBoxAST);
-            tabPageAST.Location = new Point(4, 24);
-            tabPageAST.Name = "tabPageAST";
-            tabPageAST.Size = new Size(772, 102);
-            tabPageAST.TabIndex = 3;
-            tabPageAST.Text = "AST";
-            tabPageAST.UseVisualStyleBackColor = true;
+            txtTerminal.BackColor = Color.White;
+            txtTerminal.Dock = DockStyle.Fill;
+            txtTerminal.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            txtTerminal.ForeColor = Color.Black;
+            txtTerminal.Location = new Point(0, 0);
+            txtTerminal.Name = "txtTerminal";
+            txtTerminal.ReadOnly = true;
+            txtTerminal.Size = new Size(772, 102);
+            txtTerminal.TabIndex = 0;
+            txtTerminal.Text = "";
             // 
             // dgvScannerResults
             // 
@@ -662,14 +635,14 @@ namespace Compiler
             dgvScannerResults.BackgroundColor = SystemColors.Window;
             dgvScannerResults.BorderStyle = BorderStyle.None;
             dgvScannerResults.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = SystemColors.Window;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            dgvScannerResults.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            dgvScannerResults.DefaultCellStyle = dataGridViewCellStyle5;
             dgvScannerResults.Dock = DockStyle.Fill;
             dgvScannerResults.Location = new Point(0, 0);
             dgvScannerResults.MultiSelect = false;
@@ -695,17 +668,6 @@ namespace Compiler
             richTextBoxResult.TabIndex = 1;
             richTextBoxResult.Text = ">";
             richTextBoxResult.WordWrap = false;
-            // 
-            // richTextBoxAST
-            // 
-            richTextBoxAST.Dock = DockStyle.Fill;
-            richTextBoxAST.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            richTextBoxAST.Location = new Point(0, 0);
-            richTextBoxAST.Name = "richTextBoxAST";
-            richTextBoxAST.ReadOnly = true;
-            richTextBoxAST.Size = new Size(772, 102);
-            richTextBoxAST.TabIndex = 0;
-            richTextBoxAST.Text = "";
             // 
             // MainForm
             // 
@@ -738,9 +700,7 @@ namespace Compiler
             ((System.ComponentModel.ISupportInitialize)dgvLexer).EndInit();
             tabPageParser.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvParser).EndInit();
-            tabPageSemant.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvSemant).EndInit();
-            tabPageAST.ResumeLayout(false);
+            tabPagePoliz.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvScannerResults).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -800,9 +760,7 @@ namespace Compiler
         private DataGridView dgvLexer;
         private TabPage tabPageParser;
         private DataGridView dgvParser;
-        private TabPage tabPageSemant;
-        private TabPage tabPageAST;
-        private DataGridView dgvSemant;
-        private RichTextBox richTextBoxAST;
+        private TabPage tabPagePoliz;
+        private RichTextBox txtTerminal;
     }
 }

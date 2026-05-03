@@ -16,7 +16,7 @@ namespace Compiler
 
             var model = new FileService();
             var infoModel = new InfoService();
-            var scanner = new Scanner();
+            var scanner = new Lexer();
             var view = new MainForm();
             _ = new MainController(view, model, infoModel, scanner);
 

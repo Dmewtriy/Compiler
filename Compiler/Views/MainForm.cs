@@ -39,11 +39,6 @@ namespace Compiler
             set => FilePathStatusLabel.Text = value;
         }
 
-        public string AstContent
-        {
-            set => richTextBoxAST.Text = value;
-        }
-
         public event EventHandler NewFileClicked;
         public event EventHandler OpenFileClicked;
         public event EventHandler SaveFileClicked;
@@ -137,6 +132,35 @@ namespace Compiler
 
             this.FormClosing += (s, e) => ViewClosing?.Invoke(this, e);
 
+        }
+
+        public string PolizContent
+        {
+            set => txtTerminal.Text = value;
+        }
+
+        public void ClearAll()
+        {
+            dgvLexer.Rows.Clear();
+            txtTerminal.Clear();
+            dgvParser.Rows.Clear();
+        }
+
+        public void ShowErrors(List<string> errors)
+        {
+            foreach (var error in errors)
+            {
+                dgvParser.Rows.Add(error);
+            }
+        }
+
+        public void ShowTetrads(List<Tetrad> tetrads)
+        {
+            dgvLexer.Rows.Clear();
+            foreach (var t in tetrads)
+            {
+                dgvLexer.Rows.Add(t.Op, t.Arg1, t.Arg2, t.Result);
+            }
         }
 
         public string ShowOpenFileDialog()
@@ -239,29 +263,26 @@ namespace Compiler
 
         private void CreateColumns()
         {
-            CreateColumnsLexer();
-            CreateColumnsParser();
-            CreateColumnsSemanter();
+            CreateColumnsTetrads();
+            CreateColumnsErrors();
         }
 
-        private void CreateColumnsLexer()
+        private void CreateColumnsTetrads()
         {
             dgvLexer.Columns.Clear();
 
-            dgvLexer.Columns.Add("colCode", "Код");
-            dgvLexer.Columns["colCode"].FillWeight = 30;
+            dgvLexer.Columns.Add("Op", "Op");
+            dgvLexer.Columns["Op"].FillWeight = 40;
 
-            dgvLexer.Columns.Add("colType", "Тип лексемы");
-            dgvLexer.Columns["colType"].FillWeight = 100;
+            dgvLexer.Columns.Add("ColArg1", "Arg 1");
+            dgvLexer.Columns["ColArg1"].FillWeight = 40;
 
-            dgvLexer.Columns.Add("colLexeme", "Лексема");
-            dgvLexer.Columns["colLexeme"].FillWeight = 100;
+            dgvLexer.Columns.Add("ColArg2", "Arg 2");
+            dgvLexer.Columns["ColArg2"].FillWeight = 40;
 
-            dgvLexer.Columns.Add("colPos", "Местоположение");
-            dgvLexer.Columns["colPos"].FillWeight = 80;
+            dgvLexer.Columns.Add("ColRes", "Result");
+            dgvLexer.Columns["ColRes"].FillWeight = 80;
 
-            dgvLexer.Columns.Add("colAbsIndex", "Index");
-            dgvLexer.Columns["colAbsIndex"].Visible = false;
 
             foreach (DataGridViewColumn column in dgvLexer.Columns)
             {
@@ -269,39 +290,13 @@ namespace Compiler
             }
         }
 
-        private void CreateColumnsParser()
+        private void CreateColumnsErrors()
         {
             dgvParser.Columns.Clear();
-            dgvParser.Columns.Add("Fragment", "Неверный фрагмент");
-            dgvParser.Columns["Fragment"].FillWeight = 50;
-
-            dgvParser.Columns.Add("Location", "Местоположение");
-            dgvParser.Columns["Location"].FillWeight = 80;
-
-            dgvParser.Columns.Add("Description", "Описание ошибки");
-            dgvParser.Columns["Description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-            dgvParser.Columns.Add("colAbsIndex", "Index");
-            dgvParser.Columns["colAbsIndex"].Visible = false;
-            dgvParser.Columns.Add("colLen", "Len");
-            dgvParser.Columns["colLen"].Visible = false;
+            dgvParser.Columns.Add("Error", "Неверный фрагмент");
+            dgvParser.Columns["Error"].FillWeight = 100;
 
             foreach (DataGridViewColumn column in dgvParser.Columns)
-            {
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-        }
-
-        private void CreateColumnsSemanter()
-        {
-            dgvSemant.Rows.Clear();
-            dgvSemant.Columns.Add("Message", "Сообщение");
-            dgvSemant.Columns["Message"].FillWeight = 160;
-
-            dgvSemant.Columns.Add("Location", "Местоположение");
-            dgvSemant.Columns["Location"].FillWeight = 80;
-
-            foreach (DataGridViewColumn column in dgvSemant.Columns)
             {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
@@ -311,95 +306,6 @@ namespace Compiler
         {
             dgvLexer.Rows.Clear();
             dgvParser.Rows.Clear();
-            dgvSemant.Rows.Clear();
-        }
-
-        public void ShowTokens(List<Token> tokens)
-        {
-            dgvLexer.Rows.Clear();
-            foreach (var token in tokens)
-            {
-                string pos = $"строка {token.Line}, {token.StartPos}-{token.EndPos}";
-                dgvLexer.Rows.Add(token.NumericCode, token.TypeName, token.Lexeme, pos, token.AbsoluteIndex);
-
-                if (token.Type == TokenType.INVALID_TOKEN)
-                {
-                    dgvLexer.Rows[^1].DefaultCellStyle.BackColor = Color.LightPink;
-                }
-            }
-        }
-
-
-        public void SelectTextInEditor(int start, int length)
-        {
-            richTextBoxEdit.Focus();
-            richTextBoxEdit.Select(start, length);
-        }
-
-        public void SetParserResult(string message, bool isSuccess)
-        {
-            if (!isSuccess)
-            {
-                CenteredMessageBox.Show(this, message, "Ошибка синтаксиса", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                CenteredMessageBox.Show(this, message, "Ошибок не обнаружено", MessageBoxButtons.OK, MessageBoxIcon.None);
-            }
-        }
-
-        public void DisplayErrorsParser(List<SyntaxError> errors)
-        {
-            dgvParser.Rows.Clear();
-            foreach (var error in errors)
-            {
-                dgvParser.Rows.Add(error.Fragment, error.Location, error.Description, error.AbsoluteIndex, error.Length);
-            }
-            if (errors.Count > 0) dgvParser.Rows.Add("Общее количество ошибок:", dgvParser.Rows.Count);
-        }
-
-        public void ShowSemanticErrors(List<SemanticError> errors)
-        {
-            dgvSemant.Rows.Clear();
-            foreach (var err in errors)
-            {
-                dgvSemant.Rows.Add(err.Message, err);
-            }
-        }
-
-        private void dgvLexer_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0)
-            {
-                return;
-            }
-
-            var row = dgvLexer.Rows[e.RowIndex];
-
-            if ((int)row.Cells[0].Value != (int)TokenCodes.ERROR)
-            {
-                return;
-            }
-
-            var absIndex = (int)row.Cells[4].Value;
-            var length = row.Cells[2].Value?.ToString()?.Length ?? 0;
-
-            NavigateToErrorRequested?.Invoke(absIndex, length);
-        }
-
-        private void dgvParser_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.RowIndex == dgvParser.Rows.Count - 1)
-            {
-                return;
-            }
-
-            var row = dgvParser.Rows[e.RowIndex];
-
-            var absIndex = (int)row.Cells[3].Value;
-            var length = (int)row.Cells[4].Value;
-
-            NavigateToErrorRequested?.Invoke(absIndex, length);
         }
 
         private void tabControlOutput_DrawItem(object sender, DrawItemEventArgs e)

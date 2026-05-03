@@ -11,20 +11,16 @@ namespace Compiler.Controllers
         private readonly FileService _model;
         private bool _isModified;
         private const string AppName = "Compiler";
-        private readonly Scanner _scanner;
+        private readonly Lexer _lexer;
         private readonly Parser _parser;
-        private readonly SemanticAnalyzer _semanticAnalyzer;
-        private readonly AstVisualizer _visualizer;
 
-        public MainController(IMainView view, FileService model, InfoService infoServ, Scanner scanner)
+        public MainController(IMainView view, FileService model, InfoService infoServ, Lexer lexer)
         {
             _view = view;
             _model = model;
             var infoService = infoServ;
-            _scanner = scanner;
+            _lexer = lexer;
             _parser = new Parser();
-            _semanticAnalyzer = new SemanticAnalyzer();
-            _visualizer = new AstVisualizer();
 
             _view.NewFileClicked += OnNewFile;
             _view.OpenFileClicked += OnOpenFile;
@@ -55,7 +51,6 @@ namespace Compiler.Controllers
 
             _view.ContentChanged += OnContentChanged;
 
-            _view.NavigateToErrorRequested += (start, len) => _view.SelectTextInEditor(start, len);
 
             _view.ViewClosing += OnViewClosing;
 
@@ -97,7 +92,6 @@ namespace Compiler.Controllers
             _view.IsEditorVisible = true;
             _isModified = false;
             UpdateTitle();
-            _view.SelectTextInEditor(0, 0);
         }
 
         private void OnOpenFile(object sender, EventArgs e)
@@ -122,7 +116,6 @@ namespace Compiler.Controllers
                 _view.IsEditorVisible = true;
                 _isModified = false;
                 UpdateTitle();
-                _view.SelectTextInEditor(_view.EditorContent.Length, 0);
             }
             catch (Exception ex)
             {
@@ -239,43 +232,33 @@ namespace Compiler.Controllers
 
         private void OnRunClicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(_view.EditorContent))
+            _view.ClearAll();
+            string input = _view.EditorContent;
+            if (string.IsNullOrWhiteSpace(input))
             {
-                _view.ClearResults();
                 _view.ShowMessage("Внимание", "Редактор пуст. Нечего анализировать.");
                 return;
             }
+            var lexer = new Lexer();
+            var tokens = lexer.Tokenize(input);
 
-            var tokens = _scanner.Analyze(_view.EditorContent);
+            var parser = new Parser();
+            parser.Parse(tokens);
 
-            _view.ShowTokens(tokens);
+            var allErrors = lexer.Errors.Concat(parser.Errors).ToList();
+            _view.ShowErrors(allErrors);
 
-            OnParseRequested(tokens);
-        }
+            _view.ShowTetrads(parser.Tetrads);
 
-        private void OnParseRequested(List<Token> tokens)
-        {
-
-            var defaultParserRes = ParseDefaultParser(tokens);
-
-            _view.DisplayErrorsParser(defaultParserRes);
-        }
-
-        private List<SyntaxError> ParseDefaultParser(List<Token> tokens)
-        {
-
-            SemanticAnaliz(_parser.Parse(tokens));
-
-            return _parser.Errors;
-        }
-
-        private void SemanticAnaliz(List<EnumDeclNode> enumDeclNodes)
-        {
-            var cleanAst = _semanticAnalyzer.Analyze(enumDeclNodes);
-
-            _view.ShowSemanticErrors(_semanticAnalyzer.Errors);
-
-            _view.AstContent = _visualizer.GenerateTreeText(cleanAst);
+            if (allErrors.Count == 0)
+            {
+                var polizGen = new Poliz();
+                _view.PolizContent = polizGen.GenerateAndCalculate(tokens);
+            }
+            else
+            {
+                _view.PolizContent = "ПОЛИЗ не строится: в выражении есть ошибки.";
+            }
         }
 
         private void ShowSourceCode(string url)

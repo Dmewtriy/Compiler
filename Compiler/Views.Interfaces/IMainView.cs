@@ -5,11 +5,10 @@ namespace Compiler.Views.Interfaces
     public interface IMainView
     {
         string EditorContent { get; set; }
+        string PolizContent { set; }
         bool IsEditorVisible { get; set; }
         string WindowTitle { set; }
         public string StatusText { set; }
-
-        public string AstContent { set; }
 
         event EventHandler NewFileClicked;
         event EventHandler OpenFileClicked;
@@ -57,16 +56,11 @@ namespace Compiler.Views.Interfaces
 
         DialogResult ConfirmSaveBeforeAction();
 
-        void ShowTokens(List<Token> tokens);
-        void SelectTextInEditor(int start, int length);
+        void ShowErrors(List<string> errors);
 
-        void SetParserResult(string message, bool isSuccess);
+        void ShowTetrads(List<Tetrad> tetrads);
 
-        void ClearResults();
-
-        void DisplayErrorsParser(List<SyntaxError> errors);
-
-        void ShowSemanticErrors(List<SemanticError> errors);
+        void ClearAll();
 
         void CloseView();
     }
