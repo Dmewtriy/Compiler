@@ -9,6 +9,11 @@ namespace Compiler.Views.Interfaces
         string WindowTitle { set; }
         public string StatusText { set; }
 
+        string RawIrContent { set; }
+        string Opt1IrContent { set; }
+        string Opt2IrContent { set; }
+        string FullOptIrContent { set; }
+
         public string AstContent { set; }
 
         event EventHandler NewFileClicked;

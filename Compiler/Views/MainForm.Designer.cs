@@ -89,9 +89,17 @@ namespace Compiler
             tabPageSemant = new TabPage();
             dgvSemant = new DataGridView();
             tabPageAST = new TabPage();
+            richTextBoxAST = new RichTextBox();
+            tabPageRawIr = new TabPage();
+            txtRawIr = new RichTextBox();
+            tabPageOptimizedIr = new TabPage();
+            txtFullOpt = new RichTextBox();
             dgvScannerResults = new DataGridView();
             richTextBoxResult = new RichTextBox();
-            richTextBoxAST = new RichTextBox();
+            tabPageOpt1 = new TabPage();
+            tabPageOpt2 = new TabPage();
+            txtOpt1 = new RichTextBox();
+            txtOpt2 = new RichTextBox();
             menuStrip.SuspendLayout();
             tools.SuspendLayout();
             statusStrip.SuspendLayout();
@@ -107,7 +115,11 @@ namespace Compiler
             tabPageSemant.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSemant).BeginInit();
             tabPageAST.SuspendLayout();
+            tabPageRawIr.SuspendLayout();
+            tabPageOptimizedIr.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvScannerResults).BeginInit();
+            tabPageOpt1.SuspendLayout();
+            tabPageOpt2.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip
@@ -506,6 +518,10 @@ namespace Compiler
             tabControlOutput.Controls.Add(tabPageParser);
             tabControlOutput.Controls.Add(tabPageSemant);
             tabControlOutput.Controls.Add(tabPageAST);
+            tabControlOutput.Controls.Add(tabPageRawIr);
+            tabControlOutput.Controls.Add(tabPageOpt1);
+            tabControlOutput.Controls.Add(tabPageOpt2);
+            tabControlOutput.Controls.Add(tabPageOptimizedIr);
             tabControlOutput.Dock = DockStyle.Fill;
             tabControlOutput.DrawMode = TabDrawMode.OwnerDrawFixed;
             tabControlOutput.Location = new Point(0, 0);
@@ -652,6 +668,59 @@ namespace Compiler
             tabPageAST.Text = "AST";
             tabPageAST.UseVisualStyleBackColor = true;
             // 
+            // richTextBoxAST
+            // 
+            richTextBoxAST.Dock = DockStyle.Fill;
+            richTextBoxAST.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            richTextBoxAST.Location = new Point(0, 0);
+            richTextBoxAST.Name = "richTextBoxAST";
+            richTextBoxAST.ReadOnly = true;
+            richTextBoxAST.Size = new Size(772, 102);
+            richTextBoxAST.TabIndex = 0;
+            richTextBoxAST.Text = "";
+            // 
+            // tabPageRawIr
+            // 
+            tabPageRawIr.Controls.Add(txtRawIr);
+            tabPageRawIr.Location = new Point(4, 24);
+            tabPageRawIr.Name = "tabPageRawIr";
+            tabPageRawIr.Size = new Size(772, 102);
+            tabPageRawIr.TabIndex = 4;
+            tabPageRawIr.Text = "RawIr";
+            tabPageRawIr.UseVisualStyleBackColor = true;
+            // 
+            // txtRawIr
+            // 
+            txtRawIr.Dock = DockStyle.Fill;
+            txtRawIr.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            txtRawIr.Location = new Point(0, 0);
+            txtRawIr.Name = "txtRawIr";
+            txtRawIr.ReadOnly = true;
+            txtRawIr.Size = new Size(772, 102);
+            txtRawIr.TabIndex = 2;
+            txtRawIr.Text = "";
+            // 
+            // tabPageOptimizedIr
+            // 
+            tabPageOptimizedIr.Controls.Add(txtFullOpt);
+            tabPageOptimizedIr.Location = new Point(4, 24);
+            tabPageOptimizedIr.Name = "tabPageOptimizedIr";
+            tabPageOptimizedIr.Size = new Size(772, 102);
+            tabPageOptimizedIr.TabIndex = 5;
+            tabPageOptimizedIr.Text = "OptimizedIr";
+            tabPageOptimizedIr.UseVisualStyleBackColor = true;
+            // 
+            // txtFullOpt
+            // 
+            txtFullOpt.Dock = DockStyle.Fill;
+            txtFullOpt.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            txtFullOpt.Location = new Point(0, 0);
+            txtFullOpt.Name = "txtFullOpt";
+            txtFullOpt.ReadOnly = true;
+            txtFullOpt.Size = new Size(772, 102);
+            txtFullOpt.TabIndex = 2;
+            txtFullOpt.Text = "";
+            // 
             // dgvScannerResults
             // 
             dgvScannerResults.AllowUserToAddRows = false;
@@ -696,16 +765,47 @@ namespace Compiler
             richTextBoxResult.Text = ">";
             richTextBoxResult.WordWrap = false;
             // 
-            // richTextBoxAST
+            // tabPageOpt1
             // 
-            richTextBoxAST.Dock = DockStyle.Fill;
-            richTextBoxAST.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            richTextBoxAST.Location = new Point(0, 0);
-            richTextBoxAST.Name = "richTextBoxAST";
-            richTextBoxAST.ReadOnly = true;
-            richTextBoxAST.Size = new Size(772, 102);
-            richTextBoxAST.TabIndex = 0;
-            richTextBoxAST.Text = "";
+            tabPageOpt1.Controls.Add(txtOpt1);
+            tabPageOpt1.Location = new Point(4, 24);
+            tabPageOpt1.Name = "tabPageOpt1";
+            tabPageOpt1.Size = new Size(772, 102);
+            tabPageOpt1.TabIndex = 6;
+            tabPageOpt1.Text = "Opt1";
+            tabPageOpt1.UseVisualStyleBackColor = true;
+            // 
+            // tabPageOpt2
+            // 
+            tabPageOpt2.Controls.Add(txtOpt2);
+            tabPageOpt2.Location = new Point(4, 24);
+            tabPageOpt2.Name = "tabPageOpt2";
+            tabPageOpt2.Size = new Size(772, 102);
+            tabPageOpt2.TabIndex = 7;
+            tabPageOpt2.Text = "Opt2";
+            tabPageOpt2.UseVisualStyleBackColor = true;
+            // 
+            // txtOpt1
+            // 
+            txtOpt1.Dock = DockStyle.Fill;
+            txtOpt1.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            txtOpt1.Location = new Point(0, 0);
+            txtOpt1.Name = "txtOpt1";
+            txtOpt1.ReadOnly = true;
+            txtOpt1.Size = new Size(772, 102);
+            txtOpt1.TabIndex = 1;
+            txtOpt1.Text = "";
+            // 
+            // txtOpt2
+            // 
+            txtOpt2.Dock = DockStyle.Fill;
+            txtOpt2.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            txtOpt2.Location = new Point(0, 0);
+            txtOpt2.Name = "txtOpt2";
+            txtOpt2.ReadOnly = true;
+            txtOpt2.Size = new Size(772, 102);
+            txtOpt2.TabIndex = 1;
+            txtOpt2.Text = "";
             // 
             // MainForm
             // 
@@ -741,7 +841,11 @@ namespace Compiler
             tabPageSemant.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvSemant).EndInit();
             tabPageAST.ResumeLayout(false);
+            tabPageRawIr.ResumeLayout(false);
+            tabPageOptimizedIr.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvScannerResults).EndInit();
+            tabPageOpt1.ResumeLayout(false);
+            tabPageOpt2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -804,5 +908,13 @@ namespace Compiler
         private TabPage tabPageAST;
         private DataGridView dgvSemant;
         private RichTextBox richTextBoxAST;
+        private TabPage tabPageRawIr;
+        private TabPage tabPageOptimizedIr;
+        private RichTextBox txtRawIr;
+        private RichTextBox txtFullOpt;
+        private TabPage tabPageOpt1;
+        private RichTextBox txtOpt1;
+        private TabPage tabPageOpt2;
+        private RichTextBox txtOpt2;
     }
 }

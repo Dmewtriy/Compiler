@@ -263,8 +263,25 @@ namespace Compiler.Controllers
 
         private List<SyntaxError> ParseDefaultParser(List<Token> tokens)
         {
+            List<EnumDeclNode> astRoots = _parser.Parse(tokens);
 
-            SemanticAnaliz(_parser.Parse(tokens));
+            var irGen = new IrGenerator();
+            List<IrInstruction> rawIr = irGen.Generate(astRoots);
+
+            _view.RawIrContent = string.Join(Environment.NewLine, rawIr);
+
+            var optimizer = new IrOptimizer();
+
+            List<IrInstruction> opt1 = optimizer.OptimizeDeduplicationOnly(rawIr);
+            _view.Opt1IrContent = string.Join(Environment.NewLine, opt1);
+
+            List<IrInstruction> opt2 = optimizer.OptimizeCanonicalizationOnly(rawIr);
+            _view.Opt2IrContent = string.Join(Environment.NewLine, opt2);
+
+            List<IrInstruction> fullOpt = optimizer.OptimizeBoth(rawIr);
+            _view.FullOptIrContent = string.Join(Environment.NewLine, fullOpt);
+
+            SemanticAnaliz(astRoots);
 
             return _parser.Errors;
         }
@@ -275,7 +292,15 @@ namespace Compiler.Controllers
 
             _view.ShowSemanticErrors(_semanticAnalyzer.Errors);
 
-            _view.AstContent = _visualizer.GenerateTreeText(cleanAst);
+            if (_semanticAnalyzer.Errors.Count == 0)
+            {
+                _view.AstContent = _visualizer.GenerateTreeText(cleanAst);
+            }
+            else 
+            {
+                _view.AstContent = "ОШИБКИ!";
+            }
+
         }
 
         private void ShowSourceCode(string url)

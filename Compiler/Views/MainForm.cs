@@ -44,6 +44,11 @@ namespace Compiler
             set => richTextBoxAST.Text = value;
         }
 
+        public string RawIrContent { set => txtRawIr.Text = value; }
+        public string Opt1IrContent { set => txtOpt1.Text = value; }
+        public string Opt2IrContent { set => txtOpt2.Text = value; }
+        public string FullOptIrContent { set => txtFullOpt.Text = value; }
+
         public event EventHandler NewFileClicked;
         public event EventHandler OpenFileClicked;
         public event EventHandler SaveFileClicked;
