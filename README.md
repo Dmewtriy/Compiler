@@ -684,5 +684,15 @@ Dсе элементы enum жестко заменяются на их цело
     case Clubs;
     case Hearts;
 };``` <br><br>
-Результат:<br><br>
-<img width="778" height="427" alt="лаб 7" src="https://github.com/user-attachments/assets/a3c2b869-f042-433a-9e0b-f228007d248e" />
+###Результат:<br><br>
+Без оптимизаций:<br>
+<img width="889" height="493" alt="image" src="https://github.com/user-attachments/assets/5898bd55-ee50-4dcf-8fa0-c3cc712670bf" /><br><br>
+
+Оптимизация 1 (удаление дубликатов):<br>
+<img width="889" height="493" alt="image" src="https://github.com/user-attachments/assets/ce8d216d-6afa-48c8-a96d-fb590fcfde0a" /><br><br>
+
+Оптимизация 2 (алфавитная канонизация):<br>
+<img width="889" height="493" alt="image" src="https://github.com/user-attachments/assets/f2549fcb-46ec-4f14-b24b-7a41d7a74123" /><br><br>
+
+Обе оптимизации:<br>
+<img width="889" height="493" alt="image" src="https://github.com/user-attachments/assets/6ff2d49f-e873-4c9e-af85-a85b7985ee5a" /><br><br>
